@@ -1,5 +1,5 @@
 import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
-import { Store, Users, Settings, ScanLine, ArrowLeft, Sparkles, Gift, Wallet, BarChart3 } from "lucide-react";
+import { Store, Users, Settings, ScanLine, ArrowLeft, Sparkles, Gift, Wallet, BarChart3, Megaphone } from "lucide-react";
 import { ZorynMark } from "@/components/ZorynMark";
 import type { ComponentType } from "react";
 
@@ -12,6 +12,7 @@ const TABS: { to: string; label: string; icon: ComponentType<{ className?: strin
   { to: "/merchant/analytics", label: "Analytics", icon: BarChart3 },
   { to: "/merchant/pos", label: "Kasse", icon: ScanLine },
   { to: "/merchant/offers", label: "Angebote", icon: Sparkles },
+  { to: "/merchant/campaigns", label: "Kampagnen", icon: Megaphone },
   { to: "/merchant/rewards", label: "Rewards", icon: Gift },
   { to: "/merchant/funding", label: "Guthaben", icon: Wallet },
   { to: "/merchant/team", label: "Team", icon: Users },
