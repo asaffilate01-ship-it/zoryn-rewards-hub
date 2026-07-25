@@ -20,8 +20,8 @@ export const Route = createFileRoute("/features/merchants")({
       description="POS-Modus für Personal, Self-Serve für Owner, Prepaid-Guthaben statt Überraschungsrechnung."
       features={[
         { icon: Store, title: "Self-Serve Onboarding", body: "Filiale in unter 5 Minuten anlegen — ohne Sales-Call." },
-        { icon: LineChart, title: "Kampagnen & Multiplikatoren", body: "„2× Punkte am Vormittag" mit einem Klick." },
-        { icon: Megaphone, title: "Nearby-Sichtbarkeit", body: "Erscheine im „In der Nähe"-Feed der Zoryn-App." },
+        { icon: LineChart, title: "Kampagnen & Multiplikatoren", body: "2× Punkte am Vormittag mit einem Klick." },
+        { icon: Megaphone, title: "Nearby-Sichtbarkeit", body: "Erscheine im In-der-Nähe-Feed der Zoryn-App." },
         { icon: CreditCard, title: "Prepaid-Guthaben", body: "Punkte-Ausgabe aus deinem Merchant-Wallet. Monatliches Settlement." },
         { icon: Users2, title: "Rollen & Personal", body: "Owner, Manager, Staff — sauber getrennte Rechte." },
         { icon: Boxes, title: "Rewards-Katalog", body: "Belohnungen mit einem Klick anlegen und Code-verifiziert einlösen." },
