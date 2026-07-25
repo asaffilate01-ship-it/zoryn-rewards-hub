@@ -15,7 +15,11 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedMerchantRouteImport } from './routes/_authenticated/merchant'
 import { Route as AuthenticatedAppRouteImport } from './routes/_authenticated/app'
+import { Route as AuthenticatedMerchantIndexRouteImport } from './routes/_authenticated/merchant.index'
 import { Route as AuthenticatedAppIndexRouteImport } from './routes/_authenticated/app.index'
+import { Route as AuthenticatedMerchantTeamRouteImport } from './routes/_authenticated/merchant.team'
+import { Route as AuthenticatedMerchantSettingsRouteImport } from './routes/_authenticated/merchant.settings'
+import { Route as AuthenticatedMerchantPosRouteImport } from './routes/_authenticated/merchant.pos'
 import { Route as AuthenticatedAppShopRouteImport } from './routes/_authenticated/app.shop'
 import { Route as AuthenticatedAppScanRouteImport } from './routes/_authenticated/app.scan'
 import { Route as AuthenticatedAppProfileRouteImport } from './routes/_authenticated/app.profile'
@@ -50,11 +54,35 @@ const AuthenticatedAppRoute = AuthenticatedAppRouteImport.update({
   path: '/app',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedMerchantIndexRoute =
+  AuthenticatedMerchantIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedMerchantRoute,
+  } as any)
 const AuthenticatedAppIndexRoute = AuthenticatedAppIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AuthenticatedAppRoute,
 } as any)
+const AuthenticatedMerchantTeamRoute =
+  AuthenticatedMerchantTeamRouteImport.update({
+    id: '/team',
+    path: '/team',
+    getParentRoute: () => AuthenticatedMerchantRoute,
+  } as any)
+const AuthenticatedMerchantSettingsRoute =
+  AuthenticatedMerchantSettingsRouteImport.update({
+    id: '/settings',
+    path: '/settings',
+    getParentRoute: () => AuthenticatedMerchantRoute,
+  } as any)
+const AuthenticatedMerchantPosRoute =
+  AuthenticatedMerchantPosRouteImport.update({
+    id: '/pos',
+    path: '/pos',
+    getParentRoute: () => AuthenticatedMerchantRoute,
+  } as any)
 const AuthenticatedAppShopRoute = AuthenticatedAppShopRouteImport.update({
   id: '/shop',
   path: '/shop',
@@ -81,23 +109,30 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/app': typeof AuthenticatedAppRouteWithChildren
-  '/merchant': typeof AuthenticatedMerchantRoute
+  '/merchant': typeof AuthenticatedMerchantRouteWithChildren
   '/app/nearby': typeof AuthenticatedAppNearbyRoute
   '/app/profile': typeof AuthenticatedAppProfileRoute
   '/app/scan': typeof AuthenticatedAppScanRoute
   '/app/shop': typeof AuthenticatedAppShopRoute
+  '/merchant/pos': typeof AuthenticatedMerchantPosRoute
+  '/merchant/settings': typeof AuthenticatedMerchantSettingsRoute
+  '/merchant/team': typeof AuthenticatedMerchantTeamRoute
   '/app/': typeof AuthenticatedAppIndexRoute
+  '/merchant/': typeof AuthenticatedMerchantIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/merchant': typeof AuthenticatedMerchantRoute
   '/app/nearby': typeof AuthenticatedAppNearbyRoute
   '/app/profile': typeof AuthenticatedAppProfileRoute
   '/app/scan': typeof AuthenticatedAppScanRoute
   '/app/shop': typeof AuthenticatedAppShopRoute
+  '/merchant/pos': typeof AuthenticatedMerchantPosRoute
+  '/merchant/settings': typeof AuthenticatedMerchantSettingsRoute
+  '/merchant/team': typeof AuthenticatedMerchantTeamRoute
   '/app': typeof AuthenticatedAppIndexRoute
+  '/merchant': typeof AuthenticatedMerchantIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -106,12 +141,16 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/app': typeof AuthenticatedAppRouteWithChildren
-  '/_authenticated/merchant': typeof AuthenticatedMerchantRoute
+  '/_authenticated/merchant': typeof AuthenticatedMerchantRouteWithChildren
   '/_authenticated/app/nearby': typeof AuthenticatedAppNearbyRoute
   '/_authenticated/app/profile': typeof AuthenticatedAppProfileRoute
   '/_authenticated/app/scan': typeof AuthenticatedAppScanRoute
   '/_authenticated/app/shop': typeof AuthenticatedAppShopRoute
+  '/_authenticated/merchant/pos': typeof AuthenticatedMerchantPosRoute
+  '/_authenticated/merchant/settings': typeof AuthenticatedMerchantSettingsRoute
+  '/_authenticated/merchant/team': typeof AuthenticatedMerchantTeamRoute
   '/_authenticated/app/': typeof AuthenticatedAppIndexRoute
+  '/_authenticated/merchant/': typeof AuthenticatedMerchantIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -125,18 +164,25 @@ export interface FileRouteTypes {
     | '/app/profile'
     | '/app/scan'
     | '/app/shop'
+    | '/merchant/pos'
+    | '/merchant/settings'
+    | '/merchant/team'
     | '/app/'
+    | '/merchant/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
     | '/sitemap.xml'
-    | '/merchant'
     | '/app/nearby'
     | '/app/profile'
     | '/app/scan'
     | '/app/shop'
+    | '/merchant/pos'
+    | '/merchant/settings'
+    | '/merchant/team'
     | '/app'
+    | '/merchant'
   id:
     | '__root__'
     | '/'
@@ -149,7 +195,11 @@ export interface FileRouteTypes {
     | '/_authenticated/app/profile'
     | '/_authenticated/app/scan'
     | '/_authenticated/app/shop'
+    | '/_authenticated/merchant/pos'
+    | '/_authenticated/merchant/settings'
+    | '/_authenticated/merchant/team'
     | '/_authenticated/app/'
+    | '/_authenticated/merchant/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -203,12 +253,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/merchant/': {
+      id: '/_authenticated/merchant/'
+      path: '/'
+      fullPath: '/merchant/'
+      preLoaderRoute: typeof AuthenticatedMerchantIndexRouteImport
+      parentRoute: typeof AuthenticatedMerchantRoute
+    }
     '/_authenticated/app/': {
       id: '/_authenticated/app/'
       path: '/'
       fullPath: '/app/'
       preLoaderRoute: typeof AuthenticatedAppIndexRouteImport
       parentRoute: typeof AuthenticatedAppRoute
+    }
+    '/_authenticated/merchant/team': {
+      id: '/_authenticated/merchant/team'
+      path: '/team'
+      fullPath: '/merchant/team'
+      preLoaderRoute: typeof AuthenticatedMerchantTeamRouteImport
+      parentRoute: typeof AuthenticatedMerchantRoute
+    }
+    '/_authenticated/merchant/settings': {
+      id: '/_authenticated/merchant/settings'
+      path: '/settings'
+      fullPath: '/merchant/settings'
+      preLoaderRoute: typeof AuthenticatedMerchantSettingsRouteImport
+      parentRoute: typeof AuthenticatedMerchantRoute
+    }
+    '/_authenticated/merchant/pos': {
+      id: '/_authenticated/merchant/pos'
+      path: '/pos'
+      fullPath: '/merchant/pos'
+      preLoaderRoute: typeof AuthenticatedMerchantPosRouteImport
+      parentRoute: typeof AuthenticatedMerchantRoute
     }
     '/_authenticated/app/shop': {
       id: '/_authenticated/app/shop'
@@ -260,14 +338,33 @@ const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
 const AuthenticatedAppRouteWithChildren =
   AuthenticatedAppRoute._addFileChildren(AuthenticatedAppRouteChildren)
 
+interface AuthenticatedMerchantRouteChildren {
+  AuthenticatedMerchantPosRoute: typeof AuthenticatedMerchantPosRoute
+  AuthenticatedMerchantSettingsRoute: typeof AuthenticatedMerchantSettingsRoute
+  AuthenticatedMerchantTeamRoute: typeof AuthenticatedMerchantTeamRoute
+  AuthenticatedMerchantIndexRoute: typeof AuthenticatedMerchantIndexRoute
+}
+
+const AuthenticatedMerchantRouteChildren: AuthenticatedMerchantRouteChildren = {
+  AuthenticatedMerchantPosRoute: AuthenticatedMerchantPosRoute,
+  AuthenticatedMerchantSettingsRoute: AuthenticatedMerchantSettingsRoute,
+  AuthenticatedMerchantTeamRoute: AuthenticatedMerchantTeamRoute,
+  AuthenticatedMerchantIndexRoute: AuthenticatedMerchantIndexRoute,
+}
+
+const AuthenticatedMerchantRouteWithChildren =
+  AuthenticatedMerchantRoute._addFileChildren(
+    AuthenticatedMerchantRouteChildren,
+  )
+
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAppRoute: typeof AuthenticatedAppRouteWithChildren
-  AuthenticatedMerchantRoute: typeof AuthenticatedMerchantRoute
+  AuthenticatedMerchantRoute: typeof AuthenticatedMerchantRouteWithChildren
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAppRoute: AuthenticatedAppRouteWithChildren,
-  AuthenticatedMerchantRoute: AuthenticatedMerchantRoute,
+  AuthenticatedMerchantRoute: AuthenticatedMerchantRouteWithChildren,
 }
 
 const AuthenticatedRouteRouteWithChildren =
