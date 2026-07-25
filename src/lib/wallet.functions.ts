@@ -90,7 +90,7 @@ export const earnPoints = createServerFn({ method: "POST" })
       _merchant_id: data.merchantId,
       _amount: data.amount,
       _idempotency_key: data.idempotencyKey,
-      _memo: data.memo ?? null,
+      _memo: data.memo,
     });
     if (error) throw new Error(error.message);
     return { transaction_id: txnId as string };
@@ -115,8 +115,8 @@ export const redeemPoints = createServerFn({ method: "POST" })
       _user_id: context.userId,
       _amount: data.amount,
       _idempotency_key: data.idempotencyKey,
-      _memo: data.memo ?? null,
-      _merchant_id: data.merchantId ?? null,
+      _memo: data.memo,
+      _merchant_id: data.merchantId,
     });
     if (error) {
       // Postgres raises with our custom message on insufficient balance.
