@@ -446,6 +446,117 @@ export type Database = {
           },
         ]
       }
+      reward_redemptions: {
+        Row: {
+          code: string
+          cost_points: number
+          created_at: string
+          id: string
+          merchant_id: string
+          reward_id: string
+          reward_title: string
+          status: string
+          transaction_id: string | null
+          used_at: string | null
+          used_by: string | null
+          user_id: string
+        }
+        Insert: {
+          code: string
+          cost_points: number
+          created_at?: string
+          id?: string
+          merchant_id: string
+          reward_id: string
+          reward_title: string
+          status?: string
+          transaction_id?: string | null
+          used_at?: string | null
+          used_by?: string | null
+          user_id: string
+        }
+        Update: {
+          code?: string
+          cost_points?: number
+          created_at?: string
+          id?: string
+          merchant_id?: string
+          reward_id?: string
+          reward_title?: string
+          status?: string
+          transaction_id?: string | null
+          used_at?: string | null
+          used_by?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reward_redemptions_merchant_id_fkey"
+            columns: ["merchant_id"]
+            isOneToOne: false
+            referencedRelation: "merchants"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reward_redemptions_reward_id_fkey"
+            columns: ["reward_id"]
+            isOneToOne: false
+            referencedRelation: "rewards"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reward_redemptions_transaction_id_fkey"
+            columns: ["transaction_id"]
+            isOneToOne: false
+            referencedRelation: "transactions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      rewards: {
+        Row: {
+          active: boolean
+          cost_points: number
+          created_at: string
+          description: string | null
+          id: string
+          merchant_id: string
+          stock: number | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          cost_points: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          merchant_id: string
+          stock?: number | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          cost_points?: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          merchant_id?: string
+          stock?: number | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rewards_merchant_id_fkey"
+            columns: ["merchant_id"]
+            isOneToOne: false
+            referencedRelation: "merchants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       spatial_ref_sys: {
         Row: {
           auth_name: string | null
@@ -1035,6 +1146,14 @@ export type Database = {
           _user_id: string
         }
         Returns: string
+      }
+      redeem_reward: {
+        Args: { _idempotency_key: string; _reward_id: string; _user_id: string }
+        Returns: {
+          code: string
+          redemption_id: string
+          transaction_id: string
+        }[]
       }
       st_3dclosestpoint: {
         Args: { geom1: unknown; geom2: unknown }
@@ -1627,6 +1746,15 @@ export type Database = {
           table_name: string
         }
         Returns: string
+      }
+      use_reward_code: {
+        Args: { _code: string; _merchant_id: string; _staff_user_id: string }
+        Returns: {
+          cost_points: number
+          customer_user_id: string
+          redemption_id: string
+          reward_title: string
+        }[]
       }
     }
     Enums: {

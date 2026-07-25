@@ -1,5 +1,5 @@
 import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
-import { Store, Users, Settings, ScanLine, ArrowLeft, Sparkles } from "lucide-react";
+import { Store, Users, Settings, ScanLine, ArrowLeft, Sparkles, Gift } from "lucide-react";
 import { ZorynMark } from "@/components/ZorynMark";
 import { Button } from "@/components/ui/button";
 import type { ComponentType } from "react";
@@ -33,6 +33,8 @@ function MerchantShell() {
           <TabLink to="/merchant" icon={Store} label="Übersicht" active={pathname === "/merchant"} />
           <TabLink to="/merchant/pos" icon={ScanLine} label="Kasse" active={pathname.startsWith("/merchant/pos")} />
           <TabLink to="/merchant/offers" icon={Sparkles} label="Angebote" active={pathname.startsWith("/merchant/offers")} />
+          <TabLink to="/merchant/rewards" icon={Gift} label="Rewards" active={pathname.startsWith("/merchant/rewards")} />
+
           <TabLink to="/merchant/team" icon={Users} label="Team" active={pathname.startsWith("/merchant/team")} />
           <TabLink to="/merchant/settings" icon={Settings} label="Einstellungen" active={pathname.startsWith("/merchant/settings")} />
         </div>

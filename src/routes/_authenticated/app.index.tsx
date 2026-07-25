@@ -138,7 +138,24 @@ function WalletHome() {
         </div>
       </div>
 
+      <Link
+        to="/app/rewards"
+        className="mt-6 flex items-center justify-between rounded-2xl border border-border bg-card/60 px-4 py-3 transition hover:border-primary/50"
+      >
+        <div className="flex items-center gap-3">
+          <div className="flex size-9 items-center justify-center rounded-full bg-primary/10 text-primary">
+            <Gift className="size-4" />
+          </div>
+          <div>
+            <div className="text-sm font-medium">Belohnungen</div>
+            <div className="text-xs text-muted-foreground">Punkte gegen Prämien einlösen</div>
+          </div>
+        </div>
+        <span className="text-xs text-brand-soft">Ansehen →</span>
+      </Link>
+
       <section className="mt-8">
+
         <div className="flex items-baseline justify-between">
           <h2 className="text-lg font-semibold">Aktivität</h2>
           <span className="text-xs text-muted-foreground">Letzte 20</span>
