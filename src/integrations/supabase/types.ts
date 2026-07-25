@@ -98,6 +98,41 @@ export type Database = {
           },
         ]
       }
+      merchant_members: {
+        Row: {
+          created_at: string
+          id: string
+          merchant_id: string
+          role: Database["public"]["Enums"]["merchant_member_role"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          merchant_id: string
+          role?: Database["public"]["Enums"]["merchant_member_role"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          merchant_id?: string
+          role?: Database["public"]["Enums"]["merchant_member_role"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "merchant_members_merchant_id_fkey"
+            columns: ["merchant_id"]
+            isOneToOne: false
+            referencedRelation: "merchants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       merchants: {
         Row: {
           brand_color: string | null
@@ -269,6 +304,17 @@ export type Database = {
       }
     }
     Functions: {
+      create_merchant_with_owner: {
+        Args: {
+          _brand_color: string
+          _category: string
+          _description: string
+          _name: string
+          _points_per_euro: number
+          _slug: string
+        }
+        Returns: string
+      }
       earn_points: {
         Args: {
           _amount: number
@@ -287,6 +333,42 @@ export type Database = {
           _user_id: string
         }
         Returns: boolean
+      }
+      is_merchant_member: {
+        Args: {
+          _merchant_id: string
+          _min_role?: Database["public"]["Enums"]["merchant_member_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      lookup_customer_by_membership: {
+        Args: { _membership: string; _merchant_id: string }
+        Returns: {
+          display_name: string
+          membership_number: string
+          user_id: string
+        }[]
+      }
+      merchant_earn_points: {
+        Args: {
+          _amount: number
+          _customer_user_id: string
+          _idempotency_key: string
+          _memo?: string
+          _merchant_id: string
+        }
+        Returns: string
+      }
+      merchant_redeem_points: {
+        Args: {
+          _amount: number
+          _customer_user_id: string
+          _idempotency_key: string
+          _memo?: string
+          _merchant_id: string
+        }
+        Returns: string
       }
       redeem_points: {
         Args: {
@@ -328,6 +410,7 @@ export type Database = {
         | "affiliate_manager"
         | "auditor"
       entry_direction: "debit" | "credit"
+      merchant_member_role: "owner" | "manager" | "staff"
       transaction_kind: "earn" | "redeem" | "adjust" | "transfer" | "expire"
     }
     CompositeTypes: {
@@ -486,6 +569,7 @@ export const Constants = {
         "auditor",
       ],
       entry_direction: ["debit", "credit"],
+      merchant_member_role: ["owner", "manager", "staff"],
       transaction_kind: ["earn", "redeem", "adjust", "transfer", "expire"],
     },
   },
