@@ -11,8 +11,9 @@ import {
   Building2,
 } from "lucide-react";
 import heroBg from "@/assets/hero-aurora.jpg";
-import { ZorynMark, ZorynWordmark } from "@/components/ZorynMark";
+import { ZorynMark } from "@/components/ZorynMark";
 import { Button } from "@/components/ui/button";
+import { PublicShell } from "@/components/PublicShell";
 
 export const Route = createFileRoute("/")({
   head: () => ({
