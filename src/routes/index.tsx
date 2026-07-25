@@ -303,4 +303,3 @@ function LandingPage() {
     </PublicShell>
   );
 }
-}
