@@ -1,7 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
+import { Users, Receipt } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/app/profile")({
   head: () => ({ meta: [{ title: "Profil — Zoryn" }] }),
@@ -47,6 +48,19 @@ function ProfilePage() {
         <Row label="Mitglieds-Nr." value={profile?.membership_number ?? "—"} />
         <Row label="Land" value={profile?.country ?? "—"} />
         <Row label="Sprache" value={profile?.preferred_language ?? "de"} />
+      </div>
+
+      <div className="mt-6 grid gap-2 sm:grid-cols-2">
+        <Link to="/app/referrals">
+          <Button variant="secondary" className="w-full justify-start">
+            <Users className="mr-2 size-4" /> Freunde einladen
+          </Button>
+        </Link>
+        <Link to="/app/claim">
+          <Button variant="secondary" className="w-full justify-start">
+            <Receipt className="mr-2 size-4" /> Punkte reklamieren
+          </Button>
+        </Link>
       </div>
 
       <Button variant="outline" className="mt-6" onClick={signOut}>
