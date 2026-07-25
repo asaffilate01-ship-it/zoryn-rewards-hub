@@ -5,11 +5,19 @@ import { isAdmin } from "@/lib/admin.functions";
 import { Button } from "@/components/ui/button";
 import { ZorynMark } from "@/components/ZorynMark";
 import { Shield, ArrowLeft, LayoutDashboard, Store, Inbox, FileText } from "lucide-react";
+import type { ComponentType } from "react";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({ meta: [{ title: "Admin — Zoryn" }] }),
   component: AdminShell,
 });
+
+const TABS: { to: string; label: string; icon: ComponentType<{ className?: string }> }[] = [
+  { to: "/admin", label: "Übersicht", icon: LayoutDashboard },
+  { to: "/admin/merchants", label: "Merchants", icon: Store },
+  { to: "/admin/claims", label: "Reklamationen", icon: Inbox },
+  { to: "/admin/audit", label: "Audit", icon: FileText },
+];
 
 function AdminShell() {
   const isAdminFn = useServerFn(isAdmin);
@@ -32,38 +40,55 @@ function AdminShell() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b border-border">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <Link to="/admin" className="flex items-center gap-2">
-            <ZorynMark size={26} />
-            <span className="font-display font-semibold">Zoryn Admin</span>
-          </Link>
-          <Link to="/app"><Button variant="ghost" size="sm"><ArrowLeft className="mr-1 size-4" /> App</Button></Link>
+      <header className="sticky top-0 z-30 border-b border-border/60 bg-background/70 backdrop-blur-xl">
+        <div className="mx-auto max-w-6xl px-5">
+          <div className="flex items-center justify-between py-3.5">
+            <Link to="/admin" className="flex items-center gap-2.5">
+              <ZorynMark size={26} />
+              <div className="flex items-baseline gap-1.5">
+                <span className="font-display text-[15px] font-semibold tracking-tight">Zoryn</span>
+                <span className="rounded-full border border-primary/40 bg-primary/10 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-primary">
+                  Admin
+                </span>
+              </div>
+            </Link>
+            <Link
+              to="/app"
+              className="inline-flex items-center gap-1.5 rounded-full border border-border/70 bg-card/60 px-3 py-1.5 text-xs font-medium text-muted-foreground transition hover:text-foreground"
+            >
+              <ArrowLeft className="size-3.5" /> Zur App
+            </Link>
+          </div>
+          <nav className="-mx-5 overflow-x-auto px-5 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div className="flex min-w-max items-center gap-1">
+              {TABS.map((t) => {
+                const active = t.to === "/admin" ? pathname === "/admin" : pathname.startsWith(t.to);
+                const Icon = t.icon;
+                return (
+                  <Link
+                    key={t.to}
+                    to={t.to}
+                    className={`relative inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[13px] font-medium transition ${
+                      active
+                        ? "bg-foreground/[0.06] text-foreground"
+                        : "text-muted-foreground hover:bg-card/60 hover:text-foreground"
+                    }`}
+                  >
+                    <Icon className={`size-4 ${active ? "text-primary" : ""}`} />
+                    {t.label}
+                    {active && (
+                      <span className="absolute inset-x-3 -bottom-2 h-[2px] rounded-full gradient-brand" />
+                    )}
+                  </Link>
+                );
+              })}
+            </div>
+          </nav>
         </div>
       </header>
-      <div className="mx-auto max-w-6xl px-6 pt-6">
-        <nav className="flex flex-wrap gap-2 border-b border-border pb-3">
-          <Tab to="/admin" label="Übersicht" icon={LayoutDashboard} active={pathname === "/admin"} />
-          <Tab to="/admin/merchants" label="Merchants" icon={Store} active={pathname.startsWith("/admin/merchants")} />
-          <Tab to="/admin/claims" label="Reklamationen" icon={Inbox} active={pathname.startsWith("/admin/claims")} />
-          <Tab to="/admin/audit" label="Audit" icon={FileText} active={pathname.startsWith("/admin/audit")} />
-        </nav>
-      </div>
-      <main className="mx-auto max-w-6xl space-y-6 px-6 py-8">
+      <main className="mx-auto max-w-6xl space-y-6 px-5 py-8">
         <Outlet />
       </main>
     </div>
-  );
-}
-
-function Tab({ to, label, icon: Icon, active }: {
-  to: string; label: string; icon: React.ComponentType<{ className?: string }>; active?: boolean;
-}) {
-  return (
-    <Link to={to} className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm transition ${
-      active ? "bg-primary/10 text-primary" : "text-muted-foreground hover:text-foreground"
-    }`}>
-      <Icon className="size-4" /> {label}
-    </Link>
   );
 }
