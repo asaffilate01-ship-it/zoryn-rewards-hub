@@ -79,6 +79,93 @@ export type Database = {
         }
         Relationships: []
       }
+      blog_posts: {
+        Row: {
+          author_name: string
+          body_md: string
+          cover_url: string | null
+          created_at: string
+          excerpt: string
+          id: string
+          published_at: string | null
+          slug: string
+          tags: string[]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author_name?: string
+          body_md: string
+          cover_url?: string | null
+          created_at?: string
+          excerpt: string
+          id?: string
+          published_at?: string | null
+          slug: string
+          tags?: string[]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author_name?: string
+          body_md?: string
+          cover_url?: string | null
+          created_at?: string
+          excerpt?: string
+          id?: string
+          published_at?: string | null
+          slug?: string
+          tags?: string[]
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      complaints: {
+        Row: {
+          admin_notes: string | null
+          category: string
+          created_at: string
+          email: string
+          id: string
+          membership_number: string | null
+          message: string
+          name: string
+          status: string
+          subject: string
+          submitted_by: string | null
+          updated_at: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          category: string
+          created_at?: string
+          email: string
+          id?: string
+          membership_number?: string | null
+          message: string
+          name: string
+          status?: string
+          subject: string
+          submitted_by?: string | null
+          updated_at?: string
+        }
+        Update: {
+          admin_notes?: string | null
+          category?: string
+          created_at?: string
+          email?: string
+          id?: string
+          membership_number?: string | null
+          message?: string
+          name?: string
+          status?: string
+          subject?: string
+          submitted_by?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       earn_challenges: {
         Row: {
           amount_cents: number
@@ -985,6 +1072,29 @@ export type Database = {
         Args: { _settlement_id: string }
         Returns: undefined
       }
+      admin_list_complaints: {
+        Args: never
+        Returns: {
+          admin_notes: string | null
+          category: string
+          created_at: string
+          email: string
+          id: string
+          membership_number: string | null
+          message: string
+          name: string
+          status: string
+          subject: string
+          submitted_by: string | null
+          updated_at: string
+        }[]
+        SetofOptions: {
+          from: "*"
+          to: "complaints"
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
       admin_list_merchants: {
         Args: never
         Returns: {
@@ -1035,6 +1145,29 @@ export type Database = {
       admin_set_merchant_active: {
         Args: { _active: boolean; _merchant_id: string }
         Returns: undefined
+      }
+      admin_update_complaint: {
+        Args: { _id: string; _notes: string; _status: string }
+        Returns: {
+          admin_notes: string | null
+          category: string
+          created_at: string
+          email: string
+          id: string
+          membership_number: string | null
+          message: string
+          name: string
+          status: string
+          subject: string
+          submitted_by: string | null
+          updated_at: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "complaints"
+          isOneToOne: true
+          isSetofReturn: false
+        }
       }
       apply_referral: {
         Args: { _code: string; _user_id: string }
