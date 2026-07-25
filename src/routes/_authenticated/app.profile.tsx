@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Users, Receipt } from "lucide-react";
+import { Users, Receipt, Trophy } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/app/profile")({
   head: () => ({ meta: [{ title: "Profil — Zoryn" }] }),
@@ -59,6 +59,11 @@ function ProfilePage() {
         <Link to="/app/claim">
           <Button variant="secondary" className="w-full justify-start">
             <Receipt className="mr-2 size-4" /> Punkte reklamieren
+          </Button>
+        </Link>
+        <Link to="/app/badges">
+          <Button variant="secondary" className="w-full justify-start">
+            <Trophy className="mr-2 size-4" /> Auszeichnungen
           </Button>
         </Link>
       </div>

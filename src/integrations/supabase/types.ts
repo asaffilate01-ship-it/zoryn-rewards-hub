@@ -79,6 +79,39 @@ export type Database = {
         }
         Relationships: []
       }
+      badges: {
+        Row: {
+          code: string
+          created_at: string
+          description: string
+          icon: string
+          id: string
+          name: string
+          sort_order: number
+          threshold_points: number
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          description: string
+          icon?: string
+          id?: string
+          name: string
+          sort_order?: number
+          threshold_points?: number
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          description?: string
+          icon?: string
+          id?: string
+          name?: string
+          sort_order?: number
+          threshold_points?: number
+        }
+        Relationships: []
+      }
       blog_posts: {
         Row: {
           author_name: string
@@ -120,6 +153,56 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      campaigns: {
+        Row: {
+          active: boolean
+          created_at: string
+          created_by: string | null
+          description: string | null
+          ends_at: string | null
+          id: string
+          merchant_id: string
+          multiplier: number
+          name: string
+          starts_at: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          ends_at?: string | null
+          id?: string
+          merchant_id: string
+          multiplier?: number
+          name: string
+          starts_at?: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          ends_at?: string | null
+          id?: string
+          merchant_id?: string
+          multiplier?: number
+          name?: string
+          starts_at?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaigns_merchant_id_fkey"
+            columns: ["merchant_id"]
+            isOneToOne: false
+            referencedRelation: "merchants"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       complaints: {
         Row: {
@@ -856,6 +939,35 @@ export type Database = {
           },
         ]
       }
+      user_badges: {
+        Row: {
+          badge_id: string
+          earned_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          badge_id: string
+          earned_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          badge_id?: string
+          earned_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_badges_badge_id_fkey"
+            columns: ["badge_id"]
+            isOneToOne: false
+            referencedRelation: "badges"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           granted_at: string
@@ -1193,6 +1305,7 @@ export type Database = {
         Args: { _code: string; _user_id: string }
         Returns: Json
       }
+      award_badges_for_user: { Args: { _user_id: string }; Returns: number }
       claim_earn_challenge: {
         Args: { _code: string; _user_id: string }
         Returns: {
