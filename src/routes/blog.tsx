@@ -1,4 +1,4 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { PublicShell, PageHeader } from "@/components/PublicShell";
 import { listPosts } from "@/lib/blog.functions";
@@ -21,7 +21,6 @@ export const Route = createFileRoute("/blog")({
   }),
   loader: ({ context }) => context.queryClient.ensureQueryData(postsQuery),
   component: BlogIndex,
-  notFoundComponent: () => { throw notFound(); },
 });
 
 function BlogIndex() {
