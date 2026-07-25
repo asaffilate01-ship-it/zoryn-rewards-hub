@@ -10,9 +10,25 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LegalTermsRouteImport } from './routes/legal.terms'
+import { Route as LegalPrivacyRouteImport } from './routes/legal.privacy'
+import { Route as LegalImprintRouteImport } from './routes/legal.imprint'
+import { Route as LegalGdprRouteImport } from './routes/legal.gdpr'
+import { Route as LegalCookiesRouteImport } from './routes/legal.cookies'
+import { Route as LegalComplaintsRouteImport } from './routes/legal.complaints'
+import { Route as LegalAmlRouteImport } from './routes/legal.aml'
+import { Route as LegalAccessibilityRouteImport } from './routes/legal.accessibility'
+import { Route as FeaturesStaffRouteImport } from './routes/features.staff'
+import { Route as FeaturesPartnersRouteImport } from './routes/features.partners'
+import { Route as FeaturesMerchantsRouteImport } from './routes/features.merchants'
+import { Route as FeaturesEnterpriseRouteImport } from './routes/features.enterprise'
+import { Route as FeaturesDevelopersRouteImport } from './routes/features.developers'
+import { Route as FeaturesConsumersRouteImport } from './routes/features.consumers'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AuthenticatedMerchantRouteImport } from './routes/_authenticated/merchant'
 import { Route as AuthenticatedAppRouteImport } from './routes/_authenticated/app'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
@@ -43,6 +59,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
@@ -56,6 +77,81 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const LegalTermsRoute = LegalTermsRouteImport.update({
+  id: '/legal/terms',
+  path: '/legal/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalPrivacyRoute = LegalPrivacyRouteImport.update({
+  id: '/legal/privacy',
+  path: '/legal/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalImprintRoute = LegalImprintRouteImport.update({
+  id: '/legal/imprint',
+  path: '/legal/imprint',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalGdprRoute = LegalGdprRouteImport.update({
+  id: '/legal/gdpr',
+  path: '/legal/gdpr',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalCookiesRoute = LegalCookiesRouteImport.update({
+  id: '/legal/cookies',
+  path: '/legal/cookies',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalComplaintsRoute = LegalComplaintsRouteImport.update({
+  id: '/legal/complaints',
+  path: '/legal/complaints',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalAmlRoute = LegalAmlRouteImport.update({
+  id: '/legal/aml',
+  path: '/legal/aml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalAccessibilityRoute = LegalAccessibilityRouteImport.update({
+  id: '/legal/accessibility',
+  path: '/legal/accessibility',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeaturesStaffRoute = FeaturesStaffRouteImport.update({
+  id: '/features/staff',
+  path: '/features/staff',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeaturesPartnersRoute = FeaturesPartnersRouteImport.update({
+  id: '/features/partners',
+  path: '/features/partners',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeaturesMerchantsRoute = FeaturesMerchantsRouteImport.update({
+  id: '/features/merchants',
+  path: '/features/merchants',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeaturesEnterpriseRoute = FeaturesEnterpriseRouteImport.update({
+  id: '/features/enterprise',
+  path: '/features/enterprise',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeaturesDevelopersRoute = FeaturesDevelopersRouteImport.update({
+  id: '/features/developers',
+  path: '/features/developers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeaturesConsumersRoute = FeaturesConsumersRouteImport.update({
+  id: '/features/consumers',
+  path: '/features/consumers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => BlogRoute,
 } as any)
 const AuthenticatedMerchantRoute = AuthenticatedMerchantRouteImport.update({
   id: '/merchant',
@@ -192,10 +288,26 @@ const AuthenticatedAdminAuditRoute = AuthenticatedAdminAuditRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/blog': typeof BlogRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/app': typeof AuthenticatedAppRouteWithChildren
   '/merchant': typeof AuthenticatedMerchantRouteWithChildren
+  '/blog/$slug': typeof BlogSlugRoute
+  '/features/consumers': typeof FeaturesConsumersRoute
+  '/features/developers': typeof FeaturesDevelopersRoute
+  '/features/enterprise': typeof FeaturesEnterpriseRoute
+  '/features/merchants': typeof FeaturesMerchantsRoute
+  '/features/partners': typeof FeaturesPartnersRoute
+  '/features/staff': typeof FeaturesStaffRoute
+  '/legal/accessibility': typeof LegalAccessibilityRoute
+  '/legal/aml': typeof LegalAmlRoute
+  '/legal/complaints': typeof LegalComplaintsRoute
+  '/legal/cookies': typeof LegalCookiesRoute
+  '/legal/gdpr': typeof LegalGdprRoute
+  '/legal/imprint': typeof LegalImprintRoute
+  '/legal/privacy': typeof LegalPrivacyRoute
+  '/legal/terms': typeof LegalTermsRoute
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/admin/claims': typeof AuthenticatedAdminClaimsRoute
   '/admin/merchants': typeof AuthenticatedAdminMerchantsRoute
@@ -221,7 +333,23 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/blog': typeof BlogRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/features/consumers': typeof FeaturesConsumersRoute
+  '/features/developers': typeof FeaturesDevelopersRoute
+  '/features/enterprise': typeof FeaturesEnterpriseRoute
+  '/features/merchants': typeof FeaturesMerchantsRoute
+  '/features/partners': typeof FeaturesPartnersRoute
+  '/features/staff': typeof FeaturesStaffRoute
+  '/legal/accessibility': typeof LegalAccessibilityRoute
+  '/legal/aml': typeof LegalAmlRoute
+  '/legal/complaints': typeof LegalComplaintsRoute
+  '/legal/cookies': typeof LegalCookiesRoute
+  '/legal/gdpr': typeof LegalGdprRoute
+  '/legal/imprint': typeof LegalImprintRoute
+  '/legal/privacy': typeof LegalPrivacyRoute
+  '/legal/terms': typeof LegalTermsRoute
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/admin/claims': typeof AuthenticatedAdminClaimsRoute
   '/admin/merchants': typeof AuthenticatedAdminMerchantsRoute
@@ -249,10 +377,26 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/blog': typeof BlogRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/app': typeof AuthenticatedAppRouteWithChildren
   '/_authenticated/merchant': typeof AuthenticatedMerchantRouteWithChildren
+  '/blog/$slug': typeof BlogSlugRoute
+  '/features/consumers': typeof FeaturesConsumersRoute
+  '/features/developers': typeof FeaturesDevelopersRoute
+  '/features/enterprise': typeof FeaturesEnterpriseRoute
+  '/features/merchants': typeof FeaturesMerchantsRoute
+  '/features/partners': typeof FeaturesPartnersRoute
+  '/features/staff': typeof FeaturesStaffRoute
+  '/legal/accessibility': typeof LegalAccessibilityRoute
+  '/legal/aml': typeof LegalAmlRoute
+  '/legal/complaints': typeof LegalComplaintsRoute
+  '/legal/cookies': typeof LegalCookiesRoute
+  '/legal/gdpr': typeof LegalGdprRoute
+  '/legal/imprint': typeof LegalImprintRoute
+  '/legal/privacy': typeof LegalPrivacyRoute
+  '/legal/terms': typeof LegalTermsRoute
   '/_authenticated/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/_authenticated/admin/claims': typeof AuthenticatedAdminClaimsRoute
   '/_authenticated/admin/merchants': typeof AuthenticatedAdminMerchantsRoute
@@ -280,10 +424,26 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/blog'
     | '/sitemap.xml'
     | '/admin'
     | '/app'
     | '/merchant'
+    | '/blog/$slug'
+    | '/features/consumers'
+    | '/features/developers'
+    | '/features/enterprise'
+    | '/features/merchants'
+    | '/features/partners'
+    | '/features/staff'
+    | '/legal/accessibility'
+    | '/legal/aml'
+    | '/legal/complaints'
+    | '/legal/cookies'
+    | '/legal/gdpr'
+    | '/legal/imprint'
+    | '/legal/privacy'
+    | '/legal/terms'
     | '/admin/audit'
     | '/admin/claims'
     | '/admin/merchants'
@@ -309,7 +469,23 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/blog'
     | '/sitemap.xml'
+    | '/blog/$slug'
+    | '/features/consumers'
+    | '/features/developers'
+    | '/features/enterprise'
+    | '/features/merchants'
+    | '/features/partners'
+    | '/features/staff'
+    | '/legal/accessibility'
+    | '/legal/aml'
+    | '/legal/complaints'
+    | '/legal/cookies'
+    | '/legal/gdpr'
+    | '/legal/imprint'
+    | '/legal/privacy'
+    | '/legal/terms'
     | '/admin/audit'
     | '/admin/claims'
     | '/admin/merchants'
@@ -336,10 +512,26 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/blog'
     | '/sitemap.xml'
     | '/_authenticated/admin'
     | '/_authenticated/app'
     | '/_authenticated/merchant'
+    | '/blog/$slug'
+    | '/features/consumers'
+    | '/features/developers'
+    | '/features/enterprise'
+    | '/features/merchants'
+    | '/features/partners'
+    | '/features/staff'
+    | '/legal/accessibility'
+    | '/legal/aml'
+    | '/legal/complaints'
+    | '/legal/cookies'
+    | '/legal/gdpr'
+    | '/legal/imprint'
+    | '/legal/privacy'
+    | '/legal/terms'
     | '/_authenticated/admin/audit'
     | '/_authenticated/admin/claims'
     | '/_authenticated/admin/merchants'
@@ -367,7 +559,22 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  BlogRoute: typeof BlogRouteWithChildren
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  FeaturesConsumersRoute: typeof FeaturesConsumersRoute
+  FeaturesDevelopersRoute: typeof FeaturesDevelopersRoute
+  FeaturesEnterpriseRoute: typeof FeaturesEnterpriseRoute
+  FeaturesMerchantsRoute: typeof FeaturesMerchantsRoute
+  FeaturesPartnersRoute: typeof FeaturesPartnersRoute
+  FeaturesStaffRoute: typeof FeaturesStaffRoute
+  LegalAccessibilityRoute: typeof LegalAccessibilityRoute
+  LegalAmlRoute: typeof LegalAmlRoute
+  LegalComplaintsRoute: typeof LegalComplaintsRoute
+  LegalCookiesRoute: typeof LegalCookiesRoute
+  LegalGdprRoute: typeof LegalGdprRoute
+  LegalImprintRoute: typeof LegalImprintRoute
+  LegalPrivacyRoute: typeof LegalPrivacyRoute
+  LegalTermsRoute: typeof LegalTermsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -377,6 +584,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -399,6 +613,111 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/legal/terms': {
+      id: '/legal/terms'
+      path: '/legal/terms'
+      fullPath: '/legal/terms'
+      preLoaderRoute: typeof LegalTermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/privacy': {
+      id: '/legal/privacy'
+      path: '/legal/privacy'
+      fullPath: '/legal/privacy'
+      preLoaderRoute: typeof LegalPrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/imprint': {
+      id: '/legal/imprint'
+      path: '/legal/imprint'
+      fullPath: '/legal/imprint'
+      preLoaderRoute: typeof LegalImprintRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/gdpr': {
+      id: '/legal/gdpr'
+      path: '/legal/gdpr'
+      fullPath: '/legal/gdpr'
+      preLoaderRoute: typeof LegalGdprRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/cookies': {
+      id: '/legal/cookies'
+      path: '/legal/cookies'
+      fullPath: '/legal/cookies'
+      preLoaderRoute: typeof LegalCookiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/complaints': {
+      id: '/legal/complaints'
+      path: '/legal/complaints'
+      fullPath: '/legal/complaints'
+      preLoaderRoute: typeof LegalComplaintsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/aml': {
+      id: '/legal/aml'
+      path: '/legal/aml'
+      fullPath: '/legal/aml'
+      preLoaderRoute: typeof LegalAmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/accessibility': {
+      id: '/legal/accessibility'
+      path: '/legal/accessibility'
+      fullPath: '/legal/accessibility'
+      preLoaderRoute: typeof LegalAccessibilityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/features/staff': {
+      id: '/features/staff'
+      path: '/features/staff'
+      fullPath: '/features/staff'
+      preLoaderRoute: typeof FeaturesStaffRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/features/partners': {
+      id: '/features/partners'
+      path: '/features/partners'
+      fullPath: '/features/partners'
+      preLoaderRoute: typeof FeaturesPartnersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/features/merchants': {
+      id: '/features/merchants'
+      path: '/features/merchants'
+      fullPath: '/features/merchants'
+      preLoaderRoute: typeof FeaturesMerchantsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/features/enterprise': {
+      id: '/features/enterprise'
+      path: '/features/enterprise'
+      fullPath: '/features/enterprise'
+      preLoaderRoute: typeof FeaturesEnterpriseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/features/developers': {
+      id: '/features/developers'
+      path: '/features/developers'
+      fullPath: '/features/developers'
+      preLoaderRoute: typeof FeaturesDevelopersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/features/consumers': {
+      id: '/features/consumers'
+      path: '/features/consumers'
+      fullPath: '/features/consumers'
+      preLoaderRoute: typeof FeaturesConsumersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof BlogRoute
     }
     '/_authenticated/merchant': {
       id: '/_authenticated/merchant'
@@ -657,11 +976,36 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface BlogRouteChildren {
+  BlogSlugRoute: typeof BlogSlugRoute
+}
+
+const BlogRouteChildren: BlogRouteChildren = {
+  BlogSlugRoute: BlogSlugRoute,
+}
+
+const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  BlogRoute: BlogRouteWithChildren,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  FeaturesConsumersRoute: FeaturesConsumersRoute,
+  FeaturesDevelopersRoute: FeaturesDevelopersRoute,
+  FeaturesEnterpriseRoute: FeaturesEnterpriseRoute,
+  FeaturesMerchantsRoute: FeaturesMerchantsRoute,
+  FeaturesPartnersRoute: FeaturesPartnersRoute,
+  FeaturesStaffRoute: FeaturesStaffRoute,
+  LegalAccessibilityRoute: LegalAccessibilityRoute,
+  LegalAmlRoute: LegalAmlRoute,
+  LegalComplaintsRoute: LegalComplaintsRoute,
+  LegalCookiesRoute: LegalCookiesRoute,
+  LegalGdprRoute: LegalGdprRoute,
+  LegalImprintRoute: LegalImprintRoute,
+  LegalPrivacyRoute: LegalPrivacyRoute,
+  LegalTermsRoute: LegalTermsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
