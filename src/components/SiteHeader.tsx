@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Search } from "lucide-react";
 import { ZorynMark } from "@/components/ZorynMark";
 import { Button } from "@/components/ui/button";
 
@@ -40,6 +40,9 @@ export function SiteHeader() {
         </nav>
 
         <div className="ml-auto flex items-center gap-2 md:ml-2">
+          <Link to="/search" aria-label="Suche" className="hidden sm:inline-flex">
+            <Button variant="ghost" size="icon"><Search className="h-4 w-4" /></Button>
+          </Link>
           <Link to="/auth" className="hidden sm:inline-flex">
             <Button variant="ghost" size="sm">Anmelden</Button>
           </Link>

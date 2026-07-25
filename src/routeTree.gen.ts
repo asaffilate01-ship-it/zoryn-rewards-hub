@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SearchRouteImport } from './routes/search'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
@@ -41,6 +42,7 @@ import { Route as AuthenticatedMerchantRewardsRouteImport } from './routes/_auth
 import { Route as AuthenticatedMerchantPosRouteImport } from './routes/_authenticated/merchant.pos'
 import { Route as AuthenticatedMerchantOffersRouteImport } from './routes/_authenticated/merchant.offers'
 import { Route as AuthenticatedMerchantFundingRouteImport } from './routes/_authenticated/merchant.funding'
+import { Route as AuthenticatedMerchantAnalyticsRouteImport } from './routes/_authenticated/merchant.analytics'
 import { Route as AuthenticatedAppShopRouteImport } from './routes/_authenticated/app.shop'
 import { Route as AuthenticatedAppScanRouteImport } from './routes/_authenticated/app.scan'
 import { Route as AuthenticatedAppRewardsRouteImport } from './routes/_authenticated/app.rewards'
@@ -50,13 +52,20 @@ import { Route as AuthenticatedAppOffersRouteImport } from './routes/_authentica
 import { Route as AuthenticatedAppNotificationsRouteImport } from './routes/_authenticated/app.notifications'
 import { Route as AuthenticatedAppNearbyRouteImport } from './routes/_authenticated/app.nearby'
 import { Route as AuthenticatedAppClaimRouteImport } from './routes/_authenticated/app.claim'
+import { Route as AuthenticatedAppAssistantRouteImport } from './routes/_authenticated/app.assistant'
 import { Route as AuthenticatedAdminMerchantsRouteImport } from './routes/_authenticated/admin.merchants'
 import { Route as AuthenticatedAdminClaimsRouteImport } from './routes/_authenticated/admin.claims'
 import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authenticated/admin.audit'
+import { Route as AuthenticatedAdminAnalyticsRouteImport } from './routes/_authenticated/admin.analytics'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogRoute = BlogRouteImport.update({
@@ -220,6 +229,12 @@ const AuthenticatedMerchantFundingRoute =
     path: '/funding',
     getParentRoute: () => AuthenticatedMerchantRoute,
   } as any)
+const AuthenticatedMerchantAnalyticsRoute =
+  AuthenticatedMerchantAnalyticsRouteImport.update({
+    id: '/analytics',
+    path: '/analytics',
+    getParentRoute: () => AuthenticatedMerchantRoute,
+  } as any)
 const AuthenticatedAppShopRoute = AuthenticatedAppShopRouteImport.update({
   id: '/shop',
   path: '/shop',
@@ -267,6 +282,12 @@ const AuthenticatedAppClaimRoute = AuthenticatedAppClaimRouteImport.update({
   path: '/claim',
   getParentRoute: () => AuthenticatedAppRoute,
 } as any)
+const AuthenticatedAppAssistantRoute =
+  AuthenticatedAppAssistantRouteImport.update({
+    id: '/assistant',
+    path: '/assistant',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
 const AuthenticatedAdminMerchantsRoute =
   AuthenticatedAdminMerchantsRouteImport.update({
     id: '/merchants',
@@ -284,11 +305,18 @@ const AuthenticatedAdminAuditRoute = AuthenticatedAdminAuditRouteImport.update({
   path: '/audit',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
+const AuthenticatedAdminAnalyticsRoute =
+  AuthenticatedAdminAnalyticsRouteImport.update({
+    id: '/analytics',
+    path: '/analytics',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/blog': typeof BlogRouteWithChildren
+  '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/app': typeof AuthenticatedAppRouteWithChildren
@@ -308,9 +336,11 @@ export interface FileRoutesByFullPath {
   '/legal/imprint': typeof LegalImprintRoute
   '/legal/privacy': typeof LegalPrivacyRoute
   '/legal/terms': typeof LegalTermsRoute
+  '/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/admin/claims': typeof AuthenticatedAdminClaimsRoute
   '/admin/merchants': typeof AuthenticatedAdminMerchantsRoute
+  '/app/assistant': typeof AuthenticatedAppAssistantRoute
   '/app/claim': typeof AuthenticatedAppClaimRoute
   '/app/nearby': typeof AuthenticatedAppNearbyRoute
   '/app/notifications': typeof AuthenticatedAppNotificationsRoute
@@ -320,6 +350,7 @@ export interface FileRoutesByFullPath {
   '/app/rewards': typeof AuthenticatedAppRewardsRoute
   '/app/scan': typeof AuthenticatedAppScanRoute
   '/app/shop': typeof AuthenticatedAppShopRoute
+  '/merchant/analytics': typeof AuthenticatedMerchantAnalyticsRoute
   '/merchant/funding': typeof AuthenticatedMerchantFundingRoute
   '/merchant/offers': typeof AuthenticatedMerchantOffersRoute
   '/merchant/pos': typeof AuthenticatedMerchantPosRoute
@@ -334,6 +365,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/blog': typeof BlogRouteWithChildren
+  '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/features/consumers': typeof FeaturesConsumersRoute
@@ -350,9 +382,11 @@ export interface FileRoutesByTo {
   '/legal/imprint': typeof LegalImprintRoute
   '/legal/privacy': typeof LegalPrivacyRoute
   '/legal/terms': typeof LegalTermsRoute
+  '/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/admin/claims': typeof AuthenticatedAdminClaimsRoute
   '/admin/merchants': typeof AuthenticatedAdminMerchantsRoute
+  '/app/assistant': typeof AuthenticatedAppAssistantRoute
   '/app/claim': typeof AuthenticatedAppClaimRoute
   '/app/nearby': typeof AuthenticatedAppNearbyRoute
   '/app/notifications': typeof AuthenticatedAppNotificationsRoute
@@ -362,6 +396,7 @@ export interface FileRoutesByTo {
   '/app/rewards': typeof AuthenticatedAppRewardsRoute
   '/app/scan': typeof AuthenticatedAppScanRoute
   '/app/shop': typeof AuthenticatedAppShopRoute
+  '/merchant/analytics': typeof AuthenticatedMerchantAnalyticsRoute
   '/merchant/funding': typeof AuthenticatedMerchantFundingRoute
   '/merchant/offers': typeof AuthenticatedMerchantOffersRoute
   '/merchant/pos': typeof AuthenticatedMerchantPosRoute
@@ -378,6 +413,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/blog': typeof BlogRouteWithChildren
+  '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/app': typeof AuthenticatedAppRouteWithChildren
@@ -397,9 +433,11 @@ export interface FileRoutesById {
   '/legal/imprint': typeof LegalImprintRoute
   '/legal/privacy': typeof LegalPrivacyRoute
   '/legal/terms': typeof LegalTermsRoute
+  '/_authenticated/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
   '/_authenticated/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/_authenticated/admin/claims': typeof AuthenticatedAdminClaimsRoute
   '/_authenticated/admin/merchants': typeof AuthenticatedAdminMerchantsRoute
+  '/_authenticated/app/assistant': typeof AuthenticatedAppAssistantRoute
   '/_authenticated/app/claim': typeof AuthenticatedAppClaimRoute
   '/_authenticated/app/nearby': typeof AuthenticatedAppNearbyRoute
   '/_authenticated/app/notifications': typeof AuthenticatedAppNotificationsRoute
@@ -409,6 +447,7 @@ export interface FileRoutesById {
   '/_authenticated/app/rewards': typeof AuthenticatedAppRewardsRoute
   '/_authenticated/app/scan': typeof AuthenticatedAppScanRoute
   '/_authenticated/app/shop': typeof AuthenticatedAppShopRoute
+  '/_authenticated/merchant/analytics': typeof AuthenticatedMerchantAnalyticsRoute
   '/_authenticated/merchant/funding': typeof AuthenticatedMerchantFundingRoute
   '/_authenticated/merchant/offers': typeof AuthenticatedMerchantOffersRoute
   '/_authenticated/merchant/pos': typeof AuthenticatedMerchantPosRoute
@@ -425,6 +464,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/blog'
+    | '/search'
     | '/sitemap.xml'
     | '/admin'
     | '/app'
@@ -444,9 +484,11 @@ export interface FileRouteTypes {
     | '/legal/imprint'
     | '/legal/privacy'
     | '/legal/terms'
+    | '/admin/analytics'
     | '/admin/audit'
     | '/admin/claims'
     | '/admin/merchants'
+    | '/app/assistant'
     | '/app/claim'
     | '/app/nearby'
     | '/app/notifications'
@@ -456,6 +498,7 @@ export interface FileRouteTypes {
     | '/app/rewards'
     | '/app/scan'
     | '/app/shop'
+    | '/merchant/analytics'
     | '/merchant/funding'
     | '/merchant/offers'
     | '/merchant/pos'
@@ -470,6 +513,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/blog'
+    | '/search'
     | '/sitemap.xml'
     | '/blog/$slug'
     | '/features/consumers'
@@ -486,9 +530,11 @@ export interface FileRouteTypes {
     | '/legal/imprint'
     | '/legal/privacy'
     | '/legal/terms'
+    | '/admin/analytics'
     | '/admin/audit'
     | '/admin/claims'
     | '/admin/merchants'
+    | '/app/assistant'
     | '/app/claim'
     | '/app/nearby'
     | '/app/notifications'
@@ -498,6 +544,7 @@ export interface FileRouteTypes {
     | '/app/rewards'
     | '/app/scan'
     | '/app/shop'
+    | '/merchant/analytics'
     | '/merchant/funding'
     | '/merchant/offers'
     | '/merchant/pos'
@@ -513,6 +560,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/auth'
     | '/blog'
+    | '/search'
     | '/sitemap.xml'
     | '/_authenticated/admin'
     | '/_authenticated/app'
@@ -532,9 +580,11 @@ export interface FileRouteTypes {
     | '/legal/imprint'
     | '/legal/privacy'
     | '/legal/terms'
+    | '/_authenticated/admin/analytics'
     | '/_authenticated/admin/audit'
     | '/_authenticated/admin/claims'
     | '/_authenticated/admin/merchants'
+    | '/_authenticated/app/assistant'
     | '/_authenticated/app/claim'
     | '/_authenticated/app/nearby'
     | '/_authenticated/app/notifications'
@@ -544,6 +594,7 @@ export interface FileRouteTypes {
     | '/_authenticated/app/rewards'
     | '/_authenticated/app/scan'
     | '/_authenticated/app/shop'
+    | '/_authenticated/merchant/analytics'
     | '/_authenticated/merchant/funding'
     | '/_authenticated/merchant/offers'
     | '/_authenticated/merchant/pos'
@@ -560,6 +611,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   BlogRoute: typeof BlogRouteWithChildren
+  SearchRoute: typeof SearchRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   FeaturesConsumersRoute: typeof FeaturesConsumersRoute
   FeaturesDevelopersRoute: typeof FeaturesDevelopersRoute
@@ -584,6 +636,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog': {
@@ -803,6 +862,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMerchantFundingRouteImport
       parentRoute: typeof AuthenticatedMerchantRoute
     }
+    '/_authenticated/merchant/analytics': {
+      id: '/_authenticated/merchant/analytics'
+      path: '/analytics'
+      fullPath: '/merchant/analytics'
+      preLoaderRoute: typeof AuthenticatedMerchantAnalyticsRouteImport
+      parentRoute: typeof AuthenticatedMerchantRoute
+    }
     '/_authenticated/app/shop': {
       id: '/_authenticated/app/shop'
       path: '/shop'
@@ -866,6 +932,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppClaimRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
+    '/_authenticated/app/assistant': {
+      id: '/_authenticated/app/assistant'
+      path: '/assistant'
+      fullPath: '/app/assistant'
+      preLoaderRoute: typeof AuthenticatedAppAssistantRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
     '/_authenticated/admin/merchants': {
       id: '/_authenticated/admin/merchants'
       path: '/merchants'
@@ -887,10 +960,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminAuditRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/analytics': {
+      id: '/_authenticated/admin/analytics'
+      path: '/analytics'
+      fullPath: '/admin/analytics'
+      preLoaderRoute: typeof AuthenticatedAdminAnalyticsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
   }
 }
 
 interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminAnalyticsRoute: typeof AuthenticatedAdminAnalyticsRoute
   AuthenticatedAdminAuditRoute: typeof AuthenticatedAdminAuditRoute
   AuthenticatedAdminClaimsRoute: typeof AuthenticatedAdminClaimsRoute
   AuthenticatedAdminMerchantsRoute: typeof AuthenticatedAdminMerchantsRoute
@@ -898,6 +979,7 @@ interface AuthenticatedAdminRouteChildren {
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminAnalyticsRoute: AuthenticatedAdminAnalyticsRoute,
   AuthenticatedAdminAuditRoute: AuthenticatedAdminAuditRoute,
   AuthenticatedAdminClaimsRoute: AuthenticatedAdminClaimsRoute,
   AuthenticatedAdminMerchantsRoute: AuthenticatedAdminMerchantsRoute,
@@ -908,6 +990,7 @@ const AuthenticatedAdminRouteWithChildren =
   AuthenticatedAdminRoute._addFileChildren(AuthenticatedAdminRouteChildren)
 
 interface AuthenticatedAppRouteChildren {
+  AuthenticatedAppAssistantRoute: typeof AuthenticatedAppAssistantRoute
   AuthenticatedAppClaimRoute: typeof AuthenticatedAppClaimRoute
   AuthenticatedAppNearbyRoute: typeof AuthenticatedAppNearbyRoute
   AuthenticatedAppNotificationsRoute: typeof AuthenticatedAppNotificationsRoute
@@ -921,6 +1004,7 @@ interface AuthenticatedAppRouteChildren {
 }
 
 const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
+  AuthenticatedAppAssistantRoute: AuthenticatedAppAssistantRoute,
   AuthenticatedAppClaimRoute: AuthenticatedAppClaimRoute,
   AuthenticatedAppNearbyRoute: AuthenticatedAppNearbyRoute,
   AuthenticatedAppNotificationsRoute: AuthenticatedAppNotificationsRoute,
@@ -937,6 +1021,7 @@ const AuthenticatedAppRouteWithChildren =
   AuthenticatedAppRoute._addFileChildren(AuthenticatedAppRouteChildren)
 
 interface AuthenticatedMerchantRouteChildren {
+  AuthenticatedMerchantAnalyticsRoute: typeof AuthenticatedMerchantAnalyticsRoute
   AuthenticatedMerchantFundingRoute: typeof AuthenticatedMerchantFundingRoute
   AuthenticatedMerchantOffersRoute: typeof AuthenticatedMerchantOffersRoute
   AuthenticatedMerchantPosRoute: typeof AuthenticatedMerchantPosRoute
@@ -947,6 +1032,7 @@ interface AuthenticatedMerchantRouteChildren {
 }
 
 const AuthenticatedMerchantRouteChildren: AuthenticatedMerchantRouteChildren = {
+  AuthenticatedMerchantAnalyticsRoute: AuthenticatedMerchantAnalyticsRoute,
   AuthenticatedMerchantFundingRoute: AuthenticatedMerchantFundingRoute,
   AuthenticatedMerchantOffersRoute: AuthenticatedMerchantOffersRoute,
   AuthenticatedMerchantPosRoute: AuthenticatedMerchantPosRoute,
@@ -991,6 +1077,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   BlogRoute: BlogRouteWithChildren,
+  SearchRoute: SearchRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   FeaturesConsumersRoute: FeaturesConsumersRoute,
   FeaturesDevelopersRoute: FeaturesDevelopersRoute,
