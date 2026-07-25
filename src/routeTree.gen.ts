@@ -21,10 +21,12 @@ import { Route as AuthenticatedAppIndexRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedMerchantTeamRouteImport } from './routes/_authenticated/merchant.team'
 import { Route as AuthenticatedMerchantSettingsRouteImport } from './routes/_authenticated/merchant.settings'
+import { Route as AuthenticatedMerchantRewardsRouteImport } from './routes/_authenticated/merchant.rewards'
 import { Route as AuthenticatedMerchantPosRouteImport } from './routes/_authenticated/merchant.pos'
 import { Route as AuthenticatedMerchantOffersRouteImport } from './routes/_authenticated/merchant.offers'
 import { Route as AuthenticatedAppShopRouteImport } from './routes/_authenticated/app.shop'
 import { Route as AuthenticatedAppScanRouteImport } from './routes/_authenticated/app.scan'
+import { Route as AuthenticatedAppRewardsRouteImport } from './routes/_authenticated/app.rewards'
 import { Route as AuthenticatedAppReferralsRouteImport } from './routes/_authenticated/app.referrals'
 import { Route as AuthenticatedAppProfileRouteImport } from './routes/_authenticated/app.profile'
 import { Route as AuthenticatedAppOffersRouteImport } from './routes/_authenticated/app.offers'
@@ -96,6 +98,12 @@ const AuthenticatedMerchantSettingsRoute =
     path: '/settings',
     getParentRoute: () => AuthenticatedMerchantRoute,
   } as any)
+const AuthenticatedMerchantRewardsRoute =
+  AuthenticatedMerchantRewardsRouteImport.update({
+    id: '/rewards',
+    path: '/rewards',
+    getParentRoute: () => AuthenticatedMerchantRoute,
+  } as any)
 const AuthenticatedMerchantPosRoute =
   AuthenticatedMerchantPosRouteImport.update({
     id: '/pos',
@@ -116,6 +124,11 @@ const AuthenticatedAppShopRoute = AuthenticatedAppShopRouteImport.update({
 const AuthenticatedAppScanRoute = AuthenticatedAppScanRouteImport.update({
   id: '/scan',
   path: '/scan',
+  getParentRoute: () => AuthenticatedAppRoute,
+} as any)
+const AuthenticatedAppRewardsRoute = AuthenticatedAppRewardsRouteImport.update({
+  id: '/rewards',
+  path: '/rewards',
   getParentRoute: () => AuthenticatedAppRoute,
 } as any)
 const AuthenticatedAppReferralsRoute =
@@ -178,10 +191,12 @@ export interface FileRoutesByFullPath {
   '/app/offers': typeof AuthenticatedAppOffersRoute
   '/app/profile': typeof AuthenticatedAppProfileRoute
   '/app/referrals': typeof AuthenticatedAppReferralsRoute
+  '/app/rewards': typeof AuthenticatedAppRewardsRoute
   '/app/scan': typeof AuthenticatedAppScanRoute
   '/app/shop': typeof AuthenticatedAppShopRoute
   '/merchant/offers': typeof AuthenticatedMerchantOffersRoute
   '/merchant/pos': typeof AuthenticatedMerchantPosRoute
+  '/merchant/rewards': typeof AuthenticatedMerchantRewardsRoute
   '/merchant/settings': typeof AuthenticatedMerchantSettingsRoute
   '/merchant/team': typeof AuthenticatedMerchantTeamRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
@@ -200,10 +215,12 @@ export interface FileRoutesByTo {
   '/app/offers': typeof AuthenticatedAppOffersRoute
   '/app/profile': typeof AuthenticatedAppProfileRoute
   '/app/referrals': typeof AuthenticatedAppReferralsRoute
+  '/app/rewards': typeof AuthenticatedAppRewardsRoute
   '/app/scan': typeof AuthenticatedAppScanRoute
   '/app/shop': typeof AuthenticatedAppShopRoute
   '/merchant/offers': typeof AuthenticatedMerchantOffersRoute
   '/merchant/pos': typeof AuthenticatedMerchantPosRoute
+  '/merchant/rewards': typeof AuthenticatedMerchantRewardsRoute
   '/merchant/settings': typeof AuthenticatedMerchantSettingsRoute
   '/merchant/team': typeof AuthenticatedMerchantTeamRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
@@ -227,10 +244,12 @@ export interface FileRoutesById {
   '/_authenticated/app/offers': typeof AuthenticatedAppOffersRoute
   '/_authenticated/app/profile': typeof AuthenticatedAppProfileRoute
   '/_authenticated/app/referrals': typeof AuthenticatedAppReferralsRoute
+  '/_authenticated/app/rewards': typeof AuthenticatedAppRewardsRoute
   '/_authenticated/app/scan': typeof AuthenticatedAppScanRoute
   '/_authenticated/app/shop': typeof AuthenticatedAppShopRoute
   '/_authenticated/merchant/offers': typeof AuthenticatedMerchantOffersRoute
   '/_authenticated/merchant/pos': typeof AuthenticatedMerchantPosRoute
+  '/_authenticated/merchant/rewards': typeof AuthenticatedMerchantRewardsRoute
   '/_authenticated/merchant/settings': typeof AuthenticatedMerchantSettingsRoute
   '/_authenticated/merchant/team': typeof AuthenticatedMerchantTeamRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
@@ -254,10 +273,12 @@ export interface FileRouteTypes {
     | '/app/offers'
     | '/app/profile'
     | '/app/referrals'
+    | '/app/rewards'
     | '/app/scan'
     | '/app/shop'
     | '/merchant/offers'
     | '/merchant/pos'
+    | '/merchant/rewards'
     | '/merchant/settings'
     | '/merchant/team'
     | '/admin/'
@@ -276,10 +297,12 @@ export interface FileRouteTypes {
     | '/app/offers'
     | '/app/profile'
     | '/app/referrals'
+    | '/app/rewards'
     | '/app/scan'
     | '/app/shop'
     | '/merchant/offers'
     | '/merchant/pos'
+    | '/merchant/rewards'
     | '/merchant/settings'
     | '/merchant/team'
     | '/admin'
@@ -302,10 +325,12 @@ export interface FileRouteTypes {
     | '/_authenticated/app/offers'
     | '/_authenticated/app/profile'
     | '/_authenticated/app/referrals'
+    | '/_authenticated/app/rewards'
     | '/_authenticated/app/scan'
     | '/_authenticated/app/shop'
     | '/_authenticated/merchant/offers'
     | '/_authenticated/merchant/pos'
+    | '/_authenticated/merchant/rewards'
     | '/_authenticated/merchant/settings'
     | '/_authenticated/merchant/team'
     | '/_authenticated/admin/'
@@ -406,6 +431,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMerchantSettingsRouteImport
       parentRoute: typeof AuthenticatedMerchantRoute
     }
+    '/_authenticated/merchant/rewards': {
+      id: '/_authenticated/merchant/rewards'
+      path: '/rewards'
+      fullPath: '/merchant/rewards'
+      preLoaderRoute: typeof AuthenticatedMerchantRewardsRouteImport
+      parentRoute: typeof AuthenticatedMerchantRoute
+    }
     '/_authenticated/merchant/pos': {
       id: '/_authenticated/merchant/pos'
       path: '/pos'
@@ -432,6 +464,13 @@ declare module '@tanstack/react-router' {
       path: '/scan'
       fullPath: '/app/scan'
       preLoaderRoute: typeof AuthenticatedAppScanRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
+    '/_authenticated/app/rewards': {
+      id: '/_authenticated/app/rewards'
+      path: '/rewards'
+      fullPath: '/app/rewards'
+      preLoaderRoute: typeof AuthenticatedAppRewardsRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
     '/_authenticated/app/referrals': {
@@ -515,6 +554,7 @@ interface AuthenticatedAppRouteChildren {
   AuthenticatedAppOffersRoute: typeof AuthenticatedAppOffersRoute
   AuthenticatedAppProfileRoute: typeof AuthenticatedAppProfileRoute
   AuthenticatedAppReferralsRoute: typeof AuthenticatedAppReferralsRoute
+  AuthenticatedAppRewardsRoute: typeof AuthenticatedAppRewardsRoute
   AuthenticatedAppScanRoute: typeof AuthenticatedAppScanRoute
   AuthenticatedAppShopRoute: typeof AuthenticatedAppShopRoute
   AuthenticatedAppIndexRoute: typeof AuthenticatedAppIndexRoute
@@ -527,6 +567,7 @@ const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
   AuthenticatedAppOffersRoute: AuthenticatedAppOffersRoute,
   AuthenticatedAppProfileRoute: AuthenticatedAppProfileRoute,
   AuthenticatedAppReferralsRoute: AuthenticatedAppReferralsRoute,
+  AuthenticatedAppRewardsRoute: AuthenticatedAppRewardsRoute,
   AuthenticatedAppScanRoute: AuthenticatedAppScanRoute,
   AuthenticatedAppShopRoute: AuthenticatedAppShopRoute,
   AuthenticatedAppIndexRoute: AuthenticatedAppIndexRoute,
@@ -538,6 +579,7 @@ const AuthenticatedAppRouteWithChildren =
 interface AuthenticatedMerchantRouteChildren {
   AuthenticatedMerchantOffersRoute: typeof AuthenticatedMerchantOffersRoute
   AuthenticatedMerchantPosRoute: typeof AuthenticatedMerchantPosRoute
+  AuthenticatedMerchantRewardsRoute: typeof AuthenticatedMerchantRewardsRoute
   AuthenticatedMerchantSettingsRoute: typeof AuthenticatedMerchantSettingsRoute
   AuthenticatedMerchantTeamRoute: typeof AuthenticatedMerchantTeamRoute
   AuthenticatedMerchantIndexRoute: typeof AuthenticatedMerchantIndexRoute
@@ -546,6 +588,7 @@ interface AuthenticatedMerchantRouteChildren {
 const AuthenticatedMerchantRouteChildren: AuthenticatedMerchantRouteChildren = {
   AuthenticatedMerchantOffersRoute: AuthenticatedMerchantOffersRoute,
   AuthenticatedMerchantPosRoute: AuthenticatedMerchantPosRoute,
+  AuthenticatedMerchantRewardsRoute: AuthenticatedMerchantRewardsRoute,
   AuthenticatedMerchantSettingsRoute: AuthenticatedMerchantSettingsRoute,
   AuthenticatedMerchantTeamRoute: AuthenticatedMerchantTeamRoute,
   AuthenticatedMerchantIndexRoute: AuthenticatedMerchantIndexRoute,
