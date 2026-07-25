@@ -42,6 +42,7 @@ import { Route as AuthenticatedMerchantRewardsRouteImport } from './routes/_auth
 import { Route as AuthenticatedMerchantPosRouteImport } from './routes/_authenticated/merchant.pos'
 import { Route as AuthenticatedMerchantOffersRouteImport } from './routes/_authenticated/merchant.offers'
 import { Route as AuthenticatedMerchantFundingRouteImport } from './routes/_authenticated/merchant.funding'
+import { Route as AuthenticatedMerchantCampaignsRouteImport } from './routes/_authenticated/merchant.campaigns'
 import { Route as AuthenticatedMerchantAnalyticsRouteImport } from './routes/_authenticated/merchant.analytics'
 import { Route as AuthenticatedAppShopRouteImport } from './routes/_authenticated/app.shop'
 import { Route as AuthenticatedAppScanRouteImport } from './routes/_authenticated/app.scan'
@@ -52,6 +53,7 @@ import { Route as AuthenticatedAppOffersRouteImport } from './routes/_authentica
 import { Route as AuthenticatedAppNotificationsRouteImport } from './routes/_authenticated/app.notifications'
 import { Route as AuthenticatedAppNearbyRouteImport } from './routes/_authenticated/app.nearby'
 import { Route as AuthenticatedAppClaimRouteImport } from './routes/_authenticated/app.claim'
+import { Route as AuthenticatedAppBadgesRouteImport } from './routes/_authenticated/app.badges'
 import { Route as AuthenticatedAppAssistantRouteImport } from './routes/_authenticated/app.assistant'
 import { Route as AuthenticatedAdminMerchantsRouteImport } from './routes/_authenticated/admin.merchants'
 import { Route as AuthenticatedAdminClaimsRouteImport } from './routes/_authenticated/admin.claims'
@@ -229,6 +231,12 @@ const AuthenticatedMerchantFundingRoute =
     path: '/funding',
     getParentRoute: () => AuthenticatedMerchantRoute,
   } as any)
+const AuthenticatedMerchantCampaignsRoute =
+  AuthenticatedMerchantCampaignsRouteImport.update({
+    id: '/campaigns',
+    path: '/campaigns',
+    getParentRoute: () => AuthenticatedMerchantRoute,
+  } as any)
 const AuthenticatedMerchantAnalyticsRoute =
   AuthenticatedMerchantAnalyticsRouteImport.update({
     id: '/analytics',
@@ -280,6 +288,11 @@ const AuthenticatedAppNearbyRoute = AuthenticatedAppNearbyRouteImport.update({
 const AuthenticatedAppClaimRoute = AuthenticatedAppClaimRouteImport.update({
   id: '/claim',
   path: '/claim',
+  getParentRoute: () => AuthenticatedAppRoute,
+} as any)
+const AuthenticatedAppBadgesRoute = AuthenticatedAppBadgesRouteImport.update({
+  id: '/badges',
+  path: '/badges',
   getParentRoute: () => AuthenticatedAppRoute,
 } as any)
 const AuthenticatedAppAssistantRoute =
@@ -341,6 +354,7 @@ export interface FileRoutesByFullPath {
   '/admin/claims': typeof AuthenticatedAdminClaimsRoute
   '/admin/merchants': typeof AuthenticatedAdminMerchantsRoute
   '/app/assistant': typeof AuthenticatedAppAssistantRoute
+  '/app/badges': typeof AuthenticatedAppBadgesRoute
   '/app/claim': typeof AuthenticatedAppClaimRoute
   '/app/nearby': typeof AuthenticatedAppNearbyRoute
   '/app/notifications': typeof AuthenticatedAppNotificationsRoute
@@ -351,6 +365,7 @@ export interface FileRoutesByFullPath {
   '/app/scan': typeof AuthenticatedAppScanRoute
   '/app/shop': typeof AuthenticatedAppShopRoute
   '/merchant/analytics': typeof AuthenticatedMerchantAnalyticsRoute
+  '/merchant/campaigns': typeof AuthenticatedMerchantCampaignsRoute
   '/merchant/funding': typeof AuthenticatedMerchantFundingRoute
   '/merchant/offers': typeof AuthenticatedMerchantOffersRoute
   '/merchant/pos': typeof AuthenticatedMerchantPosRoute
@@ -387,6 +402,7 @@ export interface FileRoutesByTo {
   '/admin/claims': typeof AuthenticatedAdminClaimsRoute
   '/admin/merchants': typeof AuthenticatedAdminMerchantsRoute
   '/app/assistant': typeof AuthenticatedAppAssistantRoute
+  '/app/badges': typeof AuthenticatedAppBadgesRoute
   '/app/claim': typeof AuthenticatedAppClaimRoute
   '/app/nearby': typeof AuthenticatedAppNearbyRoute
   '/app/notifications': typeof AuthenticatedAppNotificationsRoute
@@ -397,6 +413,7 @@ export interface FileRoutesByTo {
   '/app/scan': typeof AuthenticatedAppScanRoute
   '/app/shop': typeof AuthenticatedAppShopRoute
   '/merchant/analytics': typeof AuthenticatedMerchantAnalyticsRoute
+  '/merchant/campaigns': typeof AuthenticatedMerchantCampaignsRoute
   '/merchant/funding': typeof AuthenticatedMerchantFundingRoute
   '/merchant/offers': typeof AuthenticatedMerchantOffersRoute
   '/merchant/pos': typeof AuthenticatedMerchantPosRoute
@@ -438,6 +455,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/claims': typeof AuthenticatedAdminClaimsRoute
   '/_authenticated/admin/merchants': typeof AuthenticatedAdminMerchantsRoute
   '/_authenticated/app/assistant': typeof AuthenticatedAppAssistantRoute
+  '/_authenticated/app/badges': typeof AuthenticatedAppBadgesRoute
   '/_authenticated/app/claim': typeof AuthenticatedAppClaimRoute
   '/_authenticated/app/nearby': typeof AuthenticatedAppNearbyRoute
   '/_authenticated/app/notifications': typeof AuthenticatedAppNotificationsRoute
@@ -448,6 +466,7 @@ export interface FileRoutesById {
   '/_authenticated/app/scan': typeof AuthenticatedAppScanRoute
   '/_authenticated/app/shop': typeof AuthenticatedAppShopRoute
   '/_authenticated/merchant/analytics': typeof AuthenticatedMerchantAnalyticsRoute
+  '/_authenticated/merchant/campaigns': typeof AuthenticatedMerchantCampaignsRoute
   '/_authenticated/merchant/funding': typeof AuthenticatedMerchantFundingRoute
   '/_authenticated/merchant/offers': typeof AuthenticatedMerchantOffersRoute
   '/_authenticated/merchant/pos': typeof AuthenticatedMerchantPosRoute
@@ -489,6 +508,7 @@ export interface FileRouteTypes {
     | '/admin/claims'
     | '/admin/merchants'
     | '/app/assistant'
+    | '/app/badges'
     | '/app/claim'
     | '/app/nearby'
     | '/app/notifications'
@@ -499,6 +519,7 @@ export interface FileRouteTypes {
     | '/app/scan'
     | '/app/shop'
     | '/merchant/analytics'
+    | '/merchant/campaigns'
     | '/merchant/funding'
     | '/merchant/offers'
     | '/merchant/pos'
@@ -535,6 +556,7 @@ export interface FileRouteTypes {
     | '/admin/claims'
     | '/admin/merchants'
     | '/app/assistant'
+    | '/app/badges'
     | '/app/claim'
     | '/app/nearby'
     | '/app/notifications'
@@ -545,6 +567,7 @@ export interface FileRouteTypes {
     | '/app/scan'
     | '/app/shop'
     | '/merchant/analytics'
+    | '/merchant/campaigns'
     | '/merchant/funding'
     | '/merchant/offers'
     | '/merchant/pos'
@@ -585,6 +608,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/claims'
     | '/_authenticated/admin/merchants'
     | '/_authenticated/app/assistant'
+    | '/_authenticated/app/badges'
     | '/_authenticated/app/claim'
     | '/_authenticated/app/nearby'
     | '/_authenticated/app/notifications'
@@ -595,6 +619,7 @@ export interface FileRouteTypes {
     | '/_authenticated/app/scan'
     | '/_authenticated/app/shop'
     | '/_authenticated/merchant/analytics'
+    | '/_authenticated/merchant/campaigns'
     | '/_authenticated/merchant/funding'
     | '/_authenticated/merchant/offers'
     | '/_authenticated/merchant/pos'
@@ -862,6 +887,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMerchantFundingRouteImport
       parentRoute: typeof AuthenticatedMerchantRoute
     }
+    '/_authenticated/merchant/campaigns': {
+      id: '/_authenticated/merchant/campaigns'
+      path: '/campaigns'
+      fullPath: '/merchant/campaigns'
+      preLoaderRoute: typeof AuthenticatedMerchantCampaignsRouteImport
+      parentRoute: typeof AuthenticatedMerchantRoute
+    }
     '/_authenticated/merchant/analytics': {
       id: '/_authenticated/merchant/analytics'
       path: '/analytics'
@@ -932,6 +964,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppClaimRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
+    '/_authenticated/app/badges': {
+      id: '/_authenticated/app/badges'
+      path: '/badges'
+      fullPath: '/app/badges'
+      preLoaderRoute: typeof AuthenticatedAppBadgesRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
     '/_authenticated/app/assistant': {
       id: '/_authenticated/app/assistant'
       path: '/assistant'
@@ -991,6 +1030,7 @@ const AuthenticatedAdminRouteWithChildren =
 
 interface AuthenticatedAppRouteChildren {
   AuthenticatedAppAssistantRoute: typeof AuthenticatedAppAssistantRoute
+  AuthenticatedAppBadgesRoute: typeof AuthenticatedAppBadgesRoute
   AuthenticatedAppClaimRoute: typeof AuthenticatedAppClaimRoute
   AuthenticatedAppNearbyRoute: typeof AuthenticatedAppNearbyRoute
   AuthenticatedAppNotificationsRoute: typeof AuthenticatedAppNotificationsRoute
@@ -1005,6 +1045,7 @@ interface AuthenticatedAppRouteChildren {
 
 const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
   AuthenticatedAppAssistantRoute: AuthenticatedAppAssistantRoute,
+  AuthenticatedAppBadgesRoute: AuthenticatedAppBadgesRoute,
   AuthenticatedAppClaimRoute: AuthenticatedAppClaimRoute,
   AuthenticatedAppNearbyRoute: AuthenticatedAppNearbyRoute,
   AuthenticatedAppNotificationsRoute: AuthenticatedAppNotificationsRoute,
@@ -1022,6 +1063,7 @@ const AuthenticatedAppRouteWithChildren =
 
 interface AuthenticatedMerchantRouteChildren {
   AuthenticatedMerchantAnalyticsRoute: typeof AuthenticatedMerchantAnalyticsRoute
+  AuthenticatedMerchantCampaignsRoute: typeof AuthenticatedMerchantCampaignsRoute
   AuthenticatedMerchantFundingRoute: typeof AuthenticatedMerchantFundingRoute
   AuthenticatedMerchantOffersRoute: typeof AuthenticatedMerchantOffersRoute
   AuthenticatedMerchantPosRoute: typeof AuthenticatedMerchantPosRoute
@@ -1033,6 +1075,7 @@ interface AuthenticatedMerchantRouteChildren {
 
 const AuthenticatedMerchantRouteChildren: AuthenticatedMerchantRouteChildren = {
   AuthenticatedMerchantAnalyticsRoute: AuthenticatedMerchantAnalyticsRoute,
+  AuthenticatedMerchantCampaignsRoute: AuthenticatedMerchantCampaignsRoute,
   AuthenticatedMerchantFundingRoute: AuthenticatedMerchantFundingRoute,
   AuthenticatedMerchantOffersRoute: AuthenticatedMerchantOffersRoute,
   AuthenticatedMerchantPosRoute: AuthenticatedMerchantPosRoute,
