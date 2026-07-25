@@ -14,6 +14,132 @@ export type Database = {
   }
   public: {
     Tables: {
+      accounts: {
+        Row: {
+          created_at: string
+          id: string
+          kind: Database["public"]["Enums"]["account_kind"]
+          label: string | null
+          merchant_id: string | null
+          owner_user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          kind: Database["public"]["Enums"]["account_kind"]
+          label?: string | null
+          merchant_id?: string | null
+          owner_user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          kind?: Database["public"]["Enums"]["account_kind"]
+          label?: string | null
+          merchant_id?: string | null
+          owner_user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "accounts_merchant_id_fkey"
+            columns: ["merchant_id"]
+            isOneToOne: false
+            referencedRelation: "merchants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ledger_entries: {
+        Row: {
+          account_id: string
+          amount_points: number
+          created_at: string
+          direction: Database["public"]["Enums"]["entry_direction"]
+          id: string
+          transaction_id: string
+        }
+        Insert: {
+          account_id: string
+          amount_points: number
+          created_at?: string
+          direction: Database["public"]["Enums"]["entry_direction"]
+          id?: string
+          transaction_id: string
+        }
+        Update: {
+          account_id?: string
+          amount_points?: number
+          created_at?: string
+          direction?: Database["public"]["Enums"]["entry_direction"]
+          id?: string
+          transaction_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ledger_entries_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "account_balances"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "ledger_entries_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ledger_entries_transaction_id_fkey"
+            columns: ["transaction_id"]
+            isOneToOne: false
+            referencedRelation: "transactions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      merchants: {
+        Row: {
+          brand_color: string | null
+          category: string | null
+          created_at: string
+          description: string | null
+          id: string
+          is_active: boolean
+          logo_url: string | null
+          name: string
+          points_per_euro: number
+          slug: string
+          updated_at: string
+        }
+        Insert: {
+          brand_color?: string | null
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          logo_url?: string | null
+          name: string
+          points_per_euro?: number
+          slug: string
+          updated_at?: string
+        }
+        Update: {
+          brand_color?: string | null
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          logo_url?: string | null
+          name?: string
+          points_per_euro?: number
+          slug?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -59,6 +185,47 @@ export type Database = {
         }
         Relationships: []
       }
+      transactions: {
+        Row: {
+          actor_user_id: string | null
+          created_at: string
+          id: string
+          idempotency_key: string | null
+          kind: Database["public"]["Enums"]["transaction_kind"]
+          memo: string | null
+          merchant_id: string | null
+          metadata: Json
+        }
+        Insert: {
+          actor_user_id?: string | null
+          created_at?: string
+          id?: string
+          idempotency_key?: string | null
+          kind: Database["public"]["Enums"]["transaction_kind"]
+          memo?: string | null
+          merchant_id?: string | null
+          metadata?: Json
+        }
+        Update: {
+          actor_user_id?: string | null
+          created_at?: string
+          id?: string
+          idempotency_key?: string | null
+          kind?: Database["public"]["Enums"]["transaction_kind"]
+          memo?: string | null
+          merchant_id?: string | null
+          metadata?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "transactions_merchant_id_fkey"
+            columns: ["merchant_id"]
+            isOneToOne: false
+            referencedRelation: "merchants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           granted_at: string
@@ -82,9 +249,38 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      account_balances: {
+        Row: {
+          account_id: string | null
+          balance_points: number | null
+          kind: Database["public"]["Enums"]["account_kind"] | null
+          merchant_id: string | null
+          owner_user_id: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "accounts_merchant_id_fkey"
+            columns: ["merchant_id"]
+            isOneToOne: false
+            referencedRelation: "merchants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
+      earn_points: {
+        Args: {
+          _amount: number
+          _idempotency_key: string
+          _memo?: string
+          _merchant_id: string
+          _user_id: string
+        }
+        Returns: string
+      }
+      ensure_user_wallet: { Args: { _user_id: string }; Returns: string }
+      get_wallet_balance: { Args: { _user_id: string }; Returns: number }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -92,8 +288,23 @@ export type Database = {
         }
         Returns: boolean
       }
+      redeem_points: {
+        Args: {
+          _amount: number
+          _idempotency_key: string
+          _memo?: string
+          _merchant_id?: string
+          _user_id: string
+        }
+        Returns: string
+      }
     }
     Enums: {
+      account_kind:
+        | "user_wallet"
+        | "merchant_liability"
+        | "system_issuance"
+        | "system_expense"
       app_role:
         | "consumer"
         | "family_admin"
@@ -116,6 +327,8 @@ export type Database = {
         | "campaign_admin"
         | "affiliate_manager"
         | "auditor"
+      entry_direction: "debit" | "credit"
+      transaction_kind: "earn" | "redeem" | "adjust" | "transfer" | "expire"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -243,6 +456,12 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      account_kind: [
+        "user_wallet",
+        "merchant_liability",
+        "system_issuance",
+        "system_expense",
+      ],
       app_role: [
         "consumer",
         "family_admin",
@@ -266,6 +485,8 @@ export const Constants = {
         "affiliate_manager",
         "auditor",
       ],
+      entry_direction: ["debit", "credit"],
+      transaction_kind: ["earn", "redeem", "adjust", "transfer", "expire"],
     },
   },
 } as const
