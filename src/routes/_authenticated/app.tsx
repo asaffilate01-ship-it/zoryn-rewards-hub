@@ -1,8 +1,11 @@
 import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
-import { Wallet, ShoppingBag, MapPin, User, QrCode } from "lucide-react";
+import { useServerFn } from "@tanstack/react-start";
+import { useQuery } from "@tanstack/react-query";
+import { Wallet, ShoppingBag, MapPin, User, QrCode, Bell } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { ZorynMark } from "@/components/ZorynMark";
 import { Button } from "@/components/ui/button";
+import { listNotifications } from "@/lib/notifications.functions";
 import type { ComponentType } from "react";
 
 export const Route = createFileRoute("/_authenticated/app")({
@@ -11,6 +14,13 @@ export const Route = createFileRoute("/_authenticated/app")({
 
 function AppShell() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const listFn = useServerFn(listNotifications);
+  const { data: notifs } = useQuery({
+    queryKey: ["notifications"],
+    queryFn: () => listFn(),
+    refetchInterval: 60_000,
+  });
+  const unread = (notifs ?? []).filter((n) => !n.read_at).length;
 
   async function signOut() {
     await supabase.auth.signOut();
@@ -25,9 +35,17 @@ function AppShell() {
             <ZorynMark size={28} />
             <span className="font-display font-semibold">Zoryn</span>
           </Link>
-          <Button variant="ghost" size="sm" onClick={signOut}>
-            Abmelden
-          </Button>
+          <div className="flex items-center gap-1">
+            <Link to="/app/notifications" aria-label="Benachrichtigungen" className="relative rounded-md p-2 text-muted-foreground hover:text-foreground">
+              <Bell className="size-5" />
+              {unread > 0 && (
+                <span className="absolute right-1 top-1 flex size-4 items-center justify-center rounded-full bg-primary text-[10px] font-medium text-primary-foreground">
+                  {unread > 9 ? "9+" : unread}
+                </span>
+              )}
+            </Link>
+            <Button variant="ghost" size="sm" onClick={signOut}>Abmelden</Button>
+          </div>
         </div>
       </header>
 
