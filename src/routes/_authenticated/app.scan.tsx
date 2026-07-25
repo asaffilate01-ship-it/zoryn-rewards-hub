@@ -1,15 +1,79 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { QrCode } from "lucide-react";
+import { useServerFn } from "@tanstack/react-start";
+import { useMutation } from "@tanstack/react-query";
+import { useState } from "react";
+import { toast } from "sonner";
+import { QrCode, Sparkles } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { claimEarnChallenge } from "@/lib/challenges.functions";
 
 export const Route = createFileRoute("/_authenticated/app/scan")({
-  head: () => ({ meta: [{ title: "Scannen — Zoryn" }] }),
-  component: () => (
-    <div className="rounded-2xl border border-dashed border-border p-10 text-center">
-      <QrCode className="mx-auto size-8 text-brand-soft" />
-      <div className="mt-3 font-semibold">QR-Scanner</div>
-      <p className="mt-1 text-sm text-muted-foreground">
-        Kamerabasiertes Sammeln folgt in Phase 3 zusammen mit dem Merchant-Portal.
-      </p>
-    </div>
-  ),
+  head: () => ({ meta: [{ title: "Punkte sammeln — Zoryn" }] }),
+  component: ScanPage,
 });
+
+function ScanPage() {
+  const claimFn = useServerFn(claimEarnChallenge);
+  const [code, setCode] = useState("");
+  const [last, setLast] = useState<{ points: number; merchant: string; offer: string | null } | null>(null);
+
+  const claim = useMutation({
+    mutationFn: () => claimFn({ data: { code } }),
+    onSuccess: (r) => {
+      setLast({ points: r.points_awarded, merchant: r.merchant_name, offer: r.offer_title });
+      toast.success(`+${r.points_awarded} Punkte gesammelt`);
+      setCode("");
+    },
+    onError: (e: unknown) => toast.error(e instanceof Error ? e.message : "Fehler"),
+  });
+
+  return (
+    <div className="space-y-6">
+      <div>
+        <h1 className="font-display text-2xl font-semibold">Punkte sammeln</h1>
+        <p className="text-sm text-muted-foreground">
+          Gib den 8-stelligen Code von der Kasse ein. Ein Kamera-Scanner folgt in der nativen App.
+        </p>
+      </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-base">
+            <QrCode className="size-4" /> Code eingeben
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <Input
+            value={code}
+            onChange={(e) => setCode(e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 12))}
+            placeholder="Z.B. K7HP2XQR"
+            className="text-center font-mono text-lg tracking-widest"
+            autoCapitalize="characters"
+            autoComplete="off"
+          />
+          <Button
+            className="w-full"
+            disabled={code.length < 6 || claim.isPending}
+            onClick={() => claim.mutate()}
+          >
+            Einlösen
+          </Button>
+        </CardContent>
+      </Card>
+
+      {last && (
+        <Card className="border-brand/40 bg-brand/5">
+          <CardContent className="flex items-center gap-3 py-5">
+            <Sparkles className="size-6 text-brand-soft" />
+            <div>
+              <div className="font-semibold">+{last.points} Punkte bei {last.merchant}</div>
+              {last.offer && <div className="text-xs text-muted-foreground">Bonus-Aktion: {last.offer}</div>}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+    </div>
+  );
+}
