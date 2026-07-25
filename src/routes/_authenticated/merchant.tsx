@@ -1,56 +1,82 @@
 import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { Store, Users, Settings, ScanLine, ArrowLeft, Sparkles, Gift, Wallet } from "lucide-react";
 import { ZorynMark } from "@/components/ZorynMark";
-import { Button } from "@/components/ui/button";
 import type { ComponentType } from "react";
 
 export const Route = createFileRoute("/_authenticated/merchant")({
   component: MerchantShell,
 });
 
+const TABS: { to: string; label: string; icon: ComponentType<{ className?: string }> }[] = [
+  { to: "/merchant", label: "Übersicht", icon: Store },
+  { to: "/merchant/pos", label: "Kasse", icon: ScanLine },
+  { to: "/merchant/offers", label: "Angebote", icon: Sparkles },
+  { to: "/merchant/rewards", label: "Rewards", icon: Gift },
+  { to: "/merchant/funding", label: "Guthaben", icon: Wallet },
+  { to: "/merchant/team", label: "Team", icon: Users },
+  { to: "/merchant/settings", label: "Einstellungen", icon: Settings },
+];
+
+function isActive(pathname: string, to: string) {
+  return to === "/merchant" ? pathname === "/merchant" : pathname.startsWith(to);
+}
+
 function MerchantShell() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   return (
-    <div className="min-h-screen bg-background pb-24">
-      <header className="border-b border-border">
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-          <Link to="/merchant" className="flex items-center gap-2">
-            <ZorynMark size={26} />
-            <span className="font-display font-semibold">Zoryn Business</span>
-          </Link>
-          <Link to="/app">
-            <Button variant="ghost" size="sm">
-              <ArrowLeft className="mr-1 size-4" /> Wallet
-            </Button>
-          </Link>
+    <div className="min-h-screen bg-background">
+      <header className="sticky top-0 z-30 border-b border-border/60 bg-background/70 backdrop-blur-xl">
+        <div className="mx-auto max-w-6xl px-5">
+          <div className="flex items-center justify-between py-3.5">
+            <Link to="/merchant" className="flex items-center gap-2.5">
+              <ZorynMark size={26} />
+              <div className="flex items-baseline gap-1.5">
+                <span className="font-display text-[15px] font-semibold tracking-tight">Zoryn</span>
+                <span className="rounded-full border border-border/70 bg-card/60 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+                  Business
+                </span>
+              </div>
+            </Link>
+            <Link
+              to="/app"
+              className="inline-flex items-center gap-1.5 rounded-full border border-border/70 bg-card/60 px-3 py-1.5 text-xs font-medium text-muted-foreground transition hover:text-foreground"
+            >
+              <ArrowLeft className="size-3.5" /> Zur Wallet
+            </Link>
+          </div>
+
+          {/* Segmented nav — scrolls on mobile */}
+          <nav className="-mx-5 overflow-x-auto px-5 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div className="flex min-w-max items-center gap-1">
+              {TABS.map((t) => {
+                const active = isActive(pathname, t.to);
+                const Icon = t.icon;
+                return (
+                  <Link
+                    key={t.to}
+                    to={t.to}
+                    className={`group relative inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[13px] font-medium transition ${
+                      active
+                        ? "bg-foreground/[0.06] text-foreground"
+                        : "text-muted-foreground hover:bg-card/60 hover:text-foreground"
+                    }`}
+                  >
+                    <Icon className={`size-4 ${active ? "text-primary" : ""}`} />
+                    {t.label}
+                    {active && (
+                      <span className="absolute inset-x-3 -bottom-2 h-[2px] rounded-full gradient-brand" />
+                    )}
+                  </Link>
+                );
+              })}
+            </div>
+          </nav>
         </div>
       </header>
-      <main className="mx-auto max-w-5xl px-6 py-8">
+
+      <main className="mx-auto max-w-6xl px-5 py-8">
         <Outlet />
       </main>
-      <nav className="fixed bottom-0 left-0 right-0 border-t border-border bg-card/80 backdrop-blur">
-        <div className="mx-auto flex max-w-5xl items-center justify-around px-4 py-3 text-xs">
-          <TabLink to="/merchant" icon={Store} label="Übersicht" active={pathname === "/merchant"} />
-          <TabLink to="/merchant/pos" icon={ScanLine} label="Kasse" active={pathname.startsWith("/merchant/pos")} />
-          <TabLink to="/merchant/offers" icon={Sparkles} label="Angebote" active={pathname.startsWith("/merchant/offers")} />
-          <TabLink to="/merchant/rewards" icon={Gift} label="Rewards" active={pathname.startsWith("/merchant/rewards")} />
-          <TabLink to="/merchant/funding" icon={Wallet} label="Guthaben" active={pathname.startsWith("/merchant/funding")} />
-
-          <TabLink to="/merchant/team" icon={Users} label="Team" active={pathname.startsWith("/merchant/team")} />
-          <TabLink to="/merchant/settings" icon={Settings} label="Einstellungen" active={pathname.startsWith("/merchant/settings")} />
-        </div>
-      </nav>
     </div>
-  );
-}
-
-function TabLink({
-  to, icon: Icon, label, active,
-}: { to: string; icon: ComponentType<{ className?: string }>; label: string; active?: boolean }) {
-  return (
-    <Link to={to} className={`flex flex-col items-center gap-1 transition ${active ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}>
-      <Icon className="size-5" />
-      {label}
-    </Link>
   );
 }
