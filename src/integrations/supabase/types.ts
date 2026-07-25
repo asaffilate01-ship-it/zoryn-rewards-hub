@@ -400,6 +400,8 @@ export type Database = {
           membership_number: string
           phone: string | null
           preferred_language: string
+          referral_code: string | null
+          referred_by: string | null
           updated_at: string
         }
         Insert: {
@@ -414,6 +416,8 @@ export type Database = {
           membership_number?: string
           phone?: string | null
           preferred_language?: string
+          referral_code?: string | null
+          referred_by?: string | null
           updated_at?: string
         }
         Update: {
@@ -428,9 +432,19 @@ export type Database = {
           membership_number?: string
           phone?: string | null
           preferred_language?: string
+          referral_code?: string | null
+          referred_by?: string | null
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "profiles_referred_by_fkey"
+            columns: ["referred_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       spatial_ref_sys: {
         Row: {
@@ -709,6 +723,43 @@ export type Database = {
             }
             Returns: string
           }
+      admin_list_merchants: {
+        Args: never
+        Returns: {
+          address: string | null
+          brand_color: string | null
+          category: string | null
+          city: string | null
+          created_at: string
+          description: string | null
+          id: string
+          is_active: boolean
+          location: unknown
+          logo_url: string | null
+          name: string
+          points_per_euro: number
+          slug: string
+          updated_at: string
+        }[]
+        SetofOptions: {
+          from: "*"
+          to: "merchants"
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
+      admin_resolve_claim: {
+        Args: { _approve: boolean; _claim_id: string; _points?: number }
+        Returns: Json
+      }
+      admin_set_merchant_active: {
+        Args: { _active: boolean; _merchant_id: string }
+        Returns: undefined
+      }
+      apply_referral: {
+        Args: { _code: string; _user_id: string }
+        Returns: Json
+      }
       claim_earn_challenge: {
         Args: { _code: string; _user_id: string }
         Returns: {
@@ -773,6 +824,7 @@ export type Database = {
       enablelongtransactions: { Args: never; Returns: string }
       ensure_user_wallet: { Args: { _user_id: string }; Returns: string }
       equals: { Args: { geom1: unknown; geom2: unknown }; Returns: boolean }
+      gen_referral_code: { Args: never; Returns: string }
       geometry: { Args: { "": string }; Returns: unknown }
       geometry_above: {
         Args: { geom1: unknown; geom2: unknown }
