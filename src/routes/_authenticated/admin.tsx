@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { isAdmin } from "@/lib/admin.functions";
 import { Button } from "@/components/ui/button";
 import { ZorynMark } from "@/components/ZorynMark";
-import { Shield, ArrowLeft, LayoutDashboard, Store, Inbox } from "lucide-react";
+import { Shield, ArrowLeft, LayoutDashboard, Store, Inbox, FileText } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({ meta: [{ title: "Admin — Zoryn" }] }),
@@ -46,6 +46,7 @@ function AdminShell() {
           <Tab to="/admin" label="Übersicht" icon={LayoutDashboard} active={pathname === "/admin"} />
           <Tab to="/admin/merchants" label="Merchants" icon={Store} active={pathname.startsWith("/admin/merchants")} />
           <Tab to="/admin/claims" label="Reklamationen" icon={Inbox} active={pathname.startsWith("/admin/claims")} />
+          <Tab to="/admin/audit" label="Audit" icon={FileText} active={pathname.startsWith("/admin/audit")} />
         </nav>
       </div>
       <main className="mx-auto max-w-6xl space-y-6 px-6 py-8">

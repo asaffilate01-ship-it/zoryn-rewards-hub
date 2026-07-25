@@ -49,6 +49,36 @@ export type Database = {
           },
         ]
       }
+      audit_log: {
+        Row: {
+          action: string
+          actor_user_id: string | null
+          created_at: string
+          details: Json
+          entity_id: string | null
+          entity_type: string
+          id: string
+        }
+        Insert: {
+          action: string
+          actor_user_id?: string | null
+          created_at?: string
+          details?: Json
+          entity_id?: string | null
+          entity_type: string
+          id?: string
+        }
+        Update: {
+          action?: string
+          actor_user_id?: string | null
+          created_at?: string
+          details?: Json
+          entity_id?: string | null
+          entity_type?: string
+          id?: string
+        }
+        Relationships: []
+      }
       earn_challenges: {
         Row: {
           amount_cents: number
@@ -151,6 +181,73 @@ export type Database = {
             columns: ["transaction_id"]
             isOneToOne: false
             referencedRelation: "transactions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      merchant_funding_ledger: {
+        Row: {
+          amount_cents: number
+          created_at: string
+          created_by: string | null
+          id: string
+          kind: string
+          memo: string | null
+          merchant_id: string
+        }
+        Insert: {
+          amount_cents: number
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          kind: string
+          memo?: string | null
+          merchant_id: string
+        }
+        Update: {
+          amount_cents?: number
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          kind?: string
+          memo?: string | null
+          merchant_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "merchant_funding_ledger_merchant_id_fkey"
+            columns: ["merchant_id"]
+            isOneToOne: false
+            referencedRelation: "merchants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      merchant_funding_wallets: {
+        Row: {
+          balance_cents: number
+          created_at: string
+          merchant_id: string
+          updated_at: string
+        }
+        Insert: {
+          balance_cents?: number
+          created_at?: string
+          merchant_id: string
+          updated_at?: string
+        }
+        Update: {
+          balance_cents?: number
+          created_at?: string
+          merchant_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "merchant_funding_wallets_merchant_id_fkey"
+            columns: ["merchant_id"]
+            isOneToOne: true
+            referencedRelation: "merchants"
             referencedColumns: ["id"]
           },
         ]
@@ -557,6 +654,56 @@ export type Database = {
           },
         ]
       }
+      settlement_periods: {
+        Row: {
+          closed_at: string | null
+          closed_by: string | null
+          created_at: string
+          id: string
+          merchant_id: string
+          net_liability_cents: number
+          period_end: string
+          period_start: string
+          points_issued: number
+          points_redeemed: number
+          status: string
+        }
+        Insert: {
+          closed_at?: string | null
+          closed_by?: string | null
+          created_at?: string
+          id?: string
+          merchant_id: string
+          net_liability_cents?: number
+          period_end: string
+          period_start: string
+          points_issued?: number
+          points_redeemed?: number
+          status?: string
+        }
+        Update: {
+          closed_at?: string | null
+          closed_by?: string | null
+          created_at?: string
+          id?: string
+          merchant_id?: string
+          net_liability_cents?: number
+          period_end?: string
+          period_start?: string
+          points_issued?: number
+          points_redeemed?: number
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "settlement_periods_merchant_id_fkey"
+            columns: ["merchant_id"]
+            isOneToOne: false
+            referencedRelation: "merchants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       spatial_ref_sys: {
         Row: {
           auth_name: string | null
@@ -834,6 +981,10 @@ export type Database = {
             }
             Returns: string
           }
+      admin_close_settlement: {
+        Args: { _settlement_id: string }
+        Returns: undefined
+      }
       admin_list_merchants: {
         Args: never
         Returns: {
@@ -859,6 +1010,24 @@ export type Database = {
           isSetofReturn: true
         }
       }
+      admin_recent_audit: {
+        Args: { _limit?: number }
+        Returns: {
+          action: string
+          actor_user_id: string | null
+          created_at: string
+          details: Json
+          entity_id: string | null
+          entity_type: string
+          id: string
+        }[]
+        SetofOptions: {
+          from: "*"
+          to: "audit_log"
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
       admin_resolve_claim: {
         Args: { _approve: boolean; _claim_id: string; _points?: number }
         Returns: Json
@@ -879,6 +1048,10 @@ export type Database = {
           points_awarded: number
           transaction_id: string
         }[]
+      }
+      compute_settlement: {
+        Args: { _merchant_id: string; _period_start: string }
+        Returns: string
       }
       create_merchant_with_owner: {
         Args: {
@@ -1051,6 +1224,28 @@ export type Database = {
         }
         Returns: boolean
       }
+      list_settlements: {
+        Args: { _merchant_id: string }
+        Returns: {
+          closed_at: string | null
+          closed_by: string | null
+          created_at: string
+          id: string
+          merchant_id: string
+          net_liability_cents: number
+          period_end: string
+          period_start: string
+          points_issued: number
+          points_redeemed: number
+          status: string
+        }[]
+        SetofOptions: {
+          from: "*"
+          to: "settlement_periods"
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
       longtransactionsenabled: { Args: never; Returns: boolean }
       lookup_customer_by_membership: {
         Args: { _membership: string; _merchant_id: string }
@@ -1059,6 +1254,10 @@ export type Database = {
           membership_number: string
           user_id: string
         }[]
+      }
+      merchant_deposit_funds: {
+        Args: { _amount_cents: number; _memo?: string; _merchant_id: string }
+        Returns: string
       }
       merchant_earn_points: {
         Args: {
@@ -1069,6 +1268,13 @@ export type Database = {
           _merchant_id: string
         }
         Returns: string
+      }
+      merchant_funding_overview: {
+        Args: { _merchant_id: string }
+        Returns: {
+          balance_cents: number
+          ledger: Json
+        }[]
       }
       merchant_redeem_points: {
         Args: {
@@ -1755,6 +1961,15 @@ export type Database = {
           redemption_id: string
           reward_title: string
         }[]
+      }
+      write_audit: {
+        Args: {
+          _action: string
+          _details?: Json
+          _entity_id: string
+          _entity_type: string
+        }
+        Returns: undefined
       }
     }
     Enums: {

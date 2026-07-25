@@ -24,6 +24,7 @@ import { Route as AuthenticatedMerchantSettingsRouteImport } from './routes/_aut
 import { Route as AuthenticatedMerchantRewardsRouteImport } from './routes/_authenticated/merchant.rewards'
 import { Route as AuthenticatedMerchantPosRouteImport } from './routes/_authenticated/merchant.pos'
 import { Route as AuthenticatedMerchantOffersRouteImport } from './routes/_authenticated/merchant.offers'
+import { Route as AuthenticatedMerchantFundingRouteImport } from './routes/_authenticated/merchant.funding'
 import { Route as AuthenticatedAppShopRouteImport } from './routes/_authenticated/app.shop'
 import { Route as AuthenticatedAppScanRouteImport } from './routes/_authenticated/app.scan'
 import { Route as AuthenticatedAppRewardsRouteImport } from './routes/_authenticated/app.rewards'
@@ -35,6 +36,7 @@ import { Route as AuthenticatedAppNearbyRouteImport } from './routes/_authentica
 import { Route as AuthenticatedAppClaimRouteImport } from './routes/_authenticated/app.claim'
 import { Route as AuthenticatedAdminMerchantsRouteImport } from './routes/_authenticated/admin.merchants'
 import { Route as AuthenticatedAdminClaimsRouteImport } from './routes/_authenticated/admin.claims'
+import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authenticated/admin.audit'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -116,6 +118,12 @@ const AuthenticatedMerchantOffersRoute =
     path: '/offers',
     getParentRoute: () => AuthenticatedMerchantRoute,
   } as any)
+const AuthenticatedMerchantFundingRoute =
+  AuthenticatedMerchantFundingRouteImport.update({
+    id: '/funding',
+    path: '/funding',
+    getParentRoute: () => AuthenticatedMerchantRoute,
+  } as any)
 const AuthenticatedAppShopRoute = AuthenticatedAppShopRouteImport.update({
   id: '/shop',
   path: '/shop',
@@ -175,6 +183,11 @@ const AuthenticatedAdminClaimsRoute =
     path: '/claims',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminAuditRoute = AuthenticatedAdminAuditRouteImport.update({
+  id: '/audit',
+  path: '/audit',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -183,6 +196,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/app': typeof AuthenticatedAppRouteWithChildren
   '/merchant': typeof AuthenticatedMerchantRouteWithChildren
+  '/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/admin/claims': typeof AuthenticatedAdminClaimsRoute
   '/admin/merchants': typeof AuthenticatedAdminMerchantsRoute
   '/app/claim': typeof AuthenticatedAppClaimRoute
@@ -194,6 +208,7 @@ export interface FileRoutesByFullPath {
   '/app/rewards': typeof AuthenticatedAppRewardsRoute
   '/app/scan': typeof AuthenticatedAppScanRoute
   '/app/shop': typeof AuthenticatedAppShopRoute
+  '/merchant/funding': typeof AuthenticatedMerchantFundingRoute
   '/merchant/offers': typeof AuthenticatedMerchantOffersRoute
   '/merchant/pos': typeof AuthenticatedMerchantPosRoute
   '/merchant/rewards': typeof AuthenticatedMerchantRewardsRoute
@@ -207,6 +222,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/admin/claims': typeof AuthenticatedAdminClaimsRoute
   '/admin/merchants': typeof AuthenticatedAdminMerchantsRoute
   '/app/claim': typeof AuthenticatedAppClaimRoute
@@ -218,6 +234,7 @@ export interface FileRoutesByTo {
   '/app/rewards': typeof AuthenticatedAppRewardsRoute
   '/app/scan': typeof AuthenticatedAppScanRoute
   '/app/shop': typeof AuthenticatedAppShopRoute
+  '/merchant/funding': typeof AuthenticatedMerchantFundingRoute
   '/merchant/offers': typeof AuthenticatedMerchantOffersRoute
   '/merchant/pos': typeof AuthenticatedMerchantPosRoute
   '/merchant/rewards': typeof AuthenticatedMerchantRewardsRoute
@@ -236,6 +253,7 @@ export interface FileRoutesById {
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/app': typeof AuthenticatedAppRouteWithChildren
   '/_authenticated/merchant': typeof AuthenticatedMerchantRouteWithChildren
+  '/_authenticated/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/_authenticated/admin/claims': typeof AuthenticatedAdminClaimsRoute
   '/_authenticated/admin/merchants': typeof AuthenticatedAdminMerchantsRoute
   '/_authenticated/app/claim': typeof AuthenticatedAppClaimRoute
@@ -247,6 +265,7 @@ export interface FileRoutesById {
   '/_authenticated/app/rewards': typeof AuthenticatedAppRewardsRoute
   '/_authenticated/app/scan': typeof AuthenticatedAppScanRoute
   '/_authenticated/app/shop': typeof AuthenticatedAppShopRoute
+  '/_authenticated/merchant/funding': typeof AuthenticatedMerchantFundingRoute
   '/_authenticated/merchant/offers': typeof AuthenticatedMerchantOffersRoute
   '/_authenticated/merchant/pos': typeof AuthenticatedMerchantPosRoute
   '/_authenticated/merchant/rewards': typeof AuthenticatedMerchantRewardsRoute
@@ -265,6 +284,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/app'
     | '/merchant'
+    | '/admin/audit'
     | '/admin/claims'
     | '/admin/merchants'
     | '/app/claim'
@@ -276,6 +296,7 @@ export interface FileRouteTypes {
     | '/app/rewards'
     | '/app/scan'
     | '/app/shop'
+    | '/merchant/funding'
     | '/merchant/offers'
     | '/merchant/pos'
     | '/merchant/rewards'
@@ -289,6 +310,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/sitemap.xml'
+    | '/admin/audit'
     | '/admin/claims'
     | '/admin/merchants'
     | '/app/claim'
@@ -300,6 +322,7 @@ export interface FileRouteTypes {
     | '/app/rewards'
     | '/app/scan'
     | '/app/shop'
+    | '/merchant/funding'
     | '/merchant/offers'
     | '/merchant/pos'
     | '/merchant/rewards'
@@ -317,6 +340,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin'
     | '/_authenticated/app'
     | '/_authenticated/merchant'
+    | '/_authenticated/admin/audit'
     | '/_authenticated/admin/claims'
     | '/_authenticated/admin/merchants'
     | '/_authenticated/app/claim'
@@ -328,6 +352,7 @@ export interface FileRouteTypes {
     | '/_authenticated/app/rewards'
     | '/_authenticated/app/scan'
     | '/_authenticated/app/shop'
+    | '/_authenticated/merchant/funding'
     | '/_authenticated/merchant/offers'
     | '/_authenticated/merchant/pos'
     | '/_authenticated/merchant/rewards'
@@ -452,6 +477,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMerchantOffersRouteImport
       parentRoute: typeof AuthenticatedMerchantRoute
     }
+    '/_authenticated/merchant/funding': {
+      id: '/_authenticated/merchant/funding'
+      path: '/funding'
+      fullPath: '/merchant/funding'
+      preLoaderRoute: typeof AuthenticatedMerchantFundingRouteImport
+      parentRoute: typeof AuthenticatedMerchantRoute
+    }
     '/_authenticated/app/shop': {
       id: '/_authenticated/app/shop'
       path: '/shop'
@@ -529,16 +561,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminClaimsRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/audit': {
+      id: '/_authenticated/admin/audit'
+      path: '/audit'
+      fullPath: '/admin/audit'
+      preLoaderRoute: typeof AuthenticatedAdminAuditRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
   }
 }
 
 interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminAuditRoute: typeof AuthenticatedAdminAuditRoute
   AuthenticatedAdminClaimsRoute: typeof AuthenticatedAdminClaimsRoute
   AuthenticatedAdminMerchantsRoute: typeof AuthenticatedAdminMerchantsRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminAuditRoute: AuthenticatedAdminAuditRoute,
   AuthenticatedAdminClaimsRoute: AuthenticatedAdminClaimsRoute,
   AuthenticatedAdminMerchantsRoute: AuthenticatedAdminMerchantsRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
@@ -577,6 +618,7 @@ const AuthenticatedAppRouteWithChildren =
   AuthenticatedAppRoute._addFileChildren(AuthenticatedAppRouteChildren)
 
 interface AuthenticatedMerchantRouteChildren {
+  AuthenticatedMerchantFundingRoute: typeof AuthenticatedMerchantFundingRoute
   AuthenticatedMerchantOffersRoute: typeof AuthenticatedMerchantOffersRoute
   AuthenticatedMerchantPosRoute: typeof AuthenticatedMerchantPosRoute
   AuthenticatedMerchantRewardsRoute: typeof AuthenticatedMerchantRewardsRoute
@@ -586,6 +628,7 @@ interface AuthenticatedMerchantRouteChildren {
 }
 
 const AuthenticatedMerchantRouteChildren: AuthenticatedMerchantRouteChildren = {
+  AuthenticatedMerchantFundingRoute: AuthenticatedMerchantFundingRoute,
   AuthenticatedMerchantOffersRoute: AuthenticatedMerchantOffersRoute,
   AuthenticatedMerchantPosRoute: AuthenticatedMerchantPosRoute,
   AuthenticatedMerchantRewardsRoute: AuthenticatedMerchantRewardsRoute,
