@@ -21,10 +21,12 @@ import { Route as AuthenticatedAppIndexRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedMerchantTeamRouteImport } from './routes/_authenticated/merchant.team'
 import { Route as AuthenticatedMerchantSettingsRouteImport } from './routes/_authenticated/merchant.settings'
 import { Route as AuthenticatedMerchantPosRouteImport } from './routes/_authenticated/merchant.pos'
+import { Route as AuthenticatedMerchantOffersRouteImport } from './routes/_authenticated/merchant.offers'
 import { Route as AuthenticatedAppShopRouteImport } from './routes/_authenticated/app.shop'
 import { Route as AuthenticatedAppScanRouteImport } from './routes/_authenticated/app.scan'
 import { Route as AuthenticatedAppProfileRouteImport } from './routes/_authenticated/app.profile'
 import { Route as AuthenticatedAppOffersRouteImport } from './routes/_authenticated/app.offers'
+import { Route as AuthenticatedAppNotificationsRouteImport } from './routes/_authenticated/app.notifications'
 import { Route as AuthenticatedAppNearbyRouteImport } from './routes/_authenticated/app.nearby'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -90,6 +92,12 @@ const AuthenticatedMerchantPosRoute =
     path: '/pos',
     getParentRoute: () => AuthenticatedMerchantRoute,
   } as any)
+const AuthenticatedMerchantOffersRoute =
+  AuthenticatedMerchantOffersRouteImport.update({
+    id: '/offers',
+    path: '/offers',
+    getParentRoute: () => AuthenticatedMerchantRoute,
+  } as any)
 const AuthenticatedAppShopRoute = AuthenticatedAppShopRouteImport.update({
   id: '/shop',
   path: '/shop',
@@ -110,6 +118,12 @@ const AuthenticatedAppOffersRoute = AuthenticatedAppOffersRouteImport.update({
   path: '/offers',
   getParentRoute: () => AuthenticatedAppRoute,
 } as any)
+const AuthenticatedAppNotificationsRoute =
+  AuthenticatedAppNotificationsRouteImport.update({
+    id: '/notifications',
+    path: '/notifications',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
 const AuthenticatedAppNearbyRoute = AuthenticatedAppNearbyRouteImport.update({
   id: '/nearby',
   path: '/nearby',
@@ -124,10 +138,12 @@ export interface FileRoutesByFullPath {
   '/app': typeof AuthenticatedAppRouteWithChildren
   '/merchant': typeof AuthenticatedMerchantRouteWithChildren
   '/app/nearby': typeof AuthenticatedAppNearbyRoute
+  '/app/notifications': typeof AuthenticatedAppNotificationsRoute
   '/app/offers': typeof AuthenticatedAppOffersRoute
   '/app/profile': typeof AuthenticatedAppProfileRoute
   '/app/scan': typeof AuthenticatedAppScanRoute
   '/app/shop': typeof AuthenticatedAppShopRoute
+  '/merchant/offers': typeof AuthenticatedMerchantOffersRoute
   '/merchant/pos': typeof AuthenticatedMerchantPosRoute
   '/merchant/settings': typeof AuthenticatedMerchantSettingsRoute
   '/merchant/team': typeof AuthenticatedMerchantTeamRoute
@@ -140,10 +156,12 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/app/nearby': typeof AuthenticatedAppNearbyRoute
+  '/app/notifications': typeof AuthenticatedAppNotificationsRoute
   '/app/offers': typeof AuthenticatedAppOffersRoute
   '/app/profile': typeof AuthenticatedAppProfileRoute
   '/app/scan': typeof AuthenticatedAppScanRoute
   '/app/shop': typeof AuthenticatedAppShopRoute
+  '/merchant/offers': typeof AuthenticatedMerchantOffersRoute
   '/merchant/pos': typeof AuthenticatedMerchantPosRoute
   '/merchant/settings': typeof AuthenticatedMerchantSettingsRoute
   '/merchant/team': typeof AuthenticatedMerchantTeamRoute
@@ -160,10 +178,12 @@ export interface FileRoutesById {
   '/_authenticated/app': typeof AuthenticatedAppRouteWithChildren
   '/_authenticated/merchant': typeof AuthenticatedMerchantRouteWithChildren
   '/_authenticated/app/nearby': typeof AuthenticatedAppNearbyRoute
+  '/_authenticated/app/notifications': typeof AuthenticatedAppNotificationsRoute
   '/_authenticated/app/offers': typeof AuthenticatedAppOffersRoute
   '/_authenticated/app/profile': typeof AuthenticatedAppProfileRoute
   '/_authenticated/app/scan': typeof AuthenticatedAppScanRoute
   '/_authenticated/app/shop': typeof AuthenticatedAppShopRoute
+  '/_authenticated/merchant/offers': typeof AuthenticatedMerchantOffersRoute
   '/_authenticated/merchant/pos': typeof AuthenticatedMerchantPosRoute
   '/_authenticated/merchant/settings': typeof AuthenticatedMerchantSettingsRoute
   '/_authenticated/merchant/team': typeof AuthenticatedMerchantTeamRoute
@@ -180,10 +200,12 @@ export interface FileRouteTypes {
     | '/app'
     | '/merchant'
     | '/app/nearby'
+    | '/app/notifications'
     | '/app/offers'
     | '/app/profile'
     | '/app/scan'
     | '/app/shop'
+    | '/merchant/offers'
     | '/merchant/pos'
     | '/merchant/settings'
     | '/merchant/team'
@@ -196,10 +218,12 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/admin'
     | '/app/nearby'
+    | '/app/notifications'
     | '/app/offers'
     | '/app/profile'
     | '/app/scan'
     | '/app/shop'
+    | '/merchant/offers'
     | '/merchant/pos'
     | '/merchant/settings'
     | '/merchant/team'
@@ -215,10 +239,12 @@ export interface FileRouteTypes {
     | '/_authenticated/app'
     | '/_authenticated/merchant'
     | '/_authenticated/app/nearby'
+    | '/_authenticated/app/notifications'
     | '/_authenticated/app/offers'
     | '/_authenticated/app/profile'
     | '/_authenticated/app/scan'
     | '/_authenticated/app/shop'
+    | '/_authenticated/merchant/offers'
     | '/_authenticated/merchant/pos'
     | '/_authenticated/merchant/settings'
     | '/_authenticated/merchant/team'
@@ -319,6 +345,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMerchantPosRouteImport
       parentRoute: typeof AuthenticatedMerchantRoute
     }
+    '/_authenticated/merchant/offers': {
+      id: '/_authenticated/merchant/offers'
+      path: '/offers'
+      fullPath: '/merchant/offers'
+      preLoaderRoute: typeof AuthenticatedMerchantOffersRouteImport
+      parentRoute: typeof AuthenticatedMerchantRoute
+    }
     '/_authenticated/app/shop': {
       id: '/_authenticated/app/shop'
       path: '/shop'
@@ -347,6 +380,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppOffersRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
+    '/_authenticated/app/notifications': {
+      id: '/_authenticated/app/notifications'
+      path: '/notifications'
+      fullPath: '/app/notifications'
+      preLoaderRoute: typeof AuthenticatedAppNotificationsRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
     '/_authenticated/app/nearby': {
       id: '/_authenticated/app/nearby'
       path: '/nearby'
@@ -359,6 +399,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedAppRouteChildren {
   AuthenticatedAppNearbyRoute: typeof AuthenticatedAppNearbyRoute
+  AuthenticatedAppNotificationsRoute: typeof AuthenticatedAppNotificationsRoute
   AuthenticatedAppOffersRoute: typeof AuthenticatedAppOffersRoute
   AuthenticatedAppProfileRoute: typeof AuthenticatedAppProfileRoute
   AuthenticatedAppScanRoute: typeof AuthenticatedAppScanRoute
@@ -368,6 +409,7 @@ interface AuthenticatedAppRouteChildren {
 
 const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
   AuthenticatedAppNearbyRoute: AuthenticatedAppNearbyRoute,
+  AuthenticatedAppNotificationsRoute: AuthenticatedAppNotificationsRoute,
   AuthenticatedAppOffersRoute: AuthenticatedAppOffersRoute,
   AuthenticatedAppProfileRoute: AuthenticatedAppProfileRoute,
   AuthenticatedAppScanRoute: AuthenticatedAppScanRoute,
@@ -379,6 +421,7 @@ const AuthenticatedAppRouteWithChildren =
   AuthenticatedAppRoute._addFileChildren(AuthenticatedAppRouteChildren)
 
 interface AuthenticatedMerchantRouteChildren {
+  AuthenticatedMerchantOffersRoute: typeof AuthenticatedMerchantOffersRoute
   AuthenticatedMerchantPosRoute: typeof AuthenticatedMerchantPosRoute
   AuthenticatedMerchantSettingsRoute: typeof AuthenticatedMerchantSettingsRoute
   AuthenticatedMerchantTeamRoute: typeof AuthenticatedMerchantTeamRoute
@@ -386,6 +429,7 @@ interface AuthenticatedMerchantRouteChildren {
 }
 
 const AuthenticatedMerchantRouteChildren: AuthenticatedMerchantRouteChildren = {
+  AuthenticatedMerchantOffersRoute: AuthenticatedMerchantOffersRoute,
   AuthenticatedMerchantPosRoute: AuthenticatedMerchantPosRoute,
   AuthenticatedMerchantSettingsRoute: AuthenticatedMerchantSettingsRoute,
   AuthenticatedMerchantTeamRoute: AuthenticatedMerchantTeamRoute,
