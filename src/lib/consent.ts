@@ -21,21 +21,30 @@ const defaultState: ConsentState = {
   decided: false,
 };
 
+let cached: ConsentState = defaultState;
+let cachedRaw: string | null = null;
+
 function read(): ConsentState {
   if (typeof window === "undefined") return defaultState;
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
-    if (!raw) return defaultState;
+    if (raw === cachedRaw) return cached;
+    cachedRaw = raw;
+    if (!raw) {
+      cached = defaultState;
+      return cached;
+    }
     const parsed = JSON.parse(raw);
-    return {
+    cached = {
       necessary: true,
       analytics: !!parsed.analytics,
       marketing: !!parsed.marketing,
       ts: parsed.ts ?? null,
       decided: !!parsed.decided,
     };
+    return cached;
   } catch {
-    return defaultState;
+    return cached;
   }
 }
 
