@@ -299,19 +299,8 @@ function LandingPage() {
         </div>
       </section>
 
-      <footer className="border-t border-border py-10 text-center text-xs text-muted-foreground">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 sm:flex-row">
-          <div className="flex items-center gap-2">
-            <ZorynMark size={20} />
-            <span>© {new Date().getFullYear()} Zoryn. Mehr als nur Punkte.</span>
-          </div>
-          <div className="flex gap-4">
-            <a href="#" className="hover:text-foreground">Impressum</a>
-            <a href="#" className="hover:text-foreground">Datenschutz</a>
-            <a href="#" className="hover:text-foreground">AGB</a>
-          </div>
-        </div>
-      </footer>
-    </div>
+      </div>
+    </PublicShell>
   );
+}
 }
