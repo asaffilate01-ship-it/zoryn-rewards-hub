@@ -83,8 +83,16 @@ export const adminRecentAudit = createServerFn({ method: "GET" })
   .handler(async ({ context }) => {
     const { data, error } = await context.supabase.rpc("admin_recent_audit", { _limit: 100 });
     if (error) throw new Error(error.message);
-    return (data ?? []) as Array<{
+    return (data ?? []).map((r: {
       id: string; action: string; entity_type: string; entity_id: string | null;
-      details: Record<string, unknown>; created_at: string; actor_user_id: string | null;
-    }>;
+      details: unknown; created_at: string; actor_user_id: string | null;
+    }) => ({
+      id: r.id,
+      action: r.action,
+      entity_type: r.entity_type,
+      entity_id: r.entity_id,
+      details_json: JSON.stringify(r.details ?? {}),
+      created_at: r.created_at,
+      actor_user_id: r.actor_user_id,
+    }));
   });
