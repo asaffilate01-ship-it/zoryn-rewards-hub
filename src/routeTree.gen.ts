@@ -15,6 +15,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedMerchantRouteImport } from './routes/_authenticated/merchant'
 import { Route as AuthenticatedAppRouteImport } from './routes/_authenticated/app'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedMerchantIndexRouteImport } from './routes/_authenticated/merchant.index'
 import { Route as AuthenticatedAppIndexRouteImport } from './routes/_authenticated/app.index'
 import { Route as AuthenticatedMerchantTeamRouteImport } from './routes/_authenticated/merchant.team'
@@ -23,6 +24,7 @@ import { Route as AuthenticatedMerchantPosRouteImport } from './routes/_authenti
 import { Route as AuthenticatedAppShopRouteImport } from './routes/_authenticated/app.shop'
 import { Route as AuthenticatedAppScanRouteImport } from './routes/_authenticated/app.scan'
 import { Route as AuthenticatedAppProfileRouteImport } from './routes/_authenticated/app.profile'
+import { Route as AuthenticatedAppOffersRouteImport } from './routes/_authenticated/app.offers'
 import { Route as AuthenticatedAppNearbyRouteImport } from './routes/_authenticated/app.nearby'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -52,6 +54,11 @@ const AuthenticatedMerchantRoute = AuthenticatedMerchantRouteImport.update({
 const AuthenticatedAppRoute = AuthenticatedAppRouteImport.update({
   id: '/app',
   path: '/app',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedMerchantIndexRoute =
@@ -98,6 +105,11 @@ const AuthenticatedAppProfileRoute = AuthenticatedAppProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => AuthenticatedAppRoute,
 } as any)
+const AuthenticatedAppOffersRoute = AuthenticatedAppOffersRouteImport.update({
+  id: '/offers',
+  path: '/offers',
+  getParentRoute: () => AuthenticatedAppRoute,
+} as any)
 const AuthenticatedAppNearbyRoute = AuthenticatedAppNearbyRouteImport.update({
   id: '/nearby',
   path: '/nearby',
@@ -108,9 +120,11 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/app': typeof AuthenticatedAppRouteWithChildren
   '/merchant': typeof AuthenticatedMerchantRouteWithChildren
   '/app/nearby': typeof AuthenticatedAppNearbyRoute
+  '/app/offers': typeof AuthenticatedAppOffersRoute
   '/app/profile': typeof AuthenticatedAppProfileRoute
   '/app/scan': typeof AuthenticatedAppScanRoute
   '/app/shop': typeof AuthenticatedAppShopRoute
@@ -124,7 +138,9 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/app/nearby': typeof AuthenticatedAppNearbyRoute
+  '/app/offers': typeof AuthenticatedAppOffersRoute
   '/app/profile': typeof AuthenticatedAppProfileRoute
   '/app/scan': typeof AuthenticatedAppScanRoute
   '/app/shop': typeof AuthenticatedAppShopRoute
@@ -140,9 +156,11 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/app': typeof AuthenticatedAppRouteWithChildren
   '/_authenticated/merchant': typeof AuthenticatedMerchantRouteWithChildren
   '/_authenticated/app/nearby': typeof AuthenticatedAppNearbyRoute
+  '/_authenticated/app/offers': typeof AuthenticatedAppOffersRoute
   '/_authenticated/app/profile': typeof AuthenticatedAppProfileRoute
   '/_authenticated/app/scan': typeof AuthenticatedAppScanRoute
   '/_authenticated/app/shop': typeof AuthenticatedAppShopRoute
@@ -158,9 +176,11 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/sitemap.xml'
+    | '/admin'
     | '/app'
     | '/merchant'
     | '/app/nearby'
+    | '/app/offers'
     | '/app/profile'
     | '/app/scan'
     | '/app/shop'
@@ -174,7 +194,9 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/sitemap.xml'
+    | '/admin'
     | '/app/nearby'
+    | '/app/offers'
     | '/app/profile'
     | '/app/scan'
     | '/app/shop'
@@ -189,9 +211,11 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/auth'
     | '/sitemap.xml'
+    | '/_authenticated/admin'
     | '/_authenticated/app'
     | '/_authenticated/merchant'
     | '/_authenticated/app/nearby'
+    | '/_authenticated/app/offers'
     | '/_authenticated/app/profile'
     | '/_authenticated/app/scan'
     | '/_authenticated/app/shop'
@@ -253,6 +277,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/merchant/': {
       id: '/_authenticated/merchant/'
       path: '/'
@@ -309,6 +340,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppProfileRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
+    '/_authenticated/app/offers': {
+      id: '/_authenticated/app/offers'
+      path: '/offers'
+      fullPath: '/app/offers'
+      preLoaderRoute: typeof AuthenticatedAppOffersRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
     '/_authenticated/app/nearby': {
       id: '/_authenticated/app/nearby'
       path: '/nearby'
@@ -321,6 +359,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedAppRouteChildren {
   AuthenticatedAppNearbyRoute: typeof AuthenticatedAppNearbyRoute
+  AuthenticatedAppOffersRoute: typeof AuthenticatedAppOffersRoute
   AuthenticatedAppProfileRoute: typeof AuthenticatedAppProfileRoute
   AuthenticatedAppScanRoute: typeof AuthenticatedAppScanRoute
   AuthenticatedAppShopRoute: typeof AuthenticatedAppShopRoute
@@ -329,6 +368,7 @@ interface AuthenticatedAppRouteChildren {
 
 const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
   AuthenticatedAppNearbyRoute: AuthenticatedAppNearbyRoute,
+  AuthenticatedAppOffersRoute: AuthenticatedAppOffersRoute,
   AuthenticatedAppProfileRoute: AuthenticatedAppProfileRoute,
   AuthenticatedAppScanRoute: AuthenticatedAppScanRoute,
   AuthenticatedAppShopRoute: AuthenticatedAppShopRoute,
@@ -358,11 +398,13 @@ const AuthenticatedMerchantRouteWithChildren =
   )
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedAppRoute: typeof AuthenticatedAppRouteWithChildren
   AuthenticatedMerchantRoute: typeof AuthenticatedMerchantRouteWithChildren
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   AuthenticatedAppRoute: AuthenticatedAppRouteWithChildren,
   AuthenticatedMerchantRoute: AuthenticatedMerchantRouteWithChildren,
 }
