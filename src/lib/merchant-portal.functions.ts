@@ -45,10 +45,10 @@ export const createMerchant = createServerFn({ method: "POST" })
     const { data: id, error } = await supabase.rpc("create_merchant_with_owner", {
       _slug: data.slug,
       _name: data.name,
-      _description: data.description ?? null,
-      _category: data.category ?? null,
+      _description: data.description ?? '',
+      _category: data.category ?? '',
       _points_per_euro: data.pointsPerEuro,
-      _brand_color: data.brandColor ?? null,
+      _brand_color: data.brandColor ?? '',
     });
     if (error) {
       if (/duplicate|unique/i.test(error.message)) throw new Error("Slug ist bereits vergeben.");
@@ -120,7 +120,7 @@ export const merchantEarn = createServerFn({ method: "POST" })
       _customer_user_id: data.customerUserId,
       _amount: data.amount,
       _idempotency_key: data.idempotencyKey,
-      _memo: data.memo ?? null,
+      _memo: data.memo ?? '',
     });
     if (error) throw new Error(error.message);
     return { transactionId: id as string };
@@ -135,7 +135,7 @@ export const merchantRedeem = createServerFn({ method: "POST" })
       _customer_user_id: data.customerUserId,
       _amount: data.amount,
       _idempotency_key: data.idempotencyKey,
-      _memo: data.memo ?? null,
+      _memo: data.memo ?? '',
     });
     if (error) {
       if (/insufficient/i.test(error.message)) throw new Error("Kunde hat nicht genug Punkte.");
