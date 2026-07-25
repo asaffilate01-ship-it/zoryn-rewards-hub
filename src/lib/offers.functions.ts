@@ -45,3 +45,26 @@ export const listMerchantOffers = createServerFn({ method: "POST" })
     if (error) throw new Error(error.message);
     return rows ?? [];
   });
+
+export const toggleOffer = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((raw: unknown) =>
+    z.object({ offerId: z.string().uuid(), isActive: z.boolean() }).parse(raw),
+  )
+  .handler(async ({ data, context }) => {
+    const { error } = await context.supabase
+      .from("offers")
+      .update({ is_active: data.isActive })
+      .eq("id", data.offerId);
+    if (error) throw new Error(error.message);
+    return { ok: true };
+  });
+
+export const deleteOffer = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((raw: unknown) => z.object({ offerId: z.string().uuid() }).parse(raw))
+  .handler(async ({ data, context }) => {
+    const { error } = await context.supabase.from("offers").delete().eq("id", data.offerId);
+    if (error) throw new Error(error.message);
+    return { ok: true };
+  });
