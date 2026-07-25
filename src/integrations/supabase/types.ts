@@ -1120,6 +1120,15 @@ export type Database = {
           isSetofReturn: true
         }
       }
+      admin_platform_series: {
+        Args: never
+        Returns: {
+          day: string
+          earned: number
+          new_users: number
+          redeemed: number
+        }[]
+      }
       admin_recent_audit: {
         Args: { _limit?: number }
         Returns: {
@@ -1145,6 +1154,17 @@ export type Database = {
       admin_set_merchant_active: {
         Args: { _active: boolean; _merchant_id: string }
         Returns: undefined
+      }
+      admin_top_merchants: {
+        Args: { _limit?: number }
+        Returns: {
+          earned: number
+          merchant_id: string
+          name: string
+          redeemed: number
+          slug: string
+          txns: number
+        }[]
       }
       admin_update_complaint: {
         Args: { _id: string; _notes: string; _status: string }
@@ -1342,6 +1362,18 @@ export type Database = {
       geomfromewkt: { Args: { "": string }; Returns: unknown }
       get_wallet_balance: { Args: { _user_id: string }; Returns: number }
       gettransactionid: { Args: never; Returns: unknown }
+      global_search: {
+        Args: { _limit?: number; _q: string }
+        Returns: {
+          id: string
+          image_url: string
+          kind: string
+          score: number
+          slug: string
+          subtitle: string
+          title: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -1388,6 +1420,15 @@ export type Database = {
           user_id: string
         }[]
       }
+      merchant_analytics_series: {
+        Args: { _merchant_id: string }
+        Returns: {
+          day: string
+          earned: number
+          redeemed: number
+          txn_count: number
+        }[]
+      }
       merchant_deposit_funds: {
         Args: { _amount_cents: number; _memo?: string; _merchant_id: string }
         Returns: string
@@ -1418,6 +1459,16 @@ export type Database = {
           _merchant_id: string
         }
         Returns: string
+      }
+      merchant_top_customers: {
+        Args: { _limit?: number; _merchant_id: string }
+        Returns: {
+          display_name: string
+          earned: number
+          redeemed: number
+          user_id: string
+          visits: number
+        }[]
       }
       nearby_merchants: {
         Args: { _lat: number; _lng: number; _radius_m?: number }
@@ -1494,6 +1545,8 @@ export type Database = {
           transaction_id: string
         }[]
       }
+      show_limit: { Args: never; Returns: number }
+      show_trgm: { Args: { "": string }; Returns: string[] }
       st_3dclosestpoint: {
         Args: { geom1: unknown; geom2: unknown }
         Returns: unknown
