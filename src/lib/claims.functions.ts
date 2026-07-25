@@ -66,7 +66,7 @@ export const adminResolveClaim = createServerFn({ method: "POST" })
     const { error } = await context.supabase.rpc("admin_resolve_claim", {
       _claim_id: data.claimId,
       _approve: data.approve,
-      _points: data.points ?? null,
+      _points: data.points,
     });
     if (error) throw new Error(error.message);
     return { ok: true };
