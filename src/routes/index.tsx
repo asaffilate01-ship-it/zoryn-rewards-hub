@@ -11,8 +11,9 @@ import {
   Building2,
 } from "lucide-react";
 import heroBg from "@/assets/hero-aurora.jpg";
-import { ZorynMark, ZorynWordmark } from "@/components/ZorynMark";
+import { ZorynMark } from "@/components/ZorynMark";
 import { Button } from "@/components/ui/button";
+import { PublicShell } from "@/components/PublicShell";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -79,31 +80,9 @@ const platformStack = [
 
 function LandingPage() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      {/* Nav */}
-      <header className="relative z-20">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-6">
-          <ZorynWordmark />
-          <nav className="hidden items-center gap-8 text-sm text-muted-foreground md:flex">
-            <a href="#features" className="hover:text-foreground">Für dich</a>
-            <a href="#merchants" className="hover:text-foreground">Für Händler</a>
-            <a href="#network" className="hover:text-foreground">Netzwerk</a>
-          </nav>
-          <div className="flex items-center gap-3">
-            <Link
-              to="/auth"
-              className="hidden text-sm text-muted-foreground hover:text-foreground sm:inline"
-            >
-              Anmelden
-            </Link>
-            <Button asChild size="sm" className="gradient-brand text-primary-foreground border-0">
-              <Link to="/auth">
-                Wallet erstellen <ArrowRight className="ml-1 size-4" />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </header>
+    <PublicShell>
+      <div className="text-foreground">
+
 
       {/* Hero */}
       <section className="relative overflow-hidden">
@@ -320,19 +299,7 @@ function LandingPage() {
         </div>
       </section>
 
-      <footer className="border-t border-border py-10 text-center text-xs text-muted-foreground">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 sm:flex-row">
-          <div className="flex items-center gap-2">
-            <ZorynMark size={20} />
-            <span>© {new Date().getFullYear()} Zoryn. Mehr als nur Punkte.</span>
-          </div>
-          <div className="flex gap-4">
-            <a href="#" className="hover:text-foreground">Impressum</a>
-            <a href="#" className="hover:text-foreground">Datenschutz</a>
-            <a href="#" className="hover:text-foreground">AGB</a>
-          </div>
-        </div>
-      </footer>
-    </div>
+      </div>
+    </PublicShell>
   );
 }
