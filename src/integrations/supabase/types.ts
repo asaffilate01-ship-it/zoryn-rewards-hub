@@ -409,6 +409,7 @@ export type Database = {
         | "campaign_admin"
         | "affiliate_manager"
         | "auditor"
+        | "admin"
       entry_direction: "debit" | "credit"
       merchant_member_role: "owner" | "manager" | "staff"
       transaction_kind: "earn" | "redeem" | "adjust" | "transfer" | "expire"
@@ -567,6 +568,7 @@ export const Constants = {
         "campaign_admin",
         "affiliate_manager",
         "auditor",
+        "admin",
       ],
       entry_direction: ["debit", "credit"],
       merchant_member_role: ["owner", "manager", "staff"],
