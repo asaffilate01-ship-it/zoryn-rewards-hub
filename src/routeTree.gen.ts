@@ -13,6 +13,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedMerchantRouteImport } from './routes/_authenticated/merchant'
 import { Route as AuthenticatedAppRouteImport } from './routes/_authenticated/app'
 import { Route as AuthenticatedAppIndexRouteImport } from './routes/_authenticated/app.index'
 import { Route as AuthenticatedAppShopRouteImport } from './routes/_authenticated/app.shop'
@@ -38,6 +39,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedMerchantRoute = AuthenticatedMerchantRouteImport.update({
+  id: '/merchant',
+  path: '/merchant',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedAppRoute = AuthenticatedAppRouteImport.update({
   id: '/app',
@@ -75,6 +81,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/app': typeof AuthenticatedAppRouteWithChildren
+  '/merchant': typeof AuthenticatedMerchantRoute
   '/app/nearby': typeof AuthenticatedAppNearbyRoute
   '/app/profile': typeof AuthenticatedAppProfileRoute
   '/app/scan': typeof AuthenticatedAppScanRoute
@@ -85,6 +92,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/merchant': typeof AuthenticatedMerchantRoute
   '/app/nearby': typeof AuthenticatedAppNearbyRoute
   '/app/profile': typeof AuthenticatedAppProfileRoute
   '/app/scan': typeof AuthenticatedAppScanRoute
@@ -98,6 +106,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/app': typeof AuthenticatedAppRouteWithChildren
+  '/_authenticated/merchant': typeof AuthenticatedMerchantRoute
   '/_authenticated/app/nearby': typeof AuthenticatedAppNearbyRoute
   '/_authenticated/app/profile': typeof AuthenticatedAppProfileRoute
   '/_authenticated/app/scan': typeof AuthenticatedAppScanRoute
@@ -111,6 +120,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/sitemap.xml'
     | '/app'
+    | '/merchant'
     | '/app/nearby'
     | '/app/profile'
     | '/app/scan'
@@ -121,6 +131,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/sitemap.xml'
+    | '/merchant'
     | '/app/nearby'
     | '/app/profile'
     | '/app/scan'
@@ -133,6 +144,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/sitemap.xml'
     | '/_authenticated/app'
+    | '/_authenticated/merchant'
     | '/_authenticated/app/nearby'
     | '/_authenticated/app/profile'
     | '/_authenticated/app/scan'
@@ -176,6 +188,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/merchant': {
+      id: '/_authenticated/merchant'
+      path: '/merchant'
+      fullPath: '/merchant'
+      preLoaderRoute: typeof AuthenticatedMerchantRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/app': {
       id: '/_authenticated/app'
@@ -243,10 +262,12 @@ const AuthenticatedAppRouteWithChildren =
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAppRoute: typeof AuthenticatedAppRouteWithChildren
+  AuthenticatedMerchantRoute: typeof AuthenticatedMerchantRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAppRoute: AuthenticatedAppRouteWithChildren,
+  AuthenticatedMerchantRoute: AuthenticatedMerchantRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
