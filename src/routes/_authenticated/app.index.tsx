@@ -154,6 +154,22 @@ function WalletHome() {
         <span className="text-xs text-brand-soft">Ansehen →</span>
       </Link>
 
+      <Link
+        to="/app/assistant"
+        className="mt-3 flex items-center justify-between rounded-2xl border border-border bg-gradient-to-r from-brand/10 to-brand-alt/10 px-4 py-3 transition hover:border-brand/50"
+      >
+        <div className="flex items-center gap-3">
+          <div className="flex size-9 items-center justify-center rounded-full gradient-brand text-primary-foreground">
+            <Sparkles className="size-4" />
+          </div>
+          <div>
+            <div className="text-sm font-medium">Frag Zorra</div>
+            <div className="text-xs text-muted-foreground">KI-Assistent für deine Wallet</div>
+          </div>
+        </div>
+        <span className="text-xs text-brand-soft">Chatten →</span>
+      </Link>
+
       <section className="mt-8">
 
         <div className="flex items-baseline justify-between">

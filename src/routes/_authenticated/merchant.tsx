@@ -1,5 +1,5 @@
 import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
-import { Store, Users, Settings, ScanLine, ArrowLeft, Sparkles, Gift, Wallet } from "lucide-react";
+import { Store, Users, Settings, ScanLine, ArrowLeft, Sparkles, Gift, Wallet, BarChart3 } from "lucide-react";
 import { ZorynMark } from "@/components/ZorynMark";
 import type { ComponentType } from "react";
 
@@ -9,6 +9,7 @@ export const Route = createFileRoute("/_authenticated/merchant")({
 
 const TABS: { to: string; label: string; icon: ComponentType<{ className?: string }> }[] = [
   { to: "/merchant", label: "Übersicht", icon: Store },
+  { to: "/merchant/analytics", label: "Analytics", icon: BarChart3 },
   { to: "/merchant/pos", label: "Kasse", icon: ScanLine },
   { to: "/merchant/offers", label: "Angebote", icon: Sparkles },
   { to: "/merchant/rewards", label: "Rewards", icon: Gift },

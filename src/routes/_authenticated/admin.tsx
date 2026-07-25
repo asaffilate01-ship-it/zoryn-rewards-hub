@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { isAdmin } from "@/lib/admin.functions";
 import { Button } from "@/components/ui/button";
 import { ZorynMark } from "@/components/ZorynMark";
-import { Shield, ArrowLeft, LayoutDashboard, Store, Inbox, FileText } from "lucide-react";
+import { Shield, ArrowLeft, LayoutDashboard, Store, Inbox, FileText, BarChart3 } from "lucide-react";
 import type { ComponentType } from "react";
 
 export const Route = createFileRoute("/_authenticated/admin")({
@@ -14,6 +14,7 @@ export const Route = createFileRoute("/_authenticated/admin")({
 
 const TABS: { to: string; label: string; icon: ComponentType<{ className?: string }> }[] = [
   { to: "/admin", label: "Übersicht", icon: LayoutDashboard },
+  { to: "/admin/analytics", label: "Analytics", icon: BarChart3 },
   { to: "/admin/merchants", label: "Merchants", icon: Store },
   { to: "/admin/claims", label: "Reklamationen", icon: Inbox },
   { to: "/admin/audit", label: "Audit", icon: FileText },
