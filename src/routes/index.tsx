@@ -80,31 +80,9 @@ const platformStack = [
 
 function LandingPage() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      {/* Nav */}
-      <header className="relative z-20">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-6">
-          <ZorynWordmark />
-          <nav className="hidden items-center gap-8 text-sm text-muted-foreground md:flex">
-            <a href="#features" className="hover:text-foreground">Für dich</a>
-            <a href="#merchants" className="hover:text-foreground">Für Händler</a>
-            <a href="#network" className="hover:text-foreground">Netzwerk</a>
-          </nav>
-          <div className="flex items-center gap-3">
-            <Link
-              to="/auth"
-              className="hidden text-sm text-muted-foreground hover:text-foreground sm:inline"
-            >
-              Anmelden
-            </Link>
-            <Button asChild size="sm" className="gradient-brand text-primary-foreground border-0">
-              <Link to="/auth">
-                Wallet erstellen <ArrowRight className="ml-1 size-4" />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </header>
+    <PublicShell>
+      <div className="text-foreground">
+
 
       {/* Hero */}
       <section className="relative overflow-hidden">
