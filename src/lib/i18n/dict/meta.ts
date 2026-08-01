@@ -55,7 +55,8 @@ export const meta: Record<string, string> = {
     "Loyalty, rewards and campaigns — all in one portal.",
   "Ein Terminal fürs Team: Mitgliedsnummer eingeben, Punkte vergeben, Rewards einlösen.":
     "One terminal for your team: enter the membership number, award points, redeem rewards.",
-  "POS-Terminal, schnell und ohne Reibungsverluste.": "A POS terminal that is fast and frictionless.",
+  "POS-Terminal, schnell und ohne Reibungsverluste.":
+    "A POS terminal that is fast and frictionless.",
   "Mehrere Filialen, mehrere Marken, ein Loyalty-System — mit SSO-ready Rollen.":
     "Multiple stores, multiple brands, one loyalty system — with SSO-ready roles.",
   "Loyalty für Ketten und Franchise.": "Loyalty for chains and franchises.",
@@ -63,8 +64,7 @@ export const meta: Record<string, string> = {
     "API roadmap for Zoryn: points, rewards, webhooks. Coming soon.",
   "REST + Webhooks für die Zoryn-Loyalty-Plattform.":
     "REST + webhooks for the Zoryn loyalty platform.",
-  "Werde Media- oder Affiliate-Partner von Zoryn.":
-    "Become a media or affiliate partner of Zoryn.",
+  "Werde Media- oder Affiliate-Partner von Zoryn.": "Become a media or affiliate partner of Zoryn.",
   "Affiliate, Media und Distribution mit Zoryn.": "Affiliate, media and distribution with Zoryn.",
   "Neues aus dem Zoryn-Netzwerk: Produkt, Merchant-Stories und Erklärungen.":
     "News from the Zoryn network: product, merchant stories and explainers.",

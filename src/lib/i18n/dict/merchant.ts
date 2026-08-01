@@ -3,8 +3,7 @@ export const merchant: Record<string, string> = {
   "Affiliate-Netzwerke": "Affiliate networks",
   Bereit: "Ready",
   Konfigurieren: "Configure",
-  "Empfängt Swan-Karten- und Adyen-Zahlungsevents.":
-    "Receives Swan card and Adyen payment events.",
+  "Empfängt Swan-Karten- und Adyen-Zahlungsevents.": "Receives Swan card and Adyen payment events.",
   "Rewards aus externen Checkout-Systemen ausgeben und einlösen.":
     "Issue and redeem rewards from external checkout systems.",
   "Provisionsfinanzierte Rewards als pending oder approved verfolgen.":
