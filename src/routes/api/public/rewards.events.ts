@@ -84,7 +84,7 @@ export const Route = createFileRoute("/api/public/rewards/events")({
               platform_user_id: parsed.platform_user_id ?? null,
               amount_cents: parsed.amount_cents ?? null,
               currency: parsed.currency ?? "EUR",
-              payload: parsed as unknown as Record<string, unknown>,
+              payload: JSON.parse(raw),
               status: "received" as const,
             },
             { onConflict: "provider,provider_event_id" },

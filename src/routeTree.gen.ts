@@ -59,6 +59,7 @@ import { Route as AuthenticatedAdminMerchantsRouteImport } from './routes/_authe
 import { Route as AuthenticatedAdminClaimsRouteImport } from './routes/_authenticated/admin.claims'
 import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authenticated/admin.audit'
 import { Route as AuthenticatedAdminAnalyticsRouteImport } from './routes/_authenticated/admin.analytics'
+import { Route as ApiPublicRewardsEventsRouteImport } from './routes/api/public/rewards.events'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -324,6 +325,11 @@ const AuthenticatedAdminAnalyticsRoute =
     path: '/analytics',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const ApiPublicRewardsEventsRoute = ApiPublicRewardsEventsRouteImport.update({
+  id: '/api/public/rewards/events',
+  path: '/api/public/rewards/events',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -375,6 +381,7 @@ export interface FileRoutesByFullPath {
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/app/': typeof AuthenticatedAppIndexRoute
   '/merchant/': typeof AuthenticatedMerchantIndexRoute
+  '/api/public/rewards/events': typeof ApiPublicRewardsEventsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -423,6 +430,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/app': typeof AuthenticatedAppIndexRoute
   '/merchant': typeof AuthenticatedMerchantIndexRoute
+  '/api/public/rewards/events': typeof ApiPublicRewardsEventsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -476,6 +484,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/app/': typeof AuthenticatedAppIndexRoute
   '/_authenticated/merchant/': typeof AuthenticatedMerchantIndexRoute
+  '/api/public/rewards/events': typeof ApiPublicRewardsEventsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -529,6 +538,7 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/app/'
     | '/merchant/'
+    | '/api/public/rewards/events'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -577,6 +587,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/app'
     | '/merchant'
+    | '/api/public/rewards/events'
   id:
     | '__root__'
     | '/'
@@ -629,6 +640,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/'
     | '/_authenticated/app/'
     | '/_authenticated/merchant/'
+    | '/api/public/rewards/events'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -652,6 +664,7 @@ export interface RootRouteChildren {
   LegalImprintRoute: typeof LegalImprintRoute
   LegalPrivacyRoute: typeof LegalPrivacyRoute
   LegalTermsRoute: typeof LegalTermsRoute
+  ApiPublicRewardsEventsRoute: typeof ApiPublicRewardsEventsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -1006,6 +1019,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminAnalyticsRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/api/public/rewards/events': {
+      id: '/api/public/rewards/events'
+      path: '/api/public/rewards/events'
+      fullPath: '/api/public/rewards/events'
+      preLoaderRoute: typeof ApiPublicRewardsEventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -1136,6 +1156,7 @@ const rootRouteChildren: RootRouteChildren = {
   LegalImprintRoute: LegalImprintRoute,
   LegalPrivacyRoute: LegalPrivacyRoute,
   LegalTermsRoute: LegalTermsRoute,
+  ApiPublicRewardsEventsRoute: ApiPublicRewardsEventsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
