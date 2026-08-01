@@ -7,7 +7,11 @@ import { CheckCircle2, Circle, Loader2, Store } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { PlatformShell } from "@/components/PlatformShell";
-import { ONBOARDING_STEPS, onboardingBoard, setOnboardingStep } from "@/lib/rewards-platform.functions";
+import {
+  ONBOARDING_STEPS,
+  onboardingBoard,
+  setOnboardingStep,
+} from "@/lib/rewards-platform.functions";
 import type { OnboardingStep } from "@/lib/rewards-platform.functions";
 import { useT } from "@/lib/i18n";
 
@@ -50,7 +54,10 @@ function MerchantOnboardingPage() {
   const stepFn = useServerFn(setOnboardingStep);
   const [selected, setSelected] = useState<string | null>(null);
 
-  const { data, isLoading, error } = useQuery({ queryKey: ["onboarding-board"], queryFn: () => boardFn() });
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["onboarding-board"],
+    queryFn: () => boardFn(),
+  });
 
   const merchant = useMemo(() => {
     if (!data) return null;
@@ -75,7 +82,8 @@ function MerchantOnboardingPage() {
   });
 
   const statusFor = (step: OnboardingStep) =>
-    data?.progress.find((p) => p.merchant_id === merchant?.id && p.step === step)?.status ?? "not_started";
+    data?.progress.find((p) => p.merchant_id === merchant?.id && p.step === step)?.status ??
+    "not_started";
 
   const completed = ONBOARDING_STEPS.filter((s) => statusFor(s) === "complete").length;
 
@@ -89,7 +97,9 @@ function MerchantOnboardingPage() {
       {error && <p className="text-sm text-destructive">{(error as Error).message}</p>}
 
       {data && data.merchants.length === 0 && (
-        <p className="text-sm text-muted-foreground">{t("Noch keine Händler in diesem Mandanten.")}</p>
+        <p className="text-sm text-muted-foreground">
+          {t("Noch keine Händler in diesem Mandanten.")}
+        </p>
       )}
 
       {data && data.merchants.length > 0 && (

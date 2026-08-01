@@ -30,7 +30,10 @@ export const Route = createFileRoute("/_authenticated/liability-centre")({
 function LiabilityCentrePage() {
   const t = useT();
   const fn = useServerFn(liabilityOverview);
-  const { data, isLoading, error } = useQuery({ queryKey: ["liability-overview"], queryFn: () => fn() });
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["liability-overview"],
+    queryFn: () => fn(),
+  });
 
   return (
     <PlatformShell
@@ -44,8 +47,14 @@ function LiabilityCentrePage() {
       {data && (
         <>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            <StatTile label="Offene Verbindlichkeit" value={formatEuroCents(data.totals.liabilityCents)} />
-            <StatTile label="Hinterlegtes Guthaben" value={formatEuroCents(data.totals.fundedCents)} />
+            <StatTile
+              label="Offene Verbindlichkeit"
+              value={formatEuroCents(data.totals.liabilityCents)}
+            />
+            <StatTile
+              label="Hinterlegtes Guthaben"
+              value={formatEuroCents(data.totals.fundedCents)}
+            />
             <StatTile label="Reserviert" value={formatEuroCents(data.totals.reservedCents)} />
             <StatTile
               label="Deckungsgrad"
@@ -65,15 +74,27 @@ function LiabilityCentrePage() {
               {data.tenants.map((tenant) => {
                 const pct = Math.min(100, Math.round(tenant.coverageRatio * 100));
                 const tone =
-                  tenant.coverageRatio >= 1 ? "default" : tenant.coverageRatio >= 0.5 ? "secondary" : "destructive";
+                  tenant.coverageRatio >= 1
+                    ? "default"
+                    : tenant.coverageRatio >= 0.5
+                      ? "secondary"
+                      : "destructive";
                 return (
-                  <div key={tenant.id} className="rounded-xl border border-border/60 bg-card/40 p-4">
+                  <div
+                    key={tenant.id}
+                    className="rounded-xl border border-border/60 bg-card/40 p-4"
+                  >
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <p className="font-medium">{tenant.name}</p>
-                      <Badge variant={tone}>{pct}% {t("gedeckt")}</Badge>
+                      <Badge variant={tone}>
+                        {pct}% {t("gedeckt")}
+                      </Badge>
                     </div>
                     <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-muted">
-                      <div className="h-full rounded-full gradient-brand" style={{ width: `${pct}%` }} />
+                      <div
+                        className="h-full rounded-full gradient-brand"
+                        style={{ width: `${pct}%` }}
+                      />
                     </div>
                     <div className="mt-2 grid grid-cols-2 gap-3 text-xs text-muted-foreground sm:grid-cols-4">
                       <span>
@@ -87,7 +108,9 @@ function LiabilityCentrePage() {
                       </span>
                       <span>
                         {t("Reichweite")}:{" "}
-                        {tenant.daysOfCover === null ? "—" : `${formatNumber(tenant.daysOfCover)} ${t("Tage")}`}
+                        {tenant.daysOfCover === null
+                          ? "—"
+                          : `${formatNumber(tenant.daysOfCover)} ${t("Tage")}`}
                       </span>
                     </div>
                   </div>

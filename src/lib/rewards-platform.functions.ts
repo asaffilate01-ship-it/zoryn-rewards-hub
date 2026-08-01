@@ -18,13 +18,18 @@ export type OnboardingStep = (typeof ONBOARDING_STEPS)[number];
 
 type Ctx = {
   supabase: {
-    rpc: (fn: "has_role", args: { _user_id: string; _role: "admin" }) => PromiseLike<{ data: unknown }>;
+    rpc: (
+      fn: "has_role",
+      args: { _user_id: string; _role: "admin" },
+    ) => PromiseLike<{ data: unknown }>;
   };
   userId: string;
 };
 
 /** Admin => all tenants. Tenant member => only their tenants. Otherwise 403. */
-async function accessibleTenantIds(context: Ctx): Promise<{ isAdmin: boolean; tenantIds: string[] }> {
+async function accessibleTenantIds(
+  context: Ctx,
+): Promise<{ isAdmin: boolean; tenantIds: string[] }> {
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
   const { data: isAdmin } = await context.supabase.rpc("has_role", {
     _user_id: context.userId,
@@ -80,7 +85,13 @@ export type PlatformOverview = {
     pendingPoints: number;
     fundingBalanceCents: number;
   }>;
-  events: { total: number; received: number; processed: number; failed: number; last_at: string | null };
+  events: {
+    total: number;
+    received: number;
+    processed: number;
+    failed: number;
+    last_at: string | null;
+  };
 };
 
 export const platformOverview = createServerFn({ method: "GET" })
@@ -89,29 +100,49 @@ export const platformOverview = createServerFn({ method: "GET" })
     const { isAdmin, tenantIds } = await accessibleTenantIds(context as unknown as Ctx);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
-    const [tenants, merchants, programmes, locations, memberships, campaigns, wallets, funding, subs, events] =
-      await Promise.all([
-        supabaseAdmin.from("reward_tenants").select("id,slug,name,mode,status").in("id", tenantIds).order("name"),
-        supabaseAdmin.from("reward_merchants").select("id,tenant_id").in("tenant_id", tenantIds),
-        supabaseAdmin.from("reward_programmes").select("id,tenant_id").in("tenant_id", tenantIds),
-        supabaseAdmin.from("reward_locations").select("id,merchant_id"),
-        supabaseAdmin.from("reward_memberships").select("id,tenant_id").in("tenant_id", tenantIds),
-        supabaseAdmin.from("reward_campaigns").select("id,tenant_id,status").in("tenant_id", tenantIds),
-        supabaseAdmin
-          .from("reward_wallets")
-          .select("id,membership_id,available,pending,lifetime_earned,lifetime_redeemed"),
-        supabaseAdmin
-          .from("reward_funding_accounts")
-          .select("tenant_id,balance_cents,reserved_cents")
-          .in("tenant_id", tenantIds),
-        supabaseAdmin.from("reward_subscriptions").select("tenant_id,plan").in("tenant_id", tenantIds),
-        supabaseAdmin
-          .from("reward_external_events")
-          .select("status,received_at,tenant_id")
-          .in("tenant_id", tenantIds)
-          .order("received_at", { ascending: false })
-          .limit(500),
-      ]);
+    const [
+      tenants,
+      merchants,
+      programmes,
+      locations,
+      memberships,
+      campaigns,
+      wallets,
+      funding,
+      subs,
+      events,
+    ] = await Promise.all([
+      supabaseAdmin
+        .from("reward_tenants")
+        .select("id,slug,name,mode,status")
+        .in("id", tenantIds)
+        .order("name"),
+      supabaseAdmin.from("reward_merchants").select("id,tenant_id").in("tenant_id", tenantIds),
+      supabaseAdmin.from("reward_programmes").select("id,tenant_id").in("tenant_id", tenantIds),
+      supabaseAdmin.from("reward_locations").select("id,merchant_id"),
+      supabaseAdmin.from("reward_memberships").select("id,tenant_id").in("tenant_id", tenantIds),
+      supabaseAdmin
+        .from("reward_campaigns")
+        .select("id,tenant_id,status")
+        .in("tenant_id", tenantIds),
+      supabaseAdmin
+        .from("reward_wallets")
+        .select("id,membership_id,available,pending,lifetime_earned,lifetime_redeemed"),
+      supabaseAdmin
+        .from("reward_funding_accounts")
+        .select("tenant_id,balance_cents,reserved_cents")
+        .in("tenant_id", tenantIds),
+      supabaseAdmin
+        .from("reward_subscriptions")
+        .select("tenant_id,plan")
+        .in("tenant_id", tenantIds),
+      supabaseAdmin
+        .from("reward_external_events")
+        .select("status,received_at,tenant_id")
+        .in("tenant_id", tenantIds)
+        .order("received_at", { ascending: false })
+        .limit(500),
+    ]);
 
     const memberTenant = new Map((memberships.data ?? []).map((m) => [m.id, m.tenant_id]));
     const merchantIds = new Set((merchants.data ?? []).map((m) => m.id));
@@ -177,7 +208,12 @@ export const platformOverview = createServerFn({ method: "GET" })
 /* ------------------------------------------------------------------ */
 
 export type LiabilityOverview = {
-  totals: { liabilityCents: number; fundedCents: number; reservedCents: number; coverageRatio: number };
+  totals: {
+    liabilityCents: number;
+    fundedCents: number;
+    reservedCents: number;
+    coverageRatio: number;
+  };
   tenants: Array<{
     id: string;
     name: string;
@@ -224,7 +260,9 @@ export const liabilityOverview = createServerFn({ method: "GET" })
     const memberTenant = new Map((memberships.data ?? []).map((m) => [m.id, m.tenant_id]));
     const rows = (tenants.data ?? []).map((t) => {
       const w = (wallets.data ?? []).filter((x) => memberTenant.get(x.membership_id) === t.id);
-      const liabilityCents = euroFromPoints(w.reduce((s, x) => s + num(x.available) + num(x.pending), 0));
+      const liabilityCents = euroFromPoints(
+        w.reduce((s, x) => s + num(x.available) + num(x.pending), 0),
+      );
       const f = (funding.data ?? []).filter((x) => x.tenant_id === t.id);
       const fundedCents = f.reduce((s, x) => s + num(x.balance_cents), 0);
       const reservedCents = f.reduce((s, x) => s + num(x.reserved_cents), 0);
@@ -293,7 +331,11 @@ export const campaignStudio = createServerFn({ method: "GET" })
 
     const [tenants, merchants, campaigns, attributions] = await Promise.all([
       supabaseAdmin.from("reward_tenants").select("id,name").in("id", tenantIds).order("name"),
-      supabaseAdmin.from("reward_merchants").select("id,name,tenant_id").in("tenant_id", tenantIds).order("name"),
+      supabaseAdmin
+        .from("reward_merchants")
+        .select("id,name,tenant_id")
+        .in("tenant_id", tenantIds)
+        .order("name"),
       supabaseAdmin
         .from("reward_campaigns")
         .select(
@@ -395,7 +437,10 @@ export const setCampaignStatus = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((raw: unknown) =>
     z
-      .object({ campaignId: z.string().uuid(), status: z.enum(["draft", "active", "paused", "ended"]) })
+      .object({
+        campaignId: z.string().uuid(),
+        status: z.enum(["draft", "active", "paused", "ended"]),
+      })
       .parse(raw),
   )
   .handler(async ({ data, context }) => {
@@ -582,7 +627,8 @@ export const scenarioLab = createServerFn({ method: "GET" })
         id: "refund-reversal",
         area: "integration",
         title: "Storno nach Rückerstattung",
-        description: "Reward-Stornierungen, die auf die ursprüngliche Attribution zurückgeführt wurden.",
+        description:
+          "Reward-Stornierungen, die auf die ursprüngliche Attribution zurückgeführt wurden.",
         status: "healthy",
         metric: `${reversals.count ?? 0} Stornos`,
       },
@@ -591,7 +637,12 @@ export const scenarioLab = createServerFn({ method: "GET" })
         area: "platform",
         title: "Netzwerk-Verbindlichkeit",
         description: "Gesamte offene Reward-Verbindlichkeit über alle Mandanten.",
-        status: liabilityCents > 5_000_000 ? "critical" : liabilityCents > 1_000_000 ? "attention" : "healthy",
+        status:
+          liabilityCents > 5_000_000
+            ? "critical"
+            : liabilityCents > 1_000_000
+              ? "attention"
+              : "healthy",
         metric: `${(liabilityCents / 100).toFixed(2)} €`,
       },
       {

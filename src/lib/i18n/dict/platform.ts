@@ -9,7 +9,8 @@ export const platform: Record<string, string> = {
 
   // Production dashboard
   "Rewards Produktion": "Rewards production",
-  "Ein Loyalty-Betriebssystem für alle Mandanten.": "One loyalty operating system for every tenant.",
+  "Ein Loyalty-Betriebssystem für alle Mandanten.":
+    "One loyalty operating system for every tenant.",
   "Standalone-SaaS und Zoryn-integrierte Programme in einer Ansicht: Wallets, Kampagnen, Finanzierung und Provider-Events.":
     "Standalone SaaS and Zoryn-integrated programmes in one view: wallets, campaigns, funding and provider events.",
   Mandanten: "Tenants",
@@ -39,7 +40,8 @@ export const platform: Record<string, string> = {
 
   // Onboarding
   "Händler-Onboarding": "Merchant onboarding",
-  "Ein Loyalty-Programm starten – ganz ohne Banking.": "Launch a loyalty programme — no banking required.",
+  "Ein Loyalty-Programm starten – ganz ohne Banking.":
+    "Launch a loyalty programme — no banking required.",
   "Derselbe Mandant kann später Zoryn Money, ZorynPay, POS-, Affiliate- und Card-Linked-Kanäle verbinden.":
     "The same tenant can later connect Zoryn Money, ZorynPay, POS, affiliate and card-linked channels.",
   "Noch keine Händler in diesem Mandanten.": "No merchants in this tenant yet.",
@@ -85,7 +87,8 @@ export const platform: Record<string, string> = {
   Standardregel: "Default rule",
 
   // Liability centre
-  "Jeder Punkt ist eine Verbindlichkeit – und gedeckt.": "Every point is a liability — and it is covered.",
+  "Jeder Punkt ist eine Verbindlichkeit – und gedeckt.":
+    "Every point is a liability — and it is covered.",
   "Offene Reward-Verbindlichkeit, hinterlegtes Guthaben, Deckungsgrad und Reichweite je Mandant.":
     "Outstanding reward liability, deposited funds, coverage ratio and runway per tenant.",
   "Hinterlegtes Guthaben": "Deposited funds",
@@ -132,5 +135,6 @@ export const platform: Record<string, string> = {
   "Netzwerk-Verbindlichkeit": "Network liability",
   "Gesamte offene Reward-Verbindlichkeit über alle Mandanten.":
     "Total outstanding reward liability across all tenants.",
-  "Kampagnen, die aktuell Rewards auslösen können.": "Campaigns that can currently trigger rewards.",
+  "Kampagnen, die aktuell Rewards auslösen können.":
+    "Campaigns that can currently trigger rewards.",
 };

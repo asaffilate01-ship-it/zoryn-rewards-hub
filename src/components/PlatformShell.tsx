@@ -92,7 +92,9 @@ export function PlatformShell({
 
       <main className="mx-auto max-w-6xl px-5 py-8">
         <p className="text-sm font-semibold text-primary">{t(eyebrow)}</p>
-        <h1 className="font-display mt-1 text-3xl font-bold tracking-tight sm:text-4xl">{t(title)}</h1>
+        <h1 className="font-display mt-1 text-3xl font-bold tracking-tight sm:text-4xl">
+          {t(title)}
+        </h1>
         <p className="mt-2 max-w-2xl text-sm text-muted-foreground">{t(description)}</p>
         <div className="mt-8 space-y-6">{children}</div>
       </main>
@@ -100,19 +102,13 @@ export function PlatformShell({
   );
 }
 
-export function StatTile({
-  label,
-  value,
-  hint,
-}: {
-  label: string;
-  value: string;
-  hint?: string;
-}) {
+export function StatTile({ label, value, hint }: { label: string; value: string; hint?: string }) {
   const t = useT();
   return (
     <div className="rounded-2xl border border-border/60 bg-card/60 p-4">
-      <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{t(label)}</p>
+      <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+        {t(label)}
+      </p>
       <p className="font-display mt-1.5 text-2xl font-semibold tracking-tight">{value}</p>
       {hint && <p className="mt-1 text-xs text-muted-foreground">{t(hint)}</p>}
     </div>

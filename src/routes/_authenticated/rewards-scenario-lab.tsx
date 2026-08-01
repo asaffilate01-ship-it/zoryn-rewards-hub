@@ -16,12 +16,14 @@ export const Route = createFileRoute("/_authenticated/rewards-scenario-lab")({
       { title: "Scenario Lab – Zoryn" },
       {
         name: "description",
-        content: "Live-Checks für Randfälle: ausstehende Rewards, Deckung, Duplikate, Stornos und Verbindlichkeit.",
+        content:
+          "Live-Checks für Randfälle: ausstehende Rewards, Deckung, Duplikate, Stornos und Verbindlichkeit.",
       },
       { property: "og:title", content: "Scenario Lab – Zoryn" },
       {
         property: "og:description",
-        content: "Live-Checks für Randfälle: ausstehende Rewards, Deckung, Duplikate, Stornos und Verbindlichkeit.",
+        content:
+          "Live-Checks für Randfälle: ausstehende Rewards, Deckung, Duplikate, Stornos und Verbindlichkeit.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

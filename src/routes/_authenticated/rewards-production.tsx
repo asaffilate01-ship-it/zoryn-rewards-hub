@@ -30,7 +30,10 @@ export const Route = createFileRoute("/_authenticated/rewards-production")({
 function ProductionDashboard() {
   const t = useT();
   const fn = useServerFn(platformOverview);
-  const { data, isLoading, error } = useQuery({ queryKey: ["platform-overview"], queryFn: () => fn() });
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["platform-overview"],
+    queryFn: () => fn(),
+  });
 
   return (
     <PlatformShell
@@ -44,8 +47,16 @@ function ProductionDashboard() {
       {data && (
         <>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            <StatTile label="Mandanten" value={formatNumber(data.totals.tenants)} hint="Aktive Rewards-Programme" />
-            <StatTile label="Händler" value={formatNumber(data.totals.merchants)} hint="Inklusive Standorte" />
+            <StatTile
+              label="Mandanten"
+              value={formatNumber(data.totals.tenants)}
+              hint="Aktive Rewards-Programme"
+            />
+            <StatTile
+              label="Händler"
+              value={formatNumber(data.totals.merchants)}
+              hint="Inklusive Standorte"
+            />
             <StatTile label="Mitglieder" value={formatNumber(data.totals.memberships)} />
             <StatTile label="Aktive Kampagnen" value={formatNumber(data.totals.activeCampaigns)} />
             <StatTile label="Ausgegebene Punkte" value={formatNumber(data.totals.issuedPoints)} />
@@ -68,7 +79,9 @@ function ProductionDashboard() {
             </CardHeader>
             <CardContent className="space-y-3">
               {data.tenants.length === 0 && (
-                <p className="text-sm text-muted-foreground">{t("Noch keine Mandanten angelegt.")}</p>
+                <p className="text-sm text-muted-foreground">
+                  {t("Noch keine Mandanten angelegt.")}
+                </p>
               )}
               {data.tenants.map((tenant) => (
                 <div
@@ -85,8 +98,9 @@ function ProductionDashboard() {
                       {tenant.plan && <Badge variant="outline">{tenant.plan}</Badge>}
                     </div>
                     <p className="mt-1 text-xs text-muted-foreground">
-                      {formatNumber(tenant.merchants)} {t("Händler")} · {formatNumber(tenant.programmes)}{" "}
-                      {t("Programme")} · {formatNumber(tenant.memberships)} {t("Mitglieder")}
+                      {formatNumber(tenant.merchants)} {t("Händler")} ·{" "}
+                      {formatNumber(tenant.programmes)} {t("Programme")} ·{" "}
+                      {formatNumber(tenant.memberships)} {t("Mitglieder")}
                     </p>
                   </div>
                   <div className="grid grid-cols-3 gap-4 text-right text-sm">

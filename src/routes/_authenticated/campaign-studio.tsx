@@ -9,7 +9,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { PlatformShell, formatEuroCents } from "@/components/PlatformShell";
-import { campaignStudio, createRewardCampaign, setCampaignStatus } from "@/lib/rewards-platform.functions";
+import {
+  campaignStudio,
+  createRewardCampaign,
+  setCampaignStatus,
+} from "@/lib/rewards-platform.functions";
 import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_authenticated/campaign-studio")({
@@ -19,12 +23,14 @@ export const Route = createFileRoute("/_authenticated/campaign-studio")({
       { title: "Campaign Studio – Zoryn" },
       {
         name: "description",
-        content: "Kampagnen mit Zielgruppe, Reward-Regel, Budget und Attribution in einem Studio bauen.",
+        content:
+          "Kampagnen mit Zielgruppe, Reward-Regel, Budget und Attribution in einem Studio bauen.",
       },
       { property: "og:title", content: "Campaign Studio – Zoryn" },
       {
         property: "og:description",
-        content: "Kampagnen mit Zielgruppe, Reward-Regel, Budget und Attribution in einem Studio bauen.",
+        content:
+          "Kampagnen mit Zielgruppe, Reward-Regel, Budget und Attribution in einem Studio bauen.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -46,7 +52,10 @@ function CampaignStudioPage() {
   const createFn = useServerFn(createRewardCampaign);
   const statusFn = useServerFn(setCampaignStatus);
 
-  const { data, isLoading, error } = useQuery({ queryKey: ["campaign-studio"], queryFn: () => studioFn() });
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["campaign-studio"],
+    queryFn: () => studioFn(),
+  });
 
   const [name, setName] = useState("");
   const [tenantId, setTenantId] = useState("");
@@ -81,7 +90,8 @@ function CampaignStudioPage() {
   });
 
   const changeStatus = useMutation({
-    mutationFn: (input: { campaignId: string; status: "active" | "paused" }) => statusFn({ data: input }),
+    mutationFn: (input: { campaignId: string; status: "active" | "paused" }) =>
+      statusFn({ data: input }),
     onSuccess: () => {
       toast.success(t("Kampagnenstatus aktualisiert"));
       qc.invalidateQueries({ queryKey: ["campaign-studio"] });
@@ -215,12 +225,15 @@ function CampaignStudioPage() {
                 <p className="text-sm text-muted-foreground">{t("Noch keine Kampagnen.")}</p>
               )}
               {data.campaigns.map((c) => {
-                const pct = c.budgetCents > 0 ? Math.min(100, (c.spendCents / c.budgetCents) * 100) : 0;
+                const pct =
+                  c.budgetCents > 0 ? Math.min(100, (c.spendCents / c.budgetCents) * 100) : 0;
                 return (
                   <div key={c.id} className="rounded-xl border border-border/60 bg-card/40 p-4">
                     <div className="flex flex-wrap items-center gap-2">
                       <p className="font-medium">{c.name}</p>
-                      <Badge variant={c.status === "active" ? "default" : "secondary"}>{c.status}</Badge>
+                      <Badge variant={c.status === "active" ? "default" : "secondary"}>
+                        {c.status}
+                      </Badge>
                       <Badge variant="outline">{c.campaign_type}</Badge>
                       <span className="text-xs text-muted-foreground">
                         {c.tenant_name}
@@ -231,11 +244,15 @@ function CampaignStudioPage() {
                       {c.rewardSummary} · {c.audienceSummary}
                     </p>
                     <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-muted">
-                      <div className="h-full rounded-full gradient-brand" style={{ width: `${pct}%` }} />
+                      <div
+                        className="h-full rounded-full gradient-brand"
+                        style={{ width: `${pct}%` }}
+                      />
                     </div>
                     <div className="mt-2 flex flex-wrap items-center justify-between gap-3 text-xs text-muted-foreground">
                       <span>
-                        {formatEuroCents(c.spendCents)} / {formatEuroCents(c.budgetCents)} {t("Budget")}
+                        {formatEuroCents(c.spendCents)} / {formatEuroCents(c.budgetCents)}{" "}
+                        {t("Budget")}
                       </span>
                       <div className="flex gap-2">
                         <Button
