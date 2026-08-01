@@ -1,4 +1,14 @@
 export const merchant: Record<string, string> = {
+  Guthaben: "Balance",
+  "Affiliate-Netzwerke": "Affiliate networks",
+  Bereit: "Ready",
+  Konfigurieren: "Configure",
+  "Empfängt Swan-Karten- und Adyen-Zahlungsevents.":
+    "Receives Swan card and Adyen payment events.",
+  "Rewards aus externen Checkout-Systemen ausgeben und einlösen.":
+    "Issue and redeem rewards from external checkout systems.",
+  "Provisionsfinanzierte Rewards als pending oder approved verfolgen.":
+    "Track commission-funded rewards as pending or approved.",
   Abbrechen: "Cancel",
   Abgeschlossen: "Completed",
   "Abrechnung aktualisiert": "Settlement updated",
