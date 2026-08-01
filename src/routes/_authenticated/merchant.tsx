@@ -16,6 +16,7 @@ const TABS: { to: string; label: string; icon: ComponentType<{ className?: strin
   { to: "/merchant/rewards", label: "Rewards", icon: Gift },
   { to: "/merchant/funding", label: "Guthaben", icon: Wallet },
   { to: "/merchant/team", label: "Team", icon: Users },
+  { to: "/merchant/integrations", label: "Integrationen", icon: PlugZap },
   { to: "/merchant/settings", label: "Einstellungen", icon: Settings },
 ];
 
