@@ -56,6 +56,7 @@ import { Route as AuthenticatedAppNearbyRouteImport } from './routes/_authentica
 import { Route as AuthenticatedAppClaimRouteImport } from './routes/_authenticated/app.claim'
 import { Route as AuthenticatedAppBadgesRouteImport } from './routes/_authenticated/app.badges'
 import { Route as AuthenticatedAppAssistantRouteImport } from './routes/_authenticated/app.assistant'
+import { Route as AuthenticatedAdminTenantsRouteImport } from './routes/_authenticated/admin.tenants'
 import { Route as AuthenticatedAdminMerchantsRouteImport } from './routes/_authenticated/admin.merchants'
 import { Route as AuthenticatedAdminClaimsRouteImport } from './routes/_authenticated/admin.claims'
 import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authenticated/admin.audit'
@@ -309,6 +310,12 @@ const AuthenticatedAppAssistantRoute =
     path: '/assistant',
     getParentRoute: () => AuthenticatedAppRoute,
   } as any)
+const AuthenticatedAdminTenantsRoute =
+  AuthenticatedAdminTenantsRouteImport.update({
+    id: '/tenants',
+    path: '/tenants',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminMerchantsRoute =
   AuthenticatedAdminMerchantsRouteImport.update({
     id: '/merchants',
@@ -366,6 +373,7 @@ export interface FileRoutesByFullPath {
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/admin/claims': typeof AuthenticatedAdminClaimsRoute
   '/admin/merchants': typeof AuthenticatedAdminMerchantsRoute
+  '/admin/tenants': typeof AuthenticatedAdminTenantsRoute
   '/app/assistant': typeof AuthenticatedAppAssistantRoute
   '/app/badges': typeof AuthenticatedAppBadgesRoute
   '/app/claim': typeof AuthenticatedAppClaimRoute
@@ -416,6 +424,7 @@ export interface FileRoutesByTo {
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/admin/claims': typeof AuthenticatedAdminClaimsRoute
   '/admin/merchants': typeof AuthenticatedAdminMerchantsRoute
+  '/admin/tenants': typeof AuthenticatedAdminTenantsRoute
   '/app/assistant': typeof AuthenticatedAppAssistantRoute
   '/app/badges': typeof AuthenticatedAppBadgesRoute
   '/app/claim': typeof AuthenticatedAppClaimRoute
@@ -471,6 +480,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/_authenticated/admin/claims': typeof AuthenticatedAdminClaimsRoute
   '/_authenticated/admin/merchants': typeof AuthenticatedAdminMerchantsRoute
+  '/_authenticated/admin/tenants': typeof AuthenticatedAdminTenantsRoute
   '/_authenticated/app/assistant': typeof AuthenticatedAppAssistantRoute
   '/_authenticated/app/badges': typeof AuthenticatedAppBadgesRoute
   '/_authenticated/app/claim': typeof AuthenticatedAppClaimRoute
@@ -526,6 +536,7 @@ export interface FileRouteTypes {
     | '/admin/audit'
     | '/admin/claims'
     | '/admin/merchants'
+    | '/admin/tenants'
     | '/app/assistant'
     | '/app/badges'
     | '/app/claim'
@@ -576,6 +587,7 @@ export interface FileRouteTypes {
     | '/admin/audit'
     | '/admin/claims'
     | '/admin/merchants'
+    | '/admin/tenants'
     | '/app/assistant'
     | '/app/badges'
     | '/app/claim'
@@ -630,6 +642,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/audit'
     | '/_authenticated/admin/claims'
     | '/_authenticated/admin/merchants'
+    | '/_authenticated/admin/tenants'
     | '/_authenticated/app/assistant'
     | '/_authenticated/app/badges'
     | '/_authenticated/app/claim'
@@ -1011,6 +1024,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppAssistantRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
+    '/_authenticated/admin/tenants': {
+      id: '/_authenticated/admin/tenants'
+      path: '/tenants'
+      fullPath: '/admin/tenants'
+      preLoaderRoute: typeof AuthenticatedAdminTenantsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/merchants': {
       id: '/_authenticated/admin/merchants'
       path: '/merchants'
@@ -1054,6 +1074,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminAuditRoute: typeof AuthenticatedAdminAuditRoute
   AuthenticatedAdminClaimsRoute: typeof AuthenticatedAdminClaimsRoute
   AuthenticatedAdminMerchantsRoute: typeof AuthenticatedAdminMerchantsRoute
+  AuthenticatedAdminTenantsRoute: typeof AuthenticatedAdminTenantsRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
 
@@ -1062,6 +1083,7 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminAuditRoute: AuthenticatedAdminAuditRoute,
   AuthenticatedAdminClaimsRoute: AuthenticatedAdminClaimsRoute,
   AuthenticatedAdminMerchantsRoute: AuthenticatedAdminMerchantsRoute,
+  AuthenticatedAdminTenantsRoute: AuthenticatedAdminTenantsRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
 }
 
