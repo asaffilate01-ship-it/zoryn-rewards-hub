@@ -1,12 +1,14 @@
 # Merge checklist
 
-1. Create a branch: `feature/unified-rewards-platform`.
-2. Copy this overlay into the repository root and merge folders.
-3. Do not edit `src/routeTree.gen.ts`; TanStack regenerates it.
-4. Run `npm install` then `npm run build` and `npm run lint`.
-5. Apply the SQL migration in a development Supabase project.
-6. Run the seed only in development.
-7. Deploy Edge Functions and set secrets.
-8. Add a navigation link to `/merchant/integrations` if desired.
-9. Map Zoryn Platform Swan/Adyen events to the shared contract.
-10. Add production campaign evaluation, reversal worker and settlement reconciliation before launch.
+1. Back up the current repository or create a branch.
+2. Extract this ZIP.
+3. Copy all extracted files into the repository root.
+4. Allow folders to merge; do not delete existing files.
+5. Do not edit `src/routeTree.gen.ts` manually.
+6. Apply the migration in Supabase.
+7. Apply seed data only to a development project.
+8. Deploy the three Edge Functions.
+9. Add environment secrets listed in `.env.rewards-production.example`.
+10. Run `npm install`, `npm run lint`, and `npm run build`.
+11. Verify the five new routes.
+12. Commit: `Add Zoryn Rewards production upgrade v3`.
