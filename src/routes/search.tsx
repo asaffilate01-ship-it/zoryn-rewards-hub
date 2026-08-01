@@ -58,7 +58,7 @@ function SearchPage() {
           {isFetching && <p className="text-sm text-muted-foreground">{t("Suche läuft…")}</p>}
           {q.trim().length >= 2 && !isFetching && hits.length === 0 && (
             <p className="text-sm text-muted-foreground">
-              {t('Nichts gefunden für „X".').replace("X", q)}
+              {t('Nichts gefunden für „X“.').replace("X", q)}
             </p>
           )}
           <ul className="mt-2 space-y-2">

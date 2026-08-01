@@ -40,7 +40,7 @@ function GdprPage() {
           <h3>{t("Berichtigung (Art. 16)")}</h3>
           <p>{t("Falsche Daten werden auf deinen Wunsch korrigiert.")}</p>
           <h3>{t("Löschung (Art. 17)")}</h3>
-          <p>{t("„Recht auf Vergessenwerden" — mit Ausnahme gesetzlicher Aufbewahrungspflichten.")}</p>
+          <p>{t("„Recht auf Vergessenwerden“ — mit Ausnahme gesetzlicher Aufbewahrungspflichten.“)}</p>
           <h3>{t("Einschränkung (Art. 18)")}</h3>
           <p>{t("Sperrung der Verarbeitung während einer Prüfung.")}</p>
           <h3>{t("Datenübertragbarkeit (Art. 20)")}</h3>

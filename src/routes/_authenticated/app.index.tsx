@@ -184,7 +184,7 @@ function WalletHome() {
         </div>
         {wallet.transactions.length === 0 ? (
           <div className="mt-3 rounded-2xl border border-dashed border-border p-6 text-center text-sm text-muted-foreground">
-            {t('Noch keine Aktivität. Tippe „Demo Earn", um eine Buchung zu sehen.')}
+            {t('Noch keine Aktivität. Tippe „Demo Earn“, um eine Buchung zu sehen.')}
           </div>
         ) : (
           <ul className="mt-3 divide-y divide-border rounded-2xl border border-border bg-card/60">
