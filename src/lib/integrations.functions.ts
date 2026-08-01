@@ -95,7 +95,12 @@ export type TenantOverview = {
 };
 
 type AdminContext = {
-  supabase: { rpc: (fn: string, args: Record<string, unknown>) => Promise<{ data: unknown }> };
+  supabase: {
+    rpc: (
+      fn: "has_role",
+      args: { _user_id: string; _role: "admin" },
+    ) => PromiseLike<{ data: unknown }>;
+  };
   userId: string;
 };
 
@@ -111,6 +116,7 @@ export const tenantOverview = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }): Promise<TenantOverview> => {
     await assertAdmin(context as unknown as AdminContext);
+
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
     const [tenants, programmes, merchants, memberships, wallets, events] = await Promise.all([
