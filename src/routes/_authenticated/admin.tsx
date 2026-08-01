@@ -4,6 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import { isAdmin } from "@/lib/admin.functions";
 import { Button } from "@/components/ui/button";
 import { ZorynMark } from "@/components/ZorynMark";
+import { LanguageToggle } from "@/components/LanguageToggle";
+import { useT } from "@/lib/i18n";
 import {
   Shield,
   ArrowLeft,
@@ -31,6 +33,7 @@ const TABS: { to: string; label: string; icon: ComponentType<{ className?: strin
 ];
 
 function AdminShell() {
+  const t = useT();
   const isAdminFn = useServerFn(isAdmin);
   const { data: allowed, isLoading } = useQuery({
     queryKey: ["isAdmin"],
@@ -39,17 +42,17 @@ function AdminShell() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   if (isLoading)
-    return <div className="p-8 text-sm text-muted-foreground">Prüfe Berechtigungen…</div>;
+    return <div className="p-8 text-sm text-muted-foreground">{t("Prüfe Berechtigungen…")}</div>;
   if (!allowed) {
     return (
       <div className="mx-auto max-w-md p-8 text-center">
         <Shield className="mx-auto size-10 text-muted-foreground" />
-        <h1 className="mt-3 font-display text-xl font-semibold">Kein Admin-Zugriff</h1>
+        <h1 className="mt-3 font-display text-xl font-semibold">{t("Kein Admin-Zugriff")}</h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Dieser Bereich ist Plattform-Administrator:innen vorbehalten.
+          {t("Dieser Bereich ist Plattform-Administrator:innen vorbehalten.")}
         </p>
         <Link to="/app" className="mt-6 inline-block">
-          <Button variant="secondary">Zurück zum Wallet</Button>
+          <Button variant="secondary">{t("Zurück zum Wallet")}</Button>
         </Link>
       </div>
     );
@@ -69,23 +72,26 @@ function AdminShell() {
                 </span>
               </div>
             </Link>
-            <Link
-              to="/app"
-              className="inline-flex items-center gap-1.5 rounded-full border border-border/70 bg-card/60 px-3 py-1.5 text-xs font-medium text-muted-foreground transition hover:text-foreground"
-            >
-              <ArrowLeft className="size-3.5" /> Zur App
-            </Link>
+            <div className="flex items-center gap-2">
+              <LanguageToggle />
+              <Link
+                to="/app"
+                className="inline-flex items-center gap-1.5 rounded-full border border-border/70 bg-card/60 px-3 py-1.5 text-xs font-medium text-muted-foreground transition hover:text-foreground"
+              >
+                <ArrowLeft className="size-3.5" /> {t("Zur App")}
+              </Link>
+            </div>
           </div>
           <nav className="-mx-5 overflow-x-auto px-5 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             <div className="flex min-w-max items-center gap-1">
-              {TABS.map((t) => {
+              {TABS.map((tab) => {
                 const active =
-                  t.to === "/admin" ? pathname === "/admin" : pathname.startsWith(t.to);
-                const Icon = t.icon;
+                  tab.to === "/admin" ? pathname === "/admin" : pathname.startsWith(tab.to);
+                const Icon = tab.icon;
                 return (
                   <Link
-                    key={t.to}
-                    to={t.to}
+                    key={tab.to}
+                    to={tab.to}
                     className={`relative inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[13px] font-medium transition ${
                       active
                         ? "bg-foreground/[0.06] text-foreground"
@@ -93,7 +99,7 @@ function AdminShell() {
                     }`}
                   >
                     <Icon className={`size-4 ${active ? "text-primary" : ""}`} />
-                    {t.label}
+                    {t(tab.label)}
                     {active && (
                       <span className="absolute inset-x-3 -bottom-2 h-[2px] rounded-full gradient-brand" />
                     )}

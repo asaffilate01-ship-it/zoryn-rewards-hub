@@ -3,6 +3,7 @@ import { Cookie, Settings2 } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
+import { useT } from "@/lib/i18n";
 import {
   acceptAll,
   rejectAll,
@@ -13,6 +14,7 @@ import {
 } from "@/lib/consent";
 
 export function CookieConsent() {
+  const t = useT();
   const consent = useConsent();
   const [open, setOpen] = useState(false);
   const [analytics, setAnalytics] = useState(consent.analytics);
@@ -40,7 +42,7 @@ export function CookieConsent() {
       {consent.decided ? (
         <button
           onClick={openConsent}
-          aria-label="Cookie-Einstellungen"
+          aria-label={t("Cookie-Einstellungen")}
           className="fixed bottom-4 left-4 z-40 grid h-11 w-11 place-items-center rounded-full border border-border/60 bg-background/70 text-muted-foreground shadow-lg backdrop-blur-xl transition hover:text-brand"
         >
           <Cookie className="h-4 w-4" />
@@ -61,13 +63,14 @@ export function CookieConsent() {
               </div>
               <div className="min-w-0">
                 <h2 id="cookie-title" className="text-lg font-semibold">
-                  Wir respektieren deine Privatsphäre
+                  {t("Wir respektieren deine Privatsphäre")}
                 </h2>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  Wir nutzen Cookies, damit Zoryn funktioniert und um die App zu verbessern. Du
-                  entscheidest, was wir dürfen. Details in unserer{" "}
+                  {t(
+                    "Wir nutzen Cookies, damit Zoryn funktioniert und um die App zu verbessern. Du entscheidest, was wir dürfen. Details in unserer",
+                  )}{" "}
                   <Link to="/legal/cookies" className="text-brand underline underline-offset-2">
-                    Cookie-Richtlinie
+                    {t("Cookie-Richtlinie")}
                   </Link>
                   .
                 </p>
@@ -76,20 +79,20 @@ export function CookieConsent() {
 
             <div className="mt-5 space-y-3">
               <Row
-                title="Notwendig"
-                desc="Sitzung, Sicherheit, Cookie-Einstellungen."
+                title={t("Notwendig")}
+                desc={t("Sitzung, Sicherheit, Cookie-Einstellungen.")}
                 locked
                 checked
               />
               <Row
-                title="Analyse"
-                desc="Hilft uns zu verstehen, wie die App genutzt wird."
+                title={t("Analyse")}
+                desc={t("Hilft uns zu verstehen, wie die App genutzt wird.")}
                 checked={analytics}
                 onChange={setAnalytics}
               />
               <Row
-                title="Marketing"
-                desc="Personalisiertere Angebote und Kampagnen."
+                title={t("Marketing")}
+                desc={t("Personalisiertere Angebote und Kampagnen.")}
                 checked={marketing}
                 onChange={setMarketing}
               />
@@ -103,7 +106,7 @@ export function CookieConsent() {
                   setOpen(false);
                 }}
               >
-                Alle ablehnen
+                {t("Alle ablehnen")}
               </Button>
               <Button
                 variant="outline"
@@ -113,7 +116,7 @@ export function CookieConsent() {
                 }}
               >
                 <Settings2 className="mr-2 h-4 w-4" />
-                Auswahl speichern
+                {t("Auswahl speichern")}
               </Button>
               <Button
                 className="ml-auto"
@@ -122,7 +125,7 @@ export function CookieConsent() {
                   setOpen(false);
                 }}
               >
-                Alle akzeptieren
+                {t("Alle akzeptieren")}
               </Button>
             </div>
           </div>

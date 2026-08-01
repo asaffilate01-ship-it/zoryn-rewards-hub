@@ -12,6 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { createMerchant, myMerchants } from "@/lib/merchant-portal.functions";
 import { setActiveMerchantId } from "@/lib/active-merchant";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_authenticated/merchant/")({
   component: MerchantHome,
@@ -29,6 +30,7 @@ const formSchema = z.object({
 });
 
 function MerchantHome() {
+  const t = useT();
   const navigate = useNavigate();
   const qc = useQueryClient();
   const listFn = useServerFn(myMerchants);
@@ -55,56 +57,56 @@ function MerchantHome() {
       return createFn({ data: parsed });
     },
     onSuccess: ({ merchantId }) => {
-      toast.success("Merchant angelegt.");
+      toast.success(t("Merchant angelegt."));
       setActiveMerchantId(merchantId);
       qc.invalidateQueries({ queryKey: ["myMerchants"] });
       setShowForm(false);
       navigate({ to: "/merchant/pos" });
     },
-    onError: (e: unknown) => toast.error(e instanceof Error ? e.message : "Fehler"),
+    onError: (e: unknown) => toast.error(e instanceof Error ? e.message : t("Fehler")),
   });
 
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-display text-3xl font-semibold">Business-Portal</h1>
+          <h1 className="font-display text-3xl font-semibold">{t("Business-Portal")}</h1>
           <p className="text-muted-foreground">
-            Verwalte deine Zoryn-Merchants und vergib Punkte an Kundinnen.
+            {t("Verwalte deine Zoryn-Merchants und vergib Punkte an Kundinnen.")}
           </p>
         </div>
         <Button onClick={() => setShowForm((v) => !v)}>
-          <Plus className="mr-1 size-4" /> Merchant anlegen
+          <Plus className="mr-1 size-4" /> {t("Merchant anlegen")}
         </Button>
       </div>
 
       {showForm && (
         <Card>
           <CardHeader>
-            <CardTitle>Neuer Merchant</CardTitle>
+            <CardTitle>{t("Neuer Merchant")}</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-4 md:grid-cols-2">
-            <Field label="Name">
+            <Field label={t("Name")}>
               <Input
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
               />
             </Field>
-            <Field label="Slug (URL)">
+            <Field label={t("Slug (URL)")}>
               <Input
                 value={form.slug}
                 onChange={(e) => setForm({ ...form, slug: e.target.value.toLowerCase() })}
                 placeholder="cafe-nord"
               />
             </Field>
-            <Field label="Kategorie">
+            <Field label={t("Kategorie")}>
               <Input
                 value={form.category}
                 onChange={(e) => setForm({ ...form, category: e.target.value })}
-                placeholder="Café, Retail…"
+                placeholder={t("Café, Retail…")}
               />
             </Field>
-            <Field label="Punkte pro Euro">
+            <Field label={t("Punkte pro Euro")}>
               <Input
                 type="number"
                 min={1}
@@ -114,7 +116,7 @@ function MerchantHome() {
               />
             </Field>
             <div className="md:col-span-2">
-              <Field label="Beschreibung">
+              <Field label={t("Beschreibung")}>
                 <Textarea
                   value={form.description}
                   onChange={(e) => setForm({ ...form, description: e.target.value })}
@@ -124,7 +126,7 @@ function MerchantHome() {
             </div>
             <div className="md:col-span-2">
               <Button disabled={create.isPending} onClick={() => create.mutate()}>
-                {create.isPending ? "Speichere…" : "Anlegen"}
+                {create.isPending ? t("Speichere…") : t("Anlegen")}
               </Button>
             </div>
           </CardContent>
@@ -133,14 +135,14 @@ function MerchantHome() {
 
       <div>
         <h2 className="mb-3 text-sm uppercase tracking-wide text-muted-foreground">
-          Deine Merchants
+          {t("Deine Merchants")}
         </h2>
         {isLoading ? (
-          <p className="text-muted-foreground">Lade…</p>
+          <p className="text-muted-foreground">{t("Lade…")}</p>
         ) : !list || list.length === 0 ? (
           <Card>
             <CardContent className="py-8 text-center text-muted-foreground">
-              Noch keine Merchants. Lege oben deinen ersten an.
+              {t("Noch keine Merchants. Lege oben deinen ersten an.")}
             </CardContent>
           </Card>
         ) : (
@@ -165,7 +167,7 @@ function MerchantHome() {
                     <div className="font-medium">{merchant.name}</div>
                     <div className="text-xs text-muted-foreground">
                       {role} · {merchant.points_per_euro} Pkt/€{" "}
-                      {merchant.is_active ? "" : "· inaktiv"}
+                      {merchant.is_active ? "" : `· ${t("inaktiv")}`}
                     </div>
                   </div>
                 </div>
@@ -178,9 +180,9 @@ function MerchantHome() {
 
       <Card>
         <CardContent className="flex items-center justify-between py-4 text-sm">
-          <span className="text-muted-foreground">Zurück zur Consumer-App?</span>
+          <span className="text-muted-foreground">{t("Zurück zur Consumer-App?")}</span>
           <Link to="/app" className="text-primary underline-offset-4 hover:underline">
-            Zum Wallet
+            {t("Zum Wallet")}
           </Link>
         </CardContent>
       </Card>

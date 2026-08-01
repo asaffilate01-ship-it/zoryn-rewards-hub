@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { PublicShell, PageHeader } from "@/components/PublicShell";
 import { listPosts } from "@/lib/blog.functions";
+import { useT } from "@/lib/i18n";
 
 const postsQuery = queryOptions({
   queryKey: ["blog", "posts"],
@@ -27,13 +28,14 @@ export const Route = createFileRoute("/blog")({
 });
 
 function BlogIndex() {
+  const t = useT();
   const { data } = useSuspenseQuery(postsQuery);
   return (
     <PublicShell>
       <PageHeader
-        eyebrow="Blog"
-        title="Neues aus dem Zoryn-Netzwerk"
-        description="Produkt-Updates, Merchant-Stories und Erklärungen."
+        eyebrow={t("Blog")}
+        title={t("Neues aus dem Zoryn-Netzwerk")}
+        description={t("Produkt-Updates, Merchant-Stories und Erklärungen.")}
       />
       <section className="mx-auto grid max-w-6xl gap-6 px-4 py-14 sm:px-6 md:grid-cols-2 lg:grid-cols-3">
         {data.posts.map((p) => (
@@ -78,7 +80,7 @@ function BlogIndex() {
           </Link>
         ))}
         {data.posts.length === 0 ? (
-          <p className="text-sm text-muted-foreground">Noch keine Beiträge.</p>
+          <p className="text-sm text-muted-foreground">{t("Noch keine Beiträge.")}</p>
         ) : null}
       </section>
     </PublicShell>

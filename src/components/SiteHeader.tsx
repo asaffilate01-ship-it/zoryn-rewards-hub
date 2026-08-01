@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { Menu, X, Search } from "lucide-react";
 import { ZorynMark } from "@/components/ZorynMark";
 import { Button } from "@/components/ui/button";
+import { LanguageToggle } from "@/components/LanguageToggle";
+import { useT } from "@/lib/i18n";
 
 const nav = [
   { to: "/features/consumers", label: "Für dich" },
@@ -12,6 +14,7 @@ const nav = [
 ];
 
 export function SiteHeader() {
+  const t = useT();
   const [open, setOpen] = useState(false);
   useEffect(() => {
     setOpen(false);
@@ -28,7 +31,7 @@ export function SiteHeader() {
           <div className="min-w-0 leading-tight">
             <div className="font-display text-2xl font-semibold tracking-tight">Zoryn</div>
             <div className="hidden text-xs text-muted-foreground sm:block">
-              Mehr als nur Punkte.
+              {t("Mehr als nur Punkte.")}
             </div>
           </div>
         </Link>
@@ -43,20 +46,21 @@ export function SiteHeader() {
                 className: "rounded-full px-4 py-2 text-sm text-foreground bg-card/70",
               }}
             >
-              {n.label}
+              {t(n.label)}
             </Link>
           ))}
         </nav>
 
         <div className="ml-auto flex items-center gap-2 md:ml-2">
-          <Link to="/search" aria-label="Suche" className="hidden sm:inline-flex">
+          <LanguageToggle className="hidden sm:inline-flex" />
+          <Link to="/search" aria-label={t("Suche")} className="hidden sm:inline-flex">
             <Button variant="ghost" size="icon">
               <Search className="h-4 w-4" />
             </Button>
           </Link>
           <Link to="/auth" className="hidden sm:inline-flex">
             <Button variant="ghost" size="sm">
-              Anmelden
+              {t("Anmelden")}
             </Button>
           </Link>
           <Link to="/app">
@@ -64,12 +68,12 @@ export function SiteHeader() {
               size="sm"
               className="bg-gradient-to-r from-brand to-brand-alt text-primary-foreground shadow-lg"
             >
-              App öffnen
+              {t("App öffnen")}
             </Button>
           </Link>
           <button
             className="grid h-10 w-10 place-items-center rounded-full border border-border/60 md:hidden"
-            aria-label="Menü"
+            aria-label={t("Menü")}
             onClick={() => setOpen((v) => !v)}
           >
             {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
@@ -86,15 +90,18 @@ export function SiteHeader() {
                 to={n.to}
                 className="rounded-xl px-3 py-2 text-sm text-muted-foreground hover:bg-card/60 hover:text-foreground"
               >
-                {n.label}
+                {t(n.label)}
               </Link>
             ))}
             <Link
               to="/auth"
               className="rounded-xl px-3 py-2 text-sm text-muted-foreground hover:bg-card/60 hover:text-foreground"
             >
-              Anmelden
+              {t("Anmelden")}
             </Link>
+            <div className="px-3 py-2">
+              <LanguageToggle />
+            </div>
           </nav>
         </div>
       ) : null}

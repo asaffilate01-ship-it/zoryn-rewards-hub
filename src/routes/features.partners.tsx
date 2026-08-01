@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Handshake, Megaphone, Percent, TrendingUp, Users, Globe2 } from "lucide-react";
 import { FeaturePage } from "@/components/FeaturePage";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/features/partners")({
   head: () => ({
@@ -13,33 +14,46 @@ export const Route = createFileRoute("/features/partners")({
     ],
     links: [{ rel: "canonical", href: "/features/partners" }],
   }),
-  component: () => (
+  component: PartnersFeaturePage,
+});
+
+function PartnersFeaturePage() {
+  const t = useT();
+  return (
     <FeaturePage
-      eyebrow="Partner"
-      title="Wachse mit dem Zoryn-Netzwerk"
-      description="Media, Affiliate, Distribution — teile die Wallet, teile die Kundschaft."
+      eyebrow={t("Partner")}
+      title={t("Wachse mit dem Zoryn-Netzwerk")}
+      description={t("Media, Affiliate, Distribution — teile die Wallet, teile die Kundschaft.")}
       features={[
         {
           icon: Handshake,
-          title: "Affiliate-Deals",
-          body: "Cashback-Kampagnen im Namen des Netzwerks.",
+          title: t("Affiliate-Deals"),
+          body: t("Cashback-Kampagnen im Namen des Netzwerks."),
         },
-        { icon: Percent, title: "Revenue-Share", body: "Faire Beteiligung an Aktivierungen." },
+        {
+          icon: Percent,
+          title: t("Revenue-Share"),
+          body: t("Faire Beteiligung an Aktivierungen."),
+        },
         {
           icon: Megaphone,
-          title: "Co-Marketing",
-          body: "Feature-Placement in App, Blog und Social.",
+          title: t("Co-Marketing"),
+          body: t("Feature-Placement in App, Blog und Social."),
         },
-        { icon: Users, title: "Zielgruppen-Zugang", body: "Aktive Loyalty-Nutzer:innen in DACH." },
-        { icon: TrendingUp, title: "Reporting", body: "Konsolidierte Zahlen pro Kampagne." },
+        {
+          icon: Users,
+          title: t("Zielgruppen-Zugang"),
+          body: t("Aktive Loyalty-Nutzer:innen in DACH."),
+        },
+        { icon: TrendingUp, title: t("Reporting"), body: t("Konsolidierte Zahlen pro Kampagne.") },
         {
           icon: Globe2,
-          title: "LoungeTech-Netzwerk",
-          body: "Kiezio, Rettio, Haccora, TrainDirekt teilen die Wallet.",
+          title: t("LoungeTech-Netzwerk"),
+          body: t("Kiezio, Rettio, Haccora, TrainDirekt teilen die Wallet."),
         },
       ]}
-      ctaLabel="Partner werden"
+      ctaLabel={t("Partner werden")}
       ctaTo="/legal/complaints"
     />
-  ),
-});
+  );
+}

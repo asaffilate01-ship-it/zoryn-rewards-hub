@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
+import { useT } from "@/lib/i18n";
 
 export function PublicShell({ children }: { children: ReactNode }) {
   return (
@@ -37,12 +38,12 @@ export function PageHeader({
 }
 
 export function LegalNotice() {
+  const t = useT();
   return (
     <p className="rounded-2xl border border-border/60 bg-card/50 p-4 text-xs text-muted-foreground">
-      Diese Seite wird vom Zoryn-Team gepflegt und beantwortet häufige Fragen zu Nutzung,
-      Datenschutz und Sicherheit von Zoryn. Sie ersetzt keine unabhängige rechtliche Beratung und
-      keine Zertifizierung. Der Schutz deiner Daten ist eine gemeinsame Verantwortung von Zoryn,
-      unseren Partnern und dir.
+      {t(
+        "Diese Seite wird vom Zoryn-Team gepflegt und beantwortet häufige Fragen zu Nutzung, Datenschutz und Sicherheit von Zoryn. Sie ersetzt keine unabhängige rechtliche Beratung und keine Zertifizierung. Der Schutz deiner Daten ist eine gemeinsame Verantwortung von Zoryn, unseren Partnern und dir.",
+      )}
     </p>
   );
 }

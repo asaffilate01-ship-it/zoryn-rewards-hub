@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Store, LineChart, Megaphone, CreditCard, Users2, Boxes } from "lucide-react";
 import { FeaturePage } from "@/components/FeaturePage";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/features/merchants")({
   head: () => ({
@@ -20,45 +21,52 @@ export const Route = createFileRoute("/features/merchants")({
     ],
     links: [{ rel: "canonical", href: "/features/merchants" }],
   }),
-  component: () => (
+  component: MerchantsFeaturePage,
+});
+
+function MerchantsFeaturePage() {
+  const t = useT();
+  return (
     <FeaturePage
-      eyebrow="Für Unternehmen"
-      title="Loyalty, die dein Team wirklich nutzt"
-      description="POS-Modus für Personal, Self-Serve für Owner, Prepaid-Guthaben statt Überraschungsrechnung."
+      eyebrow={t("Für Unternehmen")}
+      title={t("Loyalty, die dein Team wirklich nutzt")}
+      description={t(
+        "POS-Modus für Personal, Self-Serve für Owner, Prepaid-Guthaben statt Überraschungsrechnung.",
+      )}
       features={[
         {
           icon: Store,
-          title: "Self-Serve Onboarding",
-          body: "Filiale in unter 5 Minuten anlegen — ohne Sales-Call.",
+          title: t("Self-Serve Onboarding"),
+          body: t("Filiale in unter 5 Minuten anlegen — ohne Sales-Call."),
         },
         {
           icon: LineChart,
-          title: "Kampagnen & Multiplikatoren",
-          body: "2× Punkte am Vormittag mit einem Klick.",
+          title: t("Kampagnen & Multiplikatoren"),
+          body: t("2× Punkte am Vormittag mit einem Klick."),
         },
         {
           icon: Megaphone,
-          title: "Nearby-Sichtbarkeit",
-          body: "Erscheine im In-der-Nähe-Feed der Zoryn-App.",
+          title: t("Nearby-Sichtbarkeit"),
+          body: t("Erscheine im In-der-Nähe-Feed der Zoryn-App."),
         },
         {
           icon: CreditCard,
-          title: "Prepaid-Guthaben",
-          body: "Punkte-Ausgabe aus deinem Merchant-Wallet. Monatliches Settlement.",
+          title: t("Prepaid-Guthaben"),
+          body: t("Punkte-Ausgabe aus deinem Merchant-Wallet. Monatliches Settlement."),
         },
         {
           icon: Users2,
-          title: "Rollen & Personal",
-          body: "Owner, Manager, Staff — sauber getrennte Rechte.",
+          title: t("Rollen & Personal"),
+          body: t("Owner, Manager, Staff — sauber getrennte Rechte."),
         },
         {
           icon: Boxes,
-          title: "Rewards-Katalog",
-          body: "Belohnungen mit einem Klick anlegen und Code-verifiziert einlösen.",
+          title: t("Rewards-Katalog"),
+          body: t("Belohnungen mit einem Klick anlegen und Code-verifiziert einlösen."),
         },
       ]}
-      ctaLabel="Merchant-Portal öffnen"
+      ctaLabel={t("Merchant-Portal öffnen")}
       ctaTo="/merchant"
     />
-  ),
-});
+  );
+}

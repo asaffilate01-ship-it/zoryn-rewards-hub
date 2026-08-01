@@ -13,6 +13,8 @@ import {
   PlugZap,
 } from "lucide-react";
 import { ZorynMark } from "@/components/ZorynMark";
+import { LanguageToggle } from "@/components/LanguageToggle";
+import { useT } from "@/lib/i18n";
 import type { ComponentType } from "react";
 
 export const Route = createFileRoute("/_authenticated/merchant")({
@@ -37,6 +39,7 @@ function isActive(pathname: string, to: string) {
 }
 
 function MerchantShell() {
+  const t = useT();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   return (
     <div className="min-h-screen bg-background">
@@ -52,24 +55,27 @@ function MerchantShell() {
                 </span>
               </div>
             </Link>
-            <Link
-              to="/app"
-              className="inline-flex items-center gap-1.5 rounded-full border border-border/70 bg-card/60 px-3 py-1.5 text-xs font-medium text-muted-foreground transition hover:text-foreground"
-            >
-              <ArrowLeft className="size-3.5" /> Zur Wallet
-            </Link>
+            <div className="flex items-center gap-2">
+              <LanguageToggle />
+              <Link
+                to="/app"
+                className="inline-flex items-center gap-1.5 rounded-full border border-border/70 bg-card/60 px-3 py-1.5 text-xs font-medium text-muted-foreground transition hover:text-foreground"
+              >
+                <ArrowLeft className="size-3.5" /> {t("Zur Wallet")}
+              </Link>
+            </div>
           </div>
 
           {/* Segmented nav — scrolls on mobile */}
           <nav className="-mx-5 overflow-x-auto px-5 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             <div className="flex min-w-max items-center gap-1">
-              {TABS.map((t) => {
-                const active = isActive(pathname, t.to);
-                const Icon = t.icon;
+              {TABS.map((tab) => {
+                const active = isActive(pathname, tab.to);
+                const Icon = tab.icon;
                 return (
                   <Link
-                    key={t.to}
-                    to={t.to}
+                    key={tab.to}
+                    to={tab.to}
                     className={`group relative inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[13px] font-medium transition ${
                       active
                         ? "bg-foreground/[0.06] text-foreground"
@@ -77,7 +83,7 @@ function MerchantShell() {
                     }`}
                   >
                     <Icon className={`size-4 ${active ? "text-primary" : ""}`} />
-                    {t.label}
+                    {t(tab.label)}
                     {active && (
                       <span className="absolute inset-x-3 -bottom-2 h-[2px] rounded-full gradient-brand" />
                     )}
