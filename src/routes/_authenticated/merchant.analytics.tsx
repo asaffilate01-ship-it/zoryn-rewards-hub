@@ -4,7 +4,15 @@ import { useQuery } from "@tanstack/react-query";
 import { useActiveMerchantId } from "@/lib/active-merchant";
 import { merchantSeries, merchantTopCustomers } from "@/lib/analytics.functions";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
+import {
+  ResponsiveContainer,
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+} from "recharts";
 
 export const Route = createFileRoute("/_authenticated/merchant/analytics")({
   head: () => ({ meta: [{ title: "Analytics — Zoryn Business" }] }),
@@ -26,7 +34,8 @@ function MerchantAnalytics() {
     enabled: !!merchantId,
   });
 
-  if (!merchantId) return <p className="text-sm text-muted-foreground">Bitte wähle zuerst ein Geschäft aus.</p>;
+  if (!merchantId)
+    return <p className="text-sm text-muted-foreground">Bitte wähle zuerst ein Geschäft aus.</p>;
 
   const totalEarned = (series ?? []).reduce((s, r) => s + Number(r.earned), 0);
   const totalRedeemed = (series ?? []).reduce((s, r) => s + Number(r.redeemed), 0);
@@ -46,7 +55,9 @@ function MerchantAnalytics() {
       </div>
 
       <Card>
-        <CardHeader><CardTitle className="text-base">Punkte pro Tag</CardTitle></CardHeader>
+        <CardHeader>
+          <CardTitle className="text-base">Punkte pro Tag</CardTitle>
+        </CardHeader>
         <CardContent className="h-72">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={series ?? []}>
@@ -61,18 +72,34 @@ function MerchantAnalytics() {
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
-              <XAxis dataKey="day" tick={{ fontSize: 10 }} tickFormatter={(d) => String(d).slice(5)} />
+              <XAxis
+                dataKey="day"
+                tick={{ fontSize: 10 }}
+                tickFormatter={(d) => String(d).slice(5)}
+              />
               <YAxis tick={{ fontSize: 10 }} />
-              <Tooltip contentStyle={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))" }} />
+              <Tooltip
+                contentStyle={{
+                  background: "hsl(var(--card))",
+                  border: "1px solid hsl(var(--border))",
+                }}
+              />
               <Area type="monotone" dataKey="earned" stroke="hsl(var(--primary))" fill="url(#g1)" />
-              <Area type="monotone" dataKey="redeemed" stroke="hsl(var(--destructive))" fill="url(#g2)" />
+              <Area
+                type="monotone"
+                dataKey="redeemed"
+                stroke="hsl(var(--destructive))"
+                fill="url(#g2)"
+              />
             </AreaChart>
           </ResponsiveContainer>
         </CardContent>
       </Card>
 
       <Card>
-        <CardHeader><CardTitle className="text-base">Top-Kund:innen (30 Tage)</CardTitle></CardHeader>
+        <CardHeader>
+          <CardTitle className="text-base">Top-Kund:innen (30 Tage)</CardTitle>
+        </CardHeader>
         <CardContent>
           {(top ?? []).length === 0 ? (
             <p className="text-sm text-muted-foreground">Noch keine Aktivität.</p>

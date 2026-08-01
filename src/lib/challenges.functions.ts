@@ -56,7 +56,14 @@ export const claimEarnChallenge = createServerFn({ method: "POST" })
       if (/expired/.test(msg)) throw new Error("Code ist abgelaufen.");
       throw new Error(msg);
     }
-    const row = (rows as Array<{ transaction_id: string; points_awarded: number; merchant_name: string; offer_title: string | null }>)[0];
+    const row = (
+      rows as Array<{
+        transaction_id: string;
+        points_awarded: number;
+        merchant_name: string;
+        offer_title: string | null;
+      }>
+    )[0];
     if (!row) throw new Error("Kein Ergebnis.");
 
     // notify user

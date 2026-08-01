@@ -12,7 +12,8 @@ export const Route = createFileRoute("/_authenticated/admin/")({
 function AdminIndex() {
   const overviewFn = useServerFn(adminOverview);
   const { data, isLoading, error } = useQuery({
-    queryKey: ["adminOverview"], queryFn: () => overviewFn(),
+    queryKey: ["adminOverview"],
+    queryFn: () => overviewFn(),
   });
 
   return (
@@ -22,7 +23,11 @@ function AdminIndex() {
         <p className="text-sm text-muted-foreground">Letzte 30 Tage.</p>
       </div>
       {isLoading && <div className="text-sm text-muted-foreground">Laden…</div>}
-      {error && <div className="text-sm text-destructive">{error instanceof Error ? error.message : "Fehler"}</div>}
+      {error && (
+        <div className="text-sm text-destructive">
+          {error instanceof Error ? error.message : "Fehler"}
+        </div>
+      )}
       {data && (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <Stat label="Nutzer:innen" value={data.total_users} />
@@ -31,7 +36,11 @@ function AdminIndex() {
           <Stat label="Transaktionen (30 T)" value={data.transactions_30d} />
           <Stat label="Punkte ausgegeben (30 T)" value={data.points_issued_30d} accent />
           <Stat label="Punkte eingelöst (30 T)" value={data.points_redeemed_30d} />
-          <Stat label="Punkte-Verbindlichkeit" value={`${(data.total_liability_points / 100).toFixed(2)} €`} accent />
+          <Stat
+            label="Punkte-Verbindlichkeit"
+            value={`${(data.total_liability_points / 100).toFixed(2)} €`}
+            accent
+          />
           <Stat label="Offene Fälle" value={data.open_claims} />
         </div>
       )}
@@ -40,7 +49,15 @@ function AdminIndex() {
   );
 }
 
-function Stat({ label, value, accent }: { label: string; value: number | string; accent?: boolean }) {
+function Stat({
+  label,
+  value,
+  accent,
+}: {
+  label: string;
+  value: number | string;
+  accent?: boolean;
+}) {
   return (
     <Card className={accent ? "border-brand/40 bg-brand/5" : ""}>
       <CardContent className="py-5">

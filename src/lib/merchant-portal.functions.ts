@@ -9,7 +9,9 @@ export const myMerchants = createServerFn({ method: "GET" })
     const { supabase, userId } = context;
     const { data, error } = await supabase
       .from("merchant_members")
-      .select("role, merchant:merchants(id, slug, name, category, brand_color, points_per_euro, is_active)")
+      .select(
+        "role, merchant:merchants(id, slug, name, category, brand_color, points_per_euro, is_active)",
+      )
       .eq("user_id", userId);
     if (error) throw new Error(error.message);
     return (data ?? [])
@@ -29,12 +31,19 @@ export const myMerchants = createServerFn({ method: "GET" })
   });
 
 const createInput = z.object({
-  slug: z.string().min(3).max(48).regex(/^[a-z0-9-]+$/, "nur a-z, 0-9 und -"),
+  slug: z
+    .string()
+    .min(3)
+    .max(48)
+    .regex(/^[a-z0-9-]+$/, "nur a-z, 0-9 und -"),
   name: z.string().min(2).max(80),
   description: z.string().max(500).optional(),
   category: z.string().max(40).optional(),
   pointsPerEuro: z.number().int().min(1).max(1000),
-  brandColor: z.string().regex(/^#[0-9a-fA-F]{6}$/).optional(),
+  brandColor: z
+    .string()
+    .regex(/^#[0-9a-fA-F]{6}$/)
+    .optional(),
 });
 
 export const createMerchant = createServerFn({ method: "POST" })
@@ -45,10 +54,10 @@ export const createMerchant = createServerFn({ method: "POST" })
     const { data: id, error } = await supabase.rpc("create_merchant_with_owner", {
       _slug: data.slug,
       _name: data.name,
-      _description: data.description ?? '',
-      _category: data.category ?? '',
+      _description: data.description ?? "",
+      _category: data.category ?? "",
       _points_per_euro: data.pointsPerEuro,
-      _brand_color: data.brandColor ?? '',
+      _brand_color: data.brandColor ?? "",
     });
     if (error) {
       if (/duplicate|unique/i.test(error.message)) throw new Error("Slug ist bereits vergeben.");
@@ -120,7 +129,7 @@ export const merchantEarn = createServerFn({ method: "POST" })
       _customer_user_id: data.customerUserId,
       _amount: data.amount,
       _idempotency_key: data.idempotencyKey,
-      _memo: data.memo ?? '',
+      _memo: data.memo ?? "",
     });
     if (error) throw new Error(error.message);
     return { transactionId: id as string };
@@ -135,7 +144,7 @@ export const merchantRedeem = createServerFn({ method: "POST" })
       _customer_user_id: data.customerUserId,
       _amount: data.amount,
       _idempotency_key: data.idempotencyKey,
-      _memo: data.memo ?? '',
+      _memo: data.memo ?? "",
     });
     if (error) {
       if (/insufficient/i.test(error.message)) throw new Error("Kunde hat nicht genug Punkte.");

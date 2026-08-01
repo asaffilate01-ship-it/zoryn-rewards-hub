@@ -1,5 +1,17 @@
 import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
-import { Store, Users, Settings, ScanLine, ArrowLeft, Sparkles, Gift, Wallet, BarChart3, Megaphone, PlugZap } from "lucide-react";
+import {
+  Store,
+  Users,
+  Settings,
+  ScanLine,
+  ArrowLeft,
+  Sparkles,
+  Gift,
+  Wallet,
+  BarChart3,
+  Megaphone,
+  PlugZap,
+} from "lucide-react";
 import { ZorynMark } from "@/components/ZorynMark";
 import type { ComponentType } from "react";
 

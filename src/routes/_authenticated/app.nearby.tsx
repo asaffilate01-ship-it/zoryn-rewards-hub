@@ -16,10 +16,17 @@ export const Route = createFileRoute("/_authenticated/app/nearby")({
 const FALLBACK = { lat: 52.5219, lng: 13.4132 };
 
 type Row = {
-  id: string; slug: string; name: string; category: string | null;
-  brand_color: string | null; points_per_euro: number;
-  address: string | null; city: string | null;
-  latitude: number; longitude: number; distance_m: number;
+  id: string;
+  slug: string;
+  name: string;
+  category: string | null;
+  brand_color: string | null;
+  points_per_euro: number;
+  address: string | null;
+  city: string | null;
+  latitude: number;
+  longitude: number;
+  distance_m: number;
 };
 
 function NearbyPage() {
@@ -29,7 +36,8 @@ function NearbyPage() {
   const [usedFallback, setUsedFallback] = useState(false);
 
   const query = useMutation({
-    mutationFn: (c: { lat: number; lng: number }) => fn({ data: { lat: c.lat, lng: c.lng, radiusM: 8000 } }) as Promise<Row[]>,
+    mutationFn: (c: { lat: number; lng: number }) =>
+      fn({ data: { lat: c.lat, lng: c.lng, radiusM: 8000 } }) as Promise<Row[]>,
   });
 
   useEffect(() => {
@@ -46,13 +54,23 @@ function NearbyPage() {
     }
     setLocating(true);
     navigator.geolocation.getCurrentPosition(
-      (pos) => { setLocating(false); setUsedFallback(false); setCoords({ lat: pos.coords.latitude, lng: pos.coords.longitude }); },
-      () => { setLocating(false); setUsedFallback(true); setCoords(FALLBACK); },
+      (pos) => {
+        setLocating(false);
+        setUsedFallback(false);
+        setCoords({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+      },
+      () => {
+        setLocating(false);
+        setUsedFallback(true);
+        setCoords(FALLBACK);
+      },
       { enableHighAccuracy: true, timeout: 8000 },
     );
   }
 
-  useEffect(() => { requestLocation(); }, []);
+  useEffect(() => {
+    requestLocation();
+  }, []);
 
   return (
     <div className="space-y-6">
@@ -60,11 +78,17 @@ function NearbyPage() {
         <div>
           <h1 className="font-display text-2xl font-semibold">In der Nähe</h1>
           <p className="text-sm text-muted-foreground">
-            {usedFallback ? "Standort nicht verfügbar — zeige Berlin Mitte." : "Zoryn-Partner in deiner Umgebung."}
+            {usedFallback
+              ? "Standort nicht verfügbar — zeige Berlin Mitte."
+              : "Zoryn-Partner in deiner Umgebung."}
           </p>
         </div>
         <Button variant="secondary" size="sm" disabled={locating} onClick={requestLocation}>
-          {locating ? <Loader2 className="mr-1 size-4 animate-spin" /> : <Navigation className="mr-1 size-4" />}
+          {locating ? (
+            <Loader2 className="mr-1 size-4 animate-spin" />
+          ) : (
+            <Navigation className="mr-1 size-4" />
+          )}
           Standort
         </Button>
       </div>
@@ -72,9 +96,11 @@ function NearbyPage() {
       {query.isPending && <div className="text-sm text-muted-foreground">Suche…</div>}
 
       {query.data && query.data.length === 0 && (
-        <Card><CardContent className="py-10 text-center text-sm text-muted-foreground">
-          Noch keine Zoryn-Partner in deiner Nähe.
-        </CardContent></Card>
+        <Card>
+          <CardContent className="py-10 text-center text-sm text-muted-foreground">
+            Noch keine Zoryn-Partner in deiner Nähe.
+          </CardContent>
+        </Card>
       )}
 
       <div className="space-y-3">
@@ -97,9 +123,7 @@ function NearbyPage() {
                 <div className="truncate text-xs text-muted-foreground">
                   {m.category ?? "Merchant"} · {m.address ?? m.city ?? "—"}
                 </div>
-                <div className="mt-1 text-xs text-brand-soft">
-                  {m.points_per_euro} Punkte pro €
-                </div>
+                <div className="mt-1 text-xs text-brand-soft">{m.points_per_euro} Punkte pro €</div>
               </div>
               <MapPin className="size-4 text-muted-foreground" />
             </CardContent>

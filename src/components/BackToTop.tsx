@@ -28,7 +28,9 @@ export function BackToTop() {
 
   const r = 22;
   const c = 2 * Math.PI * r;
-  const prefersReduced = typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+  const prefersReduced =
+    typeof window !== "undefined" &&
+    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
   return (
     <button
@@ -38,10 +40,18 @@ export function BackToTop() {
         visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-2 opacity-0"
       }`}
     >
-      <svg width="48" height="48" viewBox="0 0 48 48" className="absolute inset-0" aria-hidden="true">
+      <svg
+        width="48"
+        height="48"
+        viewBox="0 0 48 48"
+        className="absolute inset-0"
+        aria-hidden="true"
+      >
         <circle cx="24" cy="24" r={r} className="fill-none stroke-border/40" strokeWidth="2" />
         <circle
-          cx="24" cy="24" r={r}
+          cx="24"
+          cy="24"
+          r={r}
           className="fill-none stroke-brand"
           strokeWidth="2"
           strokeLinecap="round"

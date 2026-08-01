@@ -12,7 +12,15 @@ export function PublicShell({ children }: { children: ReactNode }) {
   );
 }
 
-export function PageHeader({ eyebrow, title, description }: { eyebrow?: string; title: string; description?: string }) {
+export function PageHeader({
+  eyebrow,
+  title,
+  description,
+}: {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+}) {
   return (
     <section className="border-b border-border/40 bg-gradient-to-b from-card/30 to-transparent">
       <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 sm:py-24">
@@ -31,10 +39,10 @@ export function PageHeader({ eyebrow, title, description }: { eyebrow?: string; 
 export function LegalNotice() {
   return (
     <p className="rounded-2xl border border-border/60 bg-card/50 p-4 text-xs text-muted-foreground">
-      Diese Seite wird vom Zoryn-Team gepflegt und beantwortet häufige Fragen zu Nutzung, Datenschutz und
-      Sicherheit von Zoryn. Sie ersetzt keine unabhängige rechtliche Beratung und keine
-      Zertifizierung. Der Schutz deiner Daten ist eine gemeinsame Verantwortung von Zoryn, unseren
-      Partnern und dir.
+      Diese Seite wird vom Zoryn-Team gepflegt und beantwortet häufige Fragen zu Nutzung,
+      Datenschutz und Sicherheit von Zoryn. Sie ersetzt keine unabhängige rechtliche Beratung und
+      keine Zertifizierung. Der Schutz deiner Daten ist eine gemeinsame Verantwortung von Zoryn,
+      unseren Partnern und dir.
     </p>
   );
 }

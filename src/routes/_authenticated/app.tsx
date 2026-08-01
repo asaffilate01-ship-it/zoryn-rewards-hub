@@ -65,10 +65,25 @@ function AppShell() {
       <nav className="pointer-events-none fixed inset-x-0 bottom-4 z-40 flex justify-center px-4">
         <div className="pointer-events-auto relative flex items-center gap-1 rounded-full border border-border/70 bg-card/80 px-2 py-2 shadow-[0_10px_40px_-12px_rgba(0,0,0,0.6)] backdrop-blur-xl">
           <TabLink to="/app" icon={Wallet} label="Wallet" active={pathname === "/app"} />
-          <TabLink to="/app/shop" icon={ShoppingBag} label="Shop" active={pathname.startsWith("/app/shop")} />
+          <TabLink
+            to="/app/shop"
+            icon={ShoppingBag}
+            label="Shop"
+            active={pathname.startsWith("/app/shop")}
+          />
           <ScanCta active={pathname.startsWith("/app/scan")} />
-          <TabLink to="/app/nearby" icon={MapPin} label="Nearby" active={pathname.startsWith("/app/nearby")} />
-          <TabLink to="/app/profile" icon={User} label="Profil" active={pathname.startsWith("/app/profile")} />
+          <TabLink
+            to="/app/nearby"
+            icon={MapPin}
+            label="Nearby"
+            active={pathname.startsWith("/app/nearby")}
+          />
+          <TabLink
+            to="/app/profile"
+            icon={User}
+            label="Profil"
+            active={pathname.startsWith("/app/profile")}
+          />
         </div>
       </nav>
     </div>

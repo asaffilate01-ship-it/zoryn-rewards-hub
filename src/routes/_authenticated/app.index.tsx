@@ -117,12 +117,14 @@ function WalletHome() {
         <div className="text-sm text-brand-soft">
           ≈ {wallet.euro_equivalent.toLocaleString("de-DE", { style: "currency", currency: "EUR" })}
         </div>
-        <div className="mt-2 text-xs text-muted-foreground">
-          Mitglieds-Nr. {membership ?? "—"}
-        </div>
+        <div className="mt-2 text-xs text-muted-foreground">Mitglieds-Nr. {membership ?? "—"}</div>
 
         <div className="mt-6 grid grid-cols-3 gap-2">
-          <Action icon={QrCode} label="Scannen" onClick={() => toast("QR-Scanner kommt in Phase 3.")} />
+          <Action
+            icon={QrCode}
+            label="Scannen"
+            onClick={() => toast("QR-Scanner kommt in Phase 3.")}
+          />
           <Action
             icon={Sparkles}
             label={earnMutation.isPending ? "…" : "Demo Earn"}
@@ -171,7 +173,6 @@ function WalletHome() {
       </Link>
 
       <section className="mt-8">
-
         <div className="flex items-baseline justify-between">
           <h2 className="text-lg font-semibold">Aktivität</h2>
           <span className="text-xs text-muted-foreground">Letzte 20</span>

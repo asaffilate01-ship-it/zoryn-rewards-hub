@@ -2,7 +2,6 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
-
 export type IntegrationHealth = {
   tenants: Array<{ id: string; slug: string; name: string; mode: string; status: string }>;
   integrations: Array<{
@@ -117,7 +116,9 @@ export const tenantOverview = createServerFn({ method: "GET" })
       supabaseAdmin.from("reward_wallets").select("id,available,membership_id"),
       supabaseAdmin
         .from("reward_external_events")
-        .select("id,tenant_id,provider,event_type,provider_event_id,amount_cents,status,attempts,error,received_at")
+        .select(
+          "id,tenant_id,provider,event_type,provider_event_id,amount_cents,status,attempts,error,received_at",
+        )
         .order("received_at", { ascending: false })
         .limit(50),
     ]);

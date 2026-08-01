@@ -4,7 +4,16 @@ import { useQuery } from "@tanstack/react-query";
 import { isAdmin } from "@/lib/admin.functions";
 import { Button } from "@/components/ui/button";
 import { ZorynMark } from "@/components/ZorynMark";
-import { Shield, ArrowLeft, LayoutDashboard, Store, Inbox, FileText, BarChart3, Network } from "lucide-react";
+import {
+  Shield,
+  ArrowLeft,
+  LayoutDashboard,
+  Store,
+  Inbox,
+  FileText,
+  BarChart3,
+  Network,
+} from "lucide-react";
 import type { ComponentType } from "react";
 
 export const Route = createFileRoute("/_authenticated/admin")({
@@ -23,10 +32,14 @@ const TABS: { to: string; label: string; icon: ComponentType<{ className?: strin
 
 function AdminShell() {
   const isAdminFn = useServerFn(isAdmin);
-  const { data: allowed, isLoading } = useQuery({ queryKey: ["isAdmin"], queryFn: () => isAdminFn() });
+  const { data: allowed, isLoading } = useQuery({
+    queryKey: ["isAdmin"],
+    queryFn: () => isAdminFn(),
+  });
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
-  if (isLoading) return <div className="p-8 text-sm text-muted-foreground">Prüfe Berechtigungen…</div>;
+  if (isLoading)
+    return <div className="p-8 text-sm text-muted-foreground">Prüfe Berechtigungen…</div>;
   if (!allowed) {
     return (
       <div className="mx-auto max-w-md p-8 text-center">
@@ -35,7 +48,9 @@ function AdminShell() {
         <p className="mt-2 text-sm text-muted-foreground">
           Dieser Bereich ist Plattform-Administrator:innen vorbehalten.
         </p>
-        <Link to="/app" className="mt-6 inline-block"><Button variant="secondary">Zurück zum Wallet</Button></Link>
+        <Link to="/app" className="mt-6 inline-block">
+          <Button variant="secondary">Zurück zum Wallet</Button>
+        </Link>
       </div>
     );
   }
@@ -64,7 +79,8 @@ function AdminShell() {
           <nav className="-mx-5 overflow-x-auto px-5 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             <div className="flex min-w-max items-center gap-1">
               {TABS.map((t) => {
-                const active = t.to === "/admin" ? pathname === "/admin" : pathname.startsWith(t.to);
+                const active =
+                  t.to === "/admin" ? pathname === "/admin" : pathname.startsWith(t.to);
                 const Icon = t.icon;
                 return (
                   <Link
