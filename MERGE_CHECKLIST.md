@@ -1,27 +1,12 @@
-import { Gift, Sparkles, WalletCards } from 'lucide-react';
-import type { RewardWalletSummary } from '../types/contracts';
+# Merge checklist
 
-const formatMoney = (cents: number) => new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(cents / 100);
-
-export function UnifiedRewardsWallet({ wallet }: { wallet: RewardWalletSummary }) {
-  return (
-    <section className="rounded-3xl border border-white/10 bg-slate-950 p-6 text-white shadow-2xl">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <p className="text-sm text-slate-400">Zoryn Rewards wallet</p>
-          <h2 className="mt-2 text-4xl font-semibold tracking-tight">{wallet.available_points.toLocaleString('de-DE')} points</h2>
-          <p className="mt-1 text-slate-300">Worth {formatMoney(wallet.euro_value_cents)}</p>
-        </div>
-        <span className="rounded-full bg-violet-500/20 px-3 py-1 text-sm text-violet-200">{wallet.tier}</span>
-      </div>
-      <div className="mt-6 grid gap-3 sm:grid-cols-3">
-        <Metric icon={<Sparkles size={18} />} label="Pending" value={`${wallet.pending_points.toLocaleString('de-DE')} pts`} />
-        <Metric icon={<WalletCards size={18} />} label="Cashback" value={formatMoney(wallet.cashback_cents)} />
-        <Metric icon={<Gift size={18} />} label="Gift credit" value={formatMoney(wallet.gift_credit_cents)} />
-      </div>
-    </section>
-  );
-}
-function Metric({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
-  return <div className="rounded-2xl bg-white/5 p-4"><div className="flex items-center gap-2 text-slate-400">{icon}<span>{label}</span></div><p className="mt-2 text-lg font-medium">{value}</p></div>;
-}
+1. Create a branch: `feature/unified-rewards-platform`.
+2. Copy this overlay into the repository root and merge folders.
+3. Do not edit `src/routeTree.gen.ts`; TanStack regenerates it.
+4. Run `npm install` then `npm run build` and `npm run lint`.
+5. Apply the SQL migration in a development Supabase project.
+6. Run the seed only in development.
+7. Deploy Edge Functions and set secrets.
+8. Add a navigation link to `/merchant/integrations` if desired.
+9. Map Zoryn Platform Swan/Adyen events to the shared contract.
+10. Add production campaign evaluation, reversal worker and settlement reconciliation before launch.
