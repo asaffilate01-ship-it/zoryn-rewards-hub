@@ -35,6 +35,7 @@ function AdminIndex() {
           <Stat label="Offene Fälle" value={data.open_claims} />
         </div>
       )}
+      <IntegrationHealthCard />
     </>
   );
 }
