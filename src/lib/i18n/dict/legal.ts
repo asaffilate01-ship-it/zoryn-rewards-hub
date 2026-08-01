@@ -37,7 +37,7 @@ export const legal: Record<string, string> = {
   "2. Erhobene Daten": "2. Data Collected",
   "Konto: E-Mail, Anzeigename, Mitgliedsnummer, optional Profilbild": "Account: email address, display name, membership number, optional profile picture",
   "Transaktionen: Punktebuchungen mit Zeitpunkt, Partner, Beleg-ID": "Transactions: point bookings with timestamp, partner, and receipt ID",
-  "Standort: Nur wenn du „In der Nähe" nutzt (temporär, nicht gespeichert)": "Location: only when you use \"Nearby\" (temporary, not stored)",
+  "Standort: Nur wenn du „In der Nähe“ nutzt (temporär, nicht gespeichert)": "Location: only when you use \"Nearby\" (temporary, not stored)",
   "Geräte & Diagnose: nur mit deiner Einwilligung im Cookie-Banner": "Device & diagnostic data: only with your consent given in the cookie banner",
   "3. Zwecke": "3. Purposes",
   "Bereitstellung der Wallet, Vergabe & Einlösung von Punkten, Betrugsprävention, gesetzliche Aufbewahrung.":
@@ -80,7 +80,7 @@ export const legal: Record<string, string> = {
   "Berichtigung (Art. 16)": "Right to Rectification (Art. 16)",
   "Falsche Daten werden auf deinen Wunsch korrigiert.": "Incorrect data will be corrected at your request.",
   "Löschung (Art. 17)": "Right to Erasure (Art. 17)",
-  "„Recht auf Vergessenwerden" — mit Ausnahme gesetzlicher Aufbewahrungspflichten.":
+  "„Recht auf Vergessenwerden“ — mit Ausnahme gesetzlicher Aufbewahrungspflichten.":
     "\"Right to be forgotten\" — except where statutory retention obligations apply.",
   "Einschränkung (Art. 18)": "Right to Restriction (Art. 18)",
   "Sperrung der Verarbeitung während einer Prüfung.": "Suspension of processing during a review.",

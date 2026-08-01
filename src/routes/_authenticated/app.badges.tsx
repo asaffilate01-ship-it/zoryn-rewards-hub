@@ -3,12 +3,14 @@ import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
 import { listBadges, listMyBadges } from "@/lib/badges.functions";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_authenticated/app/badges")({
   component: BadgesPage,
 });
 
 function BadgesPage() {
+  const t = useT();
   const allFn = useServerFn(listBadges);
   const mineFn = useServerFn(listMyBadges);
   const { data: all } = useQuery({ queryKey: ["badges"], queryFn: () => allFn() });
@@ -19,9 +21,9 @@ function BadgesPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-display text-2xl font-semibold">Auszeichnungen</h1>
+        <h1 className="font-display text-2xl font-semibold">{t("Auszeichnungen")}</h1>
         <p className="text-sm text-muted-foreground">
-          {earnedIds.size} von {all?.length ?? 0} freigeschaltet.
+          {earnedIds.size} {t("von")} {all?.length ?? 0} {t("freigeschaltet.")}
         </p>
       </div>
       <div className="grid gap-3 sm:grid-cols-2">
@@ -39,18 +41,18 @@ function BadgesPage() {
                     <div className="font-medium">{b.name}</div>
                     {earned && (
                       <span className="rounded-full bg-primary/15 px-1.5 py-0.5 text-[10px] font-medium text-primary">
-                        Erhalten
+                        {t("Erhalten")}
                       </span>
                     )}
                   </div>
                   <div className="text-xs text-muted-foreground">{b.description}</div>
                   {earned ? (
                     <div className="mt-1 text-[11px] text-muted-foreground">
-                      am {new Date(earnedMap.get(b.id) ?? "").toLocaleDateString("de-DE")}
+                      {t("am")} {new Date(earnedMap.get(b.id) ?? "").toLocaleDateString("de-DE")}
                     </div>
                   ) : (
                     <div className="mt-1 text-[11px] text-muted-foreground">
-                      Ziel: {b.threshold_points.toLocaleString("de-DE")} Punkte
+                      {t("Ziel:")} {b.threshold_points.toLocaleString("de-DE")} {t("Punkte")}
                     </div>
                   )}
                 </div>
