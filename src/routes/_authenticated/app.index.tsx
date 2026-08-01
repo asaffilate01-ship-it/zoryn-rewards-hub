@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useSuspenseQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { QrCode, ShoppingBag, ArrowDownRight, ArrowUpRight, Sparkles, Gift } from "lucide-react";
@@ -48,8 +48,8 @@ function WalletHome() {
     })();
   }, []);
 
+  const navigate = useNavigate();
   const redeemFn = useServerFn(redeemPoints);
-
 
   const redeemMutation = useMutation({
     mutationFn: redeemFn,
@@ -59,9 +59,6 @@ function WalletHome() {
     },
     onError: (e) => toast.error(e.message),
   });
-
-
-
 
   function demoRedeem() {
     redeemMutation.mutate({
