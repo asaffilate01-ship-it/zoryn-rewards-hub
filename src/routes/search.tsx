@@ -58,7 +58,7 @@ function SearchPage() {
           {isFetching && <p className="text-sm text-muted-foreground">{t("Suche läuft…")}</p>}
           {q.trim().length >= 2 && !isFetching && hits.length === 0 && (
             <p className="text-sm text-muted-foreground">
-              {t('Nichts gefunden für „X“.').replace("X", q)}
+              {t("Nichts gefunden für „X“.").replace("X", q)}
             </p>
           )}
           <ul className="mt-2 space-y-2">
@@ -78,11 +78,7 @@ function ResultRow({ hit }: { hit: SearchHit }) {
   const t = useT();
   const Icon = hit.kind === "merchant" ? Store : hit.kind === "offer" ? Sparkles : Gift;
   const label =
-    hit.kind === "merchant"
-      ? t("Geschäft")
-      : hit.kind === "offer"
-        ? t("Angebot")
-        : t("Prämie");
+    hit.kind === "merchant" ? t("Geschäft") : hit.kind === "offer" ? t("Angebot") : t("Prämie");
   return (
     <Link
       to="/app"

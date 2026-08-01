@@ -51,7 +51,11 @@ function DevelopersFeaturePage() {
           title: t("Sandbox"),
           body: t("Test-Merchants und Test-Karten für dein Team."),
         },
-        { icon: Shield, title: t("Idempotenz"), body: t("Alle Schreibpfade nehmen Idempotency-Keys.") },
+        {
+          icon: Shield,
+          title: t("Idempotenz"),
+          body: t("Alle Schreibpfade nehmen Idempotency-Keys."),
+        },
       ]}
       ctaLabel={t("Auf die Warteliste")}
       ctaTo="/legal/complaints"

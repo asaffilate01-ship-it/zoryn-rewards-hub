@@ -297,9 +297,7 @@ function LandingPage() {
               {t("Deine Wallet wartet.")}
             </h2>
             <p className="mt-4 text-muted-foreground">
-              {t(
-                "Erstelle in 30 Sekunden dein Zoryn-Konto und starte mit einem Willkommensbonus.",
-              )}
+              {t("Erstelle in 30 Sekunden dein Zoryn-Konto und starte mit einem Willkommensbonus.")}
             </p>
             <div className="mt-8">
               <Button

@@ -210,9 +210,7 @@ function AuthPage() {
                     required
                     minLength={6}
                   />
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    {t("Mindestens 6 Zeichen.")}
-                  </p>
+                  <p className="mt-1 text-xs text-muted-foreground">{t("Mindestens 6 Zeichen.")}</p>
                 </div>
                 <Button
                   type="submit"
