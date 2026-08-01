@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { adminOverview } from "@/lib/admin.functions";
+import { IntegrationHealthCard } from "@/components/IntegrationHealthCard";
 import { Card, CardContent } from "@/components/ui/card";
 
 export const Route = createFileRoute("/_authenticated/admin/")({
@@ -34,6 +35,7 @@ function AdminIndex() {
           <Stat label="Offene Fälle" value={data.open_claims} />
         </div>
       )}
+      <IntegrationHealthCard />
     </>
   );
 }
