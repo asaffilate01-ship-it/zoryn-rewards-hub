@@ -41,6 +41,7 @@ import { Route as AuthenticatedMerchantSettingsRouteImport } from './routes/_aut
 import { Route as AuthenticatedMerchantRewardsRouteImport } from './routes/_authenticated/merchant.rewards'
 import { Route as AuthenticatedMerchantPosRouteImport } from './routes/_authenticated/merchant.pos'
 import { Route as AuthenticatedMerchantOffersRouteImport } from './routes/_authenticated/merchant.offers'
+import { Route as AuthenticatedMerchantIntegrationsRouteImport } from './routes/_authenticated/merchant.integrations'
 import { Route as AuthenticatedMerchantFundingRouteImport } from './routes/_authenticated/merchant.funding'
 import { Route as AuthenticatedMerchantCampaignsRouteImport } from './routes/_authenticated/merchant.campaigns'
 import { Route as AuthenticatedMerchantAnalyticsRouteImport } from './routes/_authenticated/merchant.analytics'
@@ -226,6 +227,12 @@ const AuthenticatedMerchantOffersRoute =
     path: '/offers',
     getParentRoute: () => AuthenticatedMerchantRoute,
   } as any)
+const AuthenticatedMerchantIntegrationsRoute =
+  AuthenticatedMerchantIntegrationsRouteImport.update({
+    id: '/integrations',
+    path: '/integrations',
+    getParentRoute: () => AuthenticatedMerchantRoute,
+  } as any)
 const AuthenticatedMerchantFundingRoute =
   AuthenticatedMerchantFundingRouteImport.update({
     id: '/funding',
@@ -373,6 +380,7 @@ export interface FileRoutesByFullPath {
   '/merchant/analytics': typeof AuthenticatedMerchantAnalyticsRoute
   '/merchant/campaigns': typeof AuthenticatedMerchantCampaignsRoute
   '/merchant/funding': typeof AuthenticatedMerchantFundingRoute
+  '/merchant/integrations': typeof AuthenticatedMerchantIntegrationsRoute
   '/merchant/offers': typeof AuthenticatedMerchantOffersRoute
   '/merchant/pos': typeof AuthenticatedMerchantPosRoute
   '/merchant/rewards': typeof AuthenticatedMerchantRewardsRoute
@@ -422,6 +430,7 @@ export interface FileRoutesByTo {
   '/merchant/analytics': typeof AuthenticatedMerchantAnalyticsRoute
   '/merchant/campaigns': typeof AuthenticatedMerchantCampaignsRoute
   '/merchant/funding': typeof AuthenticatedMerchantFundingRoute
+  '/merchant/integrations': typeof AuthenticatedMerchantIntegrationsRoute
   '/merchant/offers': typeof AuthenticatedMerchantOffersRoute
   '/merchant/pos': typeof AuthenticatedMerchantPosRoute
   '/merchant/rewards': typeof AuthenticatedMerchantRewardsRoute
@@ -476,6 +485,7 @@ export interface FileRoutesById {
   '/_authenticated/merchant/analytics': typeof AuthenticatedMerchantAnalyticsRoute
   '/_authenticated/merchant/campaigns': typeof AuthenticatedMerchantCampaignsRoute
   '/_authenticated/merchant/funding': typeof AuthenticatedMerchantFundingRoute
+  '/_authenticated/merchant/integrations': typeof AuthenticatedMerchantIntegrationsRoute
   '/_authenticated/merchant/offers': typeof AuthenticatedMerchantOffersRoute
   '/_authenticated/merchant/pos': typeof AuthenticatedMerchantPosRoute
   '/_authenticated/merchant/rewards': typeof AuthenticatedMerchantRewardsRoute
@@ -530,6 +540,7 @@ export interface FileRouteTypes {
     | '/merchant/analytics'
     | '/merchant/campaigns'
     | '/merchant/funding'
+    | '/merchant/integrations'
     | '/merchant/offers'
     | '/merchant/pos'
     | '/merchant/rewards'
@@ -579,6 +590,7 @@ export interface FileRouteTypes {
     | '/merchant/analytics'
     | '/merchant/campaigns'
     | '/merchant/funding'
+    | '/merchant/integrations'
     | '/merchant/offers'
     | '/merchant/pos'
     | '/merchant/rewards'
@@ -632,6 +644,7 @@ export interface FileRouteTypes {
     | '/_authenticated/merchant/analytics'
     | '/_authenticated/merchant/campaigns'
     | '/_authenticated/merchant/funding'
+    | '/_authenticated/merchant/integrations'
     | '/_authenticated/merchant/offers'
     | '/_authenticated/merchant/pos'
     | '/_authenticated/merchant/rewards'
@@ -893,6 +906,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMerchantOffersRouteImport
       parentRoute: typeof AuthenticatedMerchantRoute
     }
+    '/_authenticated/merchant/integrations': {
+      id: '/_authenticated/merchant/integrations'
+      path: '/integrations'
+      fullPath: '/merchant/integrations'
+      preLoaderRoute: typeof AuthenticatedMerchantIntegrationsRouteImport
+      parentRoute: typeof AuthenticatedMerchantRoute
+    }
     '/_authenticated/merchant/funding': {
       id: '/_authenticated/merchant/funding'
       path: '/funding'
@@ -1085,6 +1105,7 @@ interface AuthenticatedMerchantRouteChildren {
   AuthenticatedMerchantAnalyticsRoute: typeof AuthenticatedMerchantAnalyticsRoute
   AuthenticatedMerchantCampaignsRoute: typeof AuthenticatedMerchantCampaignsRoute
   AuthenticatedMerchantFundingRoute: typeof AuthenticatedMerchantFundingRoute
+  AuthenticatedMerchantIntegrationsRoute: typeof AuthenticatedMerchantIntegrationsRoute
   AuthenticatedMerchantOffersRoute: typeof AuthenticatedMerchantOffersRoute
   AuthenticatedMerchantPosRoute: typeof AuthenticatedMerchantPosRoute
   AuthenticatedMerchantRewardsRoute: typeof AuthenticatedMerchantRewardsRoute
@@ -1097,6 +1118,8 @@ const AuthenticatedMerchantRouteChildren: AuthenticatedMerchantRouteChildren = {
   AuthenticatedMerchantAnalyticsRoute: AuthenticatedMerchantAnalyticsRoute,
   AuthenticatedMerchantCampaignsRoute: AuthenticatedMerchantCampaignsRoute,
   AuthenticatedMerchantFundingRoute: AuthenticatedMerchantFundingRoute,
+  AuthenticatedMerchantIntegrationsRoute:
+    AuthenticatedMerchantIntegrationsRoute,
   AuthenticatedMerchantOffersRoute: AuthenticatedMerchantOffersRoute,
   AuthenticatedMerchantPosRoute: AuthenticatedMerchantPosRoute,
   AuthenticatedMerchantRewardsRoute: AuthenticatedMerchantRewardsRoute,
