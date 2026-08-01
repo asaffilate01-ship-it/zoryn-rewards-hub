@@ -108,7 +108,11 @@ export const Route = createFileRoute("/api/public/rewards/events")({
         });
         if (outboxError) return json({ error: "outbox_failed" }, 500);
 
-        return json({ accepted: true, event_id: event.id }, 202);
+        const { data: result } = await supabaseAdmin.rpc("reward_process_event", {
+          _event_id: event.id,
+        });
+
+        return json({ accepted: true, event_id: event.id, processing: result ?? null }, 202);
       },
     },
   },
