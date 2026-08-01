@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { merchantsQueryOptions } from "@/lib/wallet.queries";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_authenticated/app/shop")({
   head: () => ({
@@ -16,13 +17,14 @@ export const Route = createFileRoute("/_authenticated/app/shop")({
 });
 
 function ShopPage() {
+  const t = useT();
   const { data: merchants } = useSuspenseQuery(merchantsQueryOptions());
 
   return (
     <>
       <h1 className="text-2xl font-semibold">Shop</h1>
       <p className="mt-1 text-sm text-muted-foreground">
-        Sammle Punkte bei allen teilnehmenden Zoryn-Partnern.
+        {t("Sammle Punkte bei allen teilnehmenden Zoryn-Partnern.")}
       </p>
 
       <div className="mt-6 grid gap-3">
@@ -51,7 +53,7 @@ function ShopPage() {
                   <p className="mt-1 text-sm text-muted-foreground">{m.description}</p>
                 )}
                 <div className="mt-2 text-xs text-brand-soft">
-                  {m.points_per_euro} Punkte je 1 €
+                  {m.points_per_euro} {t("Punkte je 1 €")}
                 </div>
               </div>
             </div>

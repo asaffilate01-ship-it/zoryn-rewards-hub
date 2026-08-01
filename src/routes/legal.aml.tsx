@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PublicShell, PageHeader, LegalNotice } from "@/components/PublicShell";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/legal/aml")({
   head: () => ({
@@ -15,29 +16,34 @@ export const Route = createFileRoute("/legal/aml")({
     ],
     links: [{ rel: "canonical", href: "/legal/aml" }],
   }),
-  component: () => (
+  component: AmlPage,
+});
+
+function AmlPage() {
+  const t = useT();
+  return (
     <PublicShell>
       <PageHeader
-        eyebrow="Rechtliches"
+        eyebrow={t("Rechtliches")}
         title="AML & KYC"
-        description="Kurzüberblick zur Geldwäscheprävention."
+        description={t("Kurzüberblick zur Geldwäscheprävention.")}
       />
       <section className="mx-auto max-w-3xl space-y-6 px-4 py-14 sm:px-6">
         <LegalNotice />
         <div className="prose prose-invert max-w-none text-foreground [&_p]:text-muted-foreground [&_li]:text-muted-foreground [&_ul]:list-disc [&_ul]:pl-5">
           <p>
-            Zoryn-Punkte sind eine limitierte Loyalitätswährung ohne Bargeld-Rückerstattung und
-            stellen kein E-Geld dar. Wir setzen dennoch angemessene Kontrollen zur Missbrauchs- und
-            Geldwäscheprävention ein:
+            {t(
+              "Zoryn-Punkte sind eine limitierte Loyalitätswährung ohne Bargeld-Rückerstattung und stellen kein E-Geld dar. Wir setzen dennoch angemessene Kontrollen zur Missbrauchs- und Geldwäscheprävention ein:",
+            )}
           </p>
           <ul>
-            <li>Limits pro Buchung, pro Konto und pro Zeitraum</li>
-            <li>Doppeltes Ledger mit Audit-Trail</li>
-            <li>Automatische Anomalie-Erkennung</li>
-            <li>Bei Verdachtsfällen: Sperrung und Rückfrage</li>
+            <li>{t("Limits pro Buchung, pro Konto und pro Zeitraum")}</li>
+            <li>{t("Doppeltes Ledger mit Audit-Trail")}</li>
+            <li>{t("Automatische Anomalie-Erkennung")}</li>
+            <li>{t("Bei Verdachtsfällen: Sperrung und Rückfrage")}</li>
           </ul>
         </div>
       </section>
     </PublicShell>
-  ),
-});
+  );
+}

@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PublicShell, PageHeader, LegalNotice } from "@/components/PublicShell";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/legal/gdpr")({
   head: () => ({
@@ -15,39 +16,46 @@ export const Route = createFileRoute("/legal/gdpr")({
     ],
     links: [{ rel: "canonical", href: "/legal/gdpr" }],
   }),
-  component: () => (
+  component: GdprPage,
+});
+
+function GdprPage() {
+  const t = useT();
+  return (
     <PublicShell>
       <PageHeader
-        eyebrow="Rechtliches"
+        eyebrow={t("Rechtliches")}
         title="DSGVO / GDPR"
-        description="Deine Rechte als betroffene Person."
+        description={t("Deine Rechte als betroffene Person.")}
       />
       <section className="mx-auto max-w-3xl space-y-6 px-4 py-14 sm:px-6">
         <LegalNotice />
         <div className="prose prose-invert max-w-none text-foreground [&_h3]:mt-6 [&_h3]:font-semibold [&_p]:text-muted-foreground">
-          <h3>Auskunft (Art. 15)</h3>
+          <h3>{t("Auskunft (Art. 15)")}</h3>
           <p>
-            Erhalte eine Kopie aller personenbezogenen Daten, die wir über dich gespeichert haben.
+            {t(
+              "Erhalte eine Kopie aller personenbezogenen Daten, die wir über dich gespeichert haben.",
+            )}
           </p>
-          <h3>Berichtigung (Art. 16)</h3>
-          <p>Falsche Daten werden auf deinen Wunsch korrigiert.</p>
-          <h3>Löschung (Art. 17)</h3>
-          <p>„Recht auf Vergessenwerden" — mit Ausnahme gesetzlicher Aufbewahrungspflichten.</p>
-          <h3>Einschränkung (Art. 18)</h3>
-          <p>Sperrung der Verarbeitung während einer Prüfung.</p>
-          <h3>Datenübertragbarkeit (Art. 20)</h3>
-          <p>Export deiner Daten in einem maschinenlesbaren Format.</p>
-          <h3>Widerspruch (Art. 21)</h3>
-          <p>Widerspruch gegen Verarbeitung auf Basis berechtigten Interesses.</p>
+          <h3>{t("Berichtigung (Art. 16)")}</h3>
+          <p>{t("Falsche Daten werden auf deinen Wunsch korrigiert.")}</p>
+          <h3>{t("Löschung (Art. 17)")}</h3>
+          <p>{t("„Recht auf Vergessenwerden" — mit Ausnahme gesetzlicher Aufbewahrungspflichten.")}</p>
+          <h3>{t("Einschränkung (Art. 18)")}</h3>
+          <p>{t("Sperrung der Verarbeitung während einer Prüfung.")}</p>
+          <h3>{t("Datenübertragbarkeit (Art. 20)")}</h3>
+          <p>{t("Export deiner Daten in einem maschinenlesbaren Format.")}</p>
+          <h3>{t("Widerspruch (Art. 21)")}</h3>
+          <p>{t("Widerspruch gegen Verarbeitung auf Basis berechtigten Interesses.")}</p>
         </div>
         <p className="text-sm text-muted-foreground">
-          Antrag stellen? Nutze das{" "}
+          {t("Antrag stellen? Nutze das")}{" "}
           <Link to="/legal/complaints" className="text-brand underline underline-offset-2">
-            Beschwerde- & Anfrageformular
+            {t("Beschwerde- & Anfrageformular")}
           </Link>
           .
         </p>
       </section>
     </PublicShell>
-  ),
-});
+  );
+}

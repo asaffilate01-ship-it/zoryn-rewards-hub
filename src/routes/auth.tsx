@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({
@@ -25,19 +26,27 @@ export const Route = createFileRoute("/auth")({
   component: AuthPage,
 });
 
-const signInSchema = z.object({
-  email: z.string().trim().email("Ungültige E-Mail").max(255),
-  password: z.string().min(6, "Mind. 6 Zeichen").max(72),
-});
+function buildSignInSchema(t: (s: string) => string) {
+  return z.object({
+    email: z.string().trim().email(t("Ungültige E-Mail")).max(255),
+    password: z.string().min(6, t("Mind. 6 Zeichen")).max(72),
+  });
+}
 
-const signUpSchema = signInSchema.extend({
-  first_name: z.string().trim().min(1, "Vorname erforderlich").max(50),
-});
+function buildSignUpSchema(t: (s: string) => string) {
+  return buildSignInSchema(t).extend({
+    first_name: z.string().trim().min(1, t("Vorname erforderlich")).max(50),
+  });
+}
 
 function AuthPage() {
+  const t = useT();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [tab, setTab] = useState<"signin" | "signup">("signin");
+
+  const signInSchema = buildSignInSchema(t);
+  const signUpSchema = buildSignUpSchema(t);
 
   // If already signed in, hop to /app
   useEffect(() => {
@@ -64,7 +73,7 @@ function AuthPage() {
       toast.error(error.message);
       return;
     }
-    toast.success("Willkommen zurück");
+    toast.success(t("Willkommen zurück"));
     navigate({ to: "/app" });
   }
 
@@ -94,7 +103,7 @@ function AuthPage() {
       toast.error(error.message);
       return;
     }
-    toast.success("Wallet erstellt — willkommen bei Zoryn");
+    toast.success(t("Wallet erstellt — willkommen bei Zoryn"));
     navigate({ to: "/app" });
   }
 
@@ -105,7 +114,7 @@ function AuthPage() {
     });
     if (result.error) {
       setLoading(false);
-      toast.error("Google-Anmeldung fehlgeschlagen");
+      toast.error(t("Google-Anmeldung fehlgeschlagen"));
       return;
     }
     if (result.redirected) return;
@@ -120,7 +129,7 @@ function AuthPage() {
           to="/"
           className="mb-8 inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
         >
-          <ArrowLeft className="size-4" /> Zurück
+          <ArrowLeft className="size-4" /> {t("Zurück")}
         </Link>
 
         <div className="mb-8">
@@ -128,9 +137,9 @@ function AuthPage() {
         </div>
 
         <div className="surface-glass rounded-2xl p-6">
-          <h1 className="text-2xl font-semibold tracking-tight">Deine Wallet</h1>
+          <h1 className="text-2xl font-semibold tracking-tight">{t("Deine Wallet")}</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Ein Konto. Punkte, Cashback und Angebote im gesamten Zoryn-Netzwerk.
+            {t("Ein Konto. Punkte, Cashback und Angebote im gesamten Zoryn-Netzwerk.")}
           </p>
 
           <Button
@@ -140,29 +149,29 @@ function AuthPage() {
             onClick={handleGoogle}
             disabled={loading}
           >
-            <GoogleIcon /> Mit Google fortfahren
+            <GoogleIcon /> {t("Mit Google fortfahren")}
           </Button>
 
           <div className="my-6 flex items-center gap-3 text-xs text-muted-foreground">
             <div className="h-px flex-1 bg-border" />
-            oder mit E-Mail
+            {t("oder mit E-Mail")}
             <div className="h-px flex-1 bg-border" />
           </div>
 
           <Tabs value={tab} onValueChange={(v) => setTab(v as "signin" | "signup")}>
             <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="signin">Anmelden</TabsTrigger>
-              <TabsTrigger value="signup">Registrieren</TabsTrigger>
+              <TabsTrigger value="signin">{t("Anmelden")}</TabsTrigger>
+              <TabsTrigger value="signup">{t("Registrieren")}</TabsTrigger>
             </TabsList>
 
             <TabsContent value="signin" className="mt-4">
               <form onSubmit={handleSignIn} className="space-y-4">
                 <div>
-                  <Label htmlFor="si-email">E-Mail</Label>
+                  <Label htmlFor="si-email">{t("E-Mail")}</Label>
                   <Input id="si-email" name="email" type="email" autoComplete="email" required />
                 </div>
                 <div>
-                  <Label htmlFor="si-password">Passwort</Label>
+                  <Label htmlFor="si-password">{t("Passwort")}</Label>
                   <Input
                     id="si-password"
                     name="password"
@@ -176,7 +185,7 @@ function AuthPage() {
                   disabled={loading}
                   className="w-full gradient-brand text-primary-foreground border-0"
                 >
-                  {loading ? <Loader2 className="size-4 animate-spin" /> : "Anmelden"}
+                  {loading ? <Loader2 className="size-4 animate-spin" /> : t("Anmelden")}
                 </Button>
               </form>
             </TabsContent>
@@ -184,15 +193,15 @@ function AuthPage() {
             <TabsContent value="signup" className="mt-4">
               <form onSubmit={handleSignUp} className="space-y-4">
                 <div>
-                  <Label htmlFor="su-name">Vorname</Label>
+                  <Label htmlFor="su-name">{t("Vorname")}</Label>
                   <Input id="su-name" name="first_name" required maxLength={50} />
                 </div>
                 <div>
-                  <Label htmlFor="su-email">E-Mail</Label>
+                  <Label htmlFor="su-email">{t("E-Mail")}</Label>
                   <Input id="su-email" name="email" type="email" autoComplete="email" required />
                 </div>
                 <div>
-                  <Label htmlFor="su-password">Passwort</Label>
+                  <Label htmlFor="su-password">{t("Passwort")}</Label>
                   <Input
                     id="su-password"
                     name="password"
@@ -201,17 +210,19 @@ function AuthPage() {
                     required
                     minLength={6}
                   />
-                  <p className="mt-1 text-xs text-muted-foreground">Mindestens 6 Zeichen.</p>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    {t("Mindestens 6 Zeichen.")}
+                  </p>
                 </div>
                 <Button
                   type="submit"
                   disabled={loading}
                   className="w-full gradient-brand text-primary-foreground border-0"
                 >
-                  {loading ? <Loader2 className="size-4 animate-spin" /> : "Wallet erstellen"}
+                  {loading ? <Loader2 className="size-4 animate-spin" /> : t("Wallet erstellen")}
                 </Button>
                 <p className="text-center text-xs text-muted-foreground">
-                  Mit der Registrierung akzeptierst du unsere AGB und Datenschutzerklärung.
+                  {t("Mit der Registrierung akzeptierst du unsere AGB und Datenschutzerklärung.")}
                 </p>
               </form>
             </TabsContent>

@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { submitComplaint } from "@/lib/complaints.functions";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/legal/complaints")({
   head: () => ({
@@ -27,6 +28,7 @@ export const Route = createFileRoute("/legal/complaints")({
 });
 
 function ComplaintsPage() {
+  const t = useT();
   const call = useServerFn(submitComplaint);
   const [busy, setBusy] = useState(false);
   const [form, setForm] = useState({
@@ -45,9 +47,9 @@ function ComplaintsPage() {
     try {
       await call({ data: form });
       setDone(true);
-      toast.success("Anfrage eingegangen — wir melden uns per E-Mail.");
+      toast.success(t("Anfrage eingegangen — wir melden uns per E-Mail."));
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Konnte nicht gesendet werden");
+      toast.error(err instanceof Error ? err.message : t("Konnte nicht gesendet werden"));
     } finally {
       setBusy(false);
     }
@@ -56,15 +58,15 @@ function ComplaintsPage() {
   return (
     <PublicShell>
       <PageHeader
-        eyebrow="Support"
-        title="Beschwerden & Anfragen"
-        description="Reklamationen, Datenschutz-Anfragen und Sicherheitsmeldungen."
+        eyebrow={t("Support")}
+        title={t("Beschwerden & Anfragen")}
+        description={t("Reklamationen, Datenschutz-Anfragen und Sicherheitsmeldungen.")}
       />
       <section className="mx-auto max-w-2xl space-y-6 px-4 py-14 sm:px-6">
         <LegalNotice />
         {done ? (
           <div className="rounded-3xl border border-success/40 bg-success/10 p-6 text-sm">
-            Danke — wir haben deine Anfrage erhalten und melden uns innerhalb von 5 Werktagen.
+            {t("Danke — wir haben deine Anfrage erhalten und melden uns innerhalb von 5 Werktagen.")}
           </div>
         ) : (
           <form
@@ -73,7 +75,7 @@ function ComplaintsPage() {
           >
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
-                <Label htmlFor="name">Name</Label>
+                <Label htmlFor="name">{t("Name")}</Label>
                 <Input
                   id="name"
                   required
@@ -83,7 +85,7 @@ function ComplaintsPage() {
                 />
               </div>
               <div>
-                <Label htmlFor="email">E-Mail</Label>
+                <Label htmlFor="email">{t("E-Mail")}</Label>
                 <Input
                   id="email"
                   type="email"
@@ -94,7 +96,7 @@ function ComplaintsPage() {
                 />
               </div>
               <div>
-                <Label htmlFor="mn">Mitgliedsnummer (optional)</Label>
+                <Label htmlFor="mn">{t("Mitgliedsnummer (optional)")}</Label>
                 <Input
                   id="mn"
                   maxLength={40}
@@ -103,7 +105,7 @@ function ComplaintsPage() {
                 />
               </div>
               <div>
-                <Label htmlFor="cat">Kategorie</Label>
+                <Label htmlFor="cat">{t("Kategorie")}</Label>
                 <select
                   id="cat"
                   className="mt-1 flex h-10 w-full rounded-md border border-input bg-background px-3 text-sm"
@@ -112,16 +114,16 @@ function ComplaintsPage() {
                     setForm({ ...form, category: e.target.value as typeof form.category })
                   }
                 >
-                  <option value="complaint">Beschwerde</option>
-                  <option value="gdpr">DSGVO-Anfrage</option>
-                  <option value="billing">Abrechnung</option>
-                  <option value="security">Sicherheit</option>
-                  <option value="other">Sonstiges</option>
+                  <option value="complaint">{t("Beschwerde")}</option>
+                  <option value="gdpr">{t("DSGVO-Anfrage")}</option>
+                  <option value="billing">{t("Abrechnung")}</option>
+                  <option value="security">{t("Sicherheit")}</option>
+                  <option value="other">{t("Sonstiges")}</option>
                 </select>
               </div>
             </div>
             <div>
-              <Label htmlFor="subj">Betreff</Label>
+              <Label htmlFor="subj">{t("Betreff")}</Label>
               <Input
                 id="subj"
                 required
@@ -131,7 +133,7 @@ function ComplaintsPage() {
               />
             </div>
             <div>
-              <Label htmlFor="msg">Nachricht</Label>
+              <Label htmlFor="msg">{t("Nachricht")}</Label>
               <Textarea
                 id="msg"
                 required
@@ -142,7 +144,7 @@ function ComplaintsPage() {
               />
             </div>
             <Button type="submit" disabled={busy} className="w-full">
-              {busy ? "Wird gesendet…" : "Absenden"}
+              {busy ? t("Wird gesendet…") : t("Absenden")}
             </Button>
           </form>
         )}

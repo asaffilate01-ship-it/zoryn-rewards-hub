@@ -5,12 +5,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { adminRecentAudit } from "@/lib/settlements.functions";
 import { FileText } from "lucide-react";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_authenticated/admin/audit")({
   component: AuditPage,
 });
 
 function AuditPage() {
+  const t = useT();
   const fn = useServerFn(adminRecentAudit);
   const { data } = useQuery({
     queryKey: ["adminAudit"],
@@ -19,16 +21,16 @@ function AuditPage() {
 
   return (
     <div className="space-y-4">
-      <h2 className="font-display text-xl font-semibold">Audit-Log</h2>
+      <h2 className="font-display text-xl font-semibold">{t("Audit-Log")}</h2>
       <Card>
         <CardHeader>
           <CardTitle className="text-base flex items-center gap-2">
-            <FileText className="size-4" /> Letzte Ereignisse
+            <FileText className="size-4" /> {t("Letzte Ereignisse")}
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-2">
           {(data ?? []).length === 0 && (
-            <p className="text-sm text-muted-foreground">Keine Ereignisse.</p>
+            <p className="text-sm text-muted-foreground">{t("Keine Ereignisse.")}</p>
           )}
           {(data ?? []).map((e) => (
             <div

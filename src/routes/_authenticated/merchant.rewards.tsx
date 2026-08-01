@@ -18,12 +18,14 @@ import {
   useRewardCode,
 } from "@/lib/rewards.functions";
 import { useActiveMerchantId } from "@/lib/active-merchant";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_authenticated/merchant/rewards")({
   component: MerchantRewards,
 });
 
 function MerchantRewards() {
+  const t = useT();
   const merchantId = useActiveMerchantId();
   const qc = useQueryClient();
   const listFn = useServerFn(listMerchantRewards);
@@ -54,12 +56,12 @@ function MerchantRewards() {
         },
       }),
     onSuccess: () => {
-      toast.success("Belohnung angelegt.");
+      toast.success(t("Belohnung angelegt."));
       setForm({ title: "", description: "", costPoints: "500", stock: "" });
       setShowForm(false);
       qc.invalidateQueries({ queryKey: ["merchantRewards", merchantId] });
     },
-    onError: (e: unknown) => toast.error(e instanceof Error ? e.message : "Fehler"),
+    onError: (e: unknown) => toast.error(e instanceof Error ? e.message : t("Fehler")),
   });
 
   const toggle = useMutation({
@@ -69,7 +71,7 @@ function MerchantRewards() {
   const del = useMutation({
     mutationFn: async (rewardId: string) => delFn({ data: { rewardId } }),
     onSuccess: () => {
-      toast.success("Gelöscht.");
+      toast.success(t("Gelöscht."));
       qc.invalidateQueries({ queryKey: ["merchantRewards", merchantId] });
     },
   });
@@ -77,18 +79,18 @@ function MerchantRewards() {
   const redeemCode = useMutation({
     mutationFn: async () => redeemCodeFn({ data: { merchantId: merchantId!, code } }),
     onSuccess: (r) => {
-      toast.success(`Eingelöst: ${r.reward_title}`);
+      toast.success(`${t("Eingelöst:")} ${r.reward_title}`);
       setCode("");
     },
-    onError: (e: unknown) => toast.error(e instanceof Error ? e.message : "Fehler"),
+    onError: (e: unknown) => toast.error(e instanceof Error ? e.message : t("Fehler")),
   });
 
   if (!merchantId) {
     return (
       <div className="mx-auto max-w-md text-center">
-        <p className="text-sm text-muted-foreground">Bitte einen Merchant auswählen.</p>
+        <p className="text-sm text-muted-foreground">{t("Bitte einen Merchant auswählen.")}</p>
         <Link to="/merchant" className="text-sm text-primary underline">
-          Zur Übersicht
+          {t("Zur Übersicht")}
         </Link>
       </div>
     );
@@ -97,24 +99,24 @@ function MerchantRewards() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="font-display text-2xl font-semibold">Belohnungen</h1>
+        <h1 className="font-display text-2xl font-semibold">{t("Belohnungen")}</h1>
         <Button onClick={() => setShowForm((s) => !s)}>
-          <Plus className="mr-1 size-4" /> Neue Belohnung
+          <Plus className="mr-1 size-4" /> {t("Neue Belohnung")}
         </Button>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Code einlösen</CardTitle>
+          <CardTitle className="text-base">{t("Code einlösen")}</CardTitle>
         </CardHeader>
         <CardContent className="flex gap-2">
           <Input
-            placeholder="Belohnungscode"
+            placeholder={t("Belohnungscode")}
             value={code}
             onChange={(e) => setCode(e.target.value.toUpperCase())}
           />
           <Button onClick={() => redeemCode.mutate()} disabled={!code || redeemCode.isPending}>
-            <Ticket className="mr-1 size-4" /> Einlösen
+            <Ticket className="mr-1 size-4" /> {t("Einlösen")}
           </Button>
         </CardContent>
       </Card>
@@ -122,19 +124,19 @@ function MerchantRewards() {
       {showForm && (
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">Belohnung anlegen</CardTitle>
+            <CardTitle className="text-base">{t("Belohnung anlegen")}</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-3">
             <div className="grid gap-1.5">
-              <Label>Titel</Label>
+              <Label>{t("Titel")}</Label>
               <Input
                 value={form.title}
                 onChange={(e) => setForm({ ...form, title: e.target.value })}
-                placeholder="Gratis Kaffee"
+                placeholder={t("Gratis Kaffee")}
               />
             </div>
             <div className="grid gap-1.5">
-              <Label>Beschreibung</Label>
+              <Label>{t("Beschreibung")}</Label>
               <Textarea
                 rows={2}
                 value={form.description}
@@ -143,7 +145,7 @@ function MerchantRewards() {
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div className="grid gap-1.5">
-                <Label>Kosten (Punkte)</Label>
+                <Label>{t("Kosten (Punkte)")}</Label>
                 <Input
                   type="number"
                   value={form.costPoints}
@@ -151,7 +153,7 @@ function MerchantRewards() {
                 />
               </div>
               <div className="grid gap-1.5">
-                <Label>Bestand (leer = unbegrenzt)</Label>
+                <Label>{t("Bestand (leer = unbegrenzt)")}</Label>
                 <Input
                   type="number"
                   value={form.stock}
@@ -161,17 +163,17 @@ function MerchantRewards() {
             </div>
             <div className="flex justify-end gap-2">
               <Button variant="ghost" onClick={() => setShowForm(false)}>
-                Abbrechen
+                {t("Abbrechen")}
               </Button>
               <Button onClick={() => create.mutate()} disabled={!form.title || create.isPending}>
-                Anlegen
+                {t("Anlegen")}
               </Button>
             </div>
           </CardContent>
         </Card>
       )}
 
-      {isLoading && <p className="text-sm text-muted-foreground">Laden…</p>}
+      {isLoading && <p className="text-sm text-muted-foreground">{t("Laden…")}</p>}
       <div className="grid gap-3">
         {(list ?? []).map((r) => (
           <Card key={r.id}>
@@ -183,8 +185,8 @@ function MerchantRewards() {
                 <div>
                   <div className="font-medium">{r.title}</div>
                   <div className="text-xs text-muted-foreground">
-                    {r.cost_points.toLocaleString("de-DE")} Punkte
-                    {r.stock !== null && ` · Bestand ${r.stock}`}
+                    {r.cost_points.toLocaleString("de-DE")} {t("Punkte")}
+                    {r.stock !== null && ` · ${t("Bestand")} ${r.stock}`}
                   </div>
                   {r.description && (
                     <div className="mt-1 text-sm text-muted-foreground">{r.description}</div>
@@ -193,7 +195,7 @@ function MerchantRewards() {
               </div>
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                  Aktiv
+                  {t("Aktiv")}
                   <Switch
                     checked={r.active}
                     onCheckedChange={(v) => toggle.mutate({ rewardId: r.id, active: v })}
@@ -209,7 +211,7 @@ function MerchantRewards() {
         {list && list.length === 0 && (
           <Card>
             <CardContent className="py-8 text-center text-muted-foreground">
-              Noch keine Belohnungen.
+              {t("Noch keine Belohnungen.")}
             </CardContent>
           </Card>
         )}

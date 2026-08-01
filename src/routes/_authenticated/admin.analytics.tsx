@@ -13,6 +13,7 @@ import {
   CartesianGrid,
   Legend,
 } from "recharts";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_authenticated/admin/analytics")({
   head: () => ({ meta: [{ title: "Analytics — Zoryn Admin" }] }),
@@ -20,6 +21,7 @@ export const Route = createFileRoute("/_authenticated/admin/analytics")({
 });
 
 function AdminAnalytics() {
+  const t = useT();
   const seriesFn = useServerFn(adminSeries);
   const topFn = useServerFn(adminTopMerchants);
   const { data: series } = useQuery({ queryKey: ["adminSeries"], queryFn: () => seriesFn() });
@@ -28,13 +30,13 @@ function AdminAnalytics() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-display text-2xl font-semibold">Plattform-Analytics</h1>
-        <p className="text-sm text-muted-foreground">30-Tage-Trends.</p>
+        <h1 className="font-display text-2xl font-semibold">{t("Plattform-Analytics")}</h1>
+        <p className="text-sm text-muted-foreground">{t("30-Tage-Trends.")}</p>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Punkte-Aktivität & Registrierungen</CardTitle>
+          <CardTitle className="text-base">{t("Punkte-Aktivität & Registrierungen")}</CardTitle>
         </CardHeader>
         <CardContent className="h-80">
           <ResponsiveContainer width="100%" height="100%">
@@ -57,21 +59,21 @@ function AdminAnalytics() {
                 type="monotone"
                 dataKey="earned"
                 stroke="hsl(var(--primary))"
-                name="Ausgegeben"
+                name={t("Ausgegeben")}
                 dot={false}
               />
               <Line
                 type="monotone"
                 dataKey="redeemed"
                 stroke="hsl(var(--destructive))"
-                name="Eingelöst"
+                name={t("Eingelöst")}
                 dot={false}
               />
               <Line
                 type="monotone"
                 dataKey="new_users"
                 stroke="hsl(var(--accent))"
-                name="Neue Nutzer:innen"
+                name={t("Neue Nutzer:innen")}
                 dot={false}
               />
             </LineChart>
@@ -81,11 +83,11 @@ function AdminAnalytics() {
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Top-Merchants (30 Tage)</CardTitle>
+          <CardTitle className="text-base">{t("Top-Merchants (30 Tage)")}</CardTitle>
         </CardHeader>
         <CardContent>
           {(top ?? []).length === 0 ? (
-            <p className="text-sm text-muted-foreground">Keine Aktivität.</p>
+            <p className="text-sm text-muted-foreground">{t("Keine Aktivität.")}</p>
           ) : (
             <ul className="divide-y divide-border/60">
               {(top ?? []).map((m) => (
@@ -95,8 +97,12 @@ function AdminAnalytics() {
                     <div className="text-xs text-muted-foreground">/{m.slug}</div>
                   </div>
                   <div className="text-right tabular-nums text-muted-foreground">
-                    <div>{Number(m.earned).toLocaleString("de-DE")} P ausgegeben</div>
-                    <div className="text-xs">{Number(m.txns)} Transaktionen</div>
+                    <div>
+                      {Number(m.earned).toLocaleString("de-DE")} {t("P ausgegeben")}
+                    </div>
+                    <div className="text-xs">
+                      {Number(m.txns)} {t("Transaktionen")}
+                    </div>
                   </div>
                 </li>
               ))}

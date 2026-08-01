@@ -6,12 +6,14 @@ import { Bell } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { listNotifications, markAllNotificationsRead } from "@/lib/notifications.functions";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_authenticated/app/notifications")({
   component: NotificationsPage,
 });
 
 function NotificationsPage() {
+  const t = useT();
   const qc = useQueryClient();
   const listFn = useServerFn(listNotifications);
   const markFn = useServerFn(markAllNotificationsRead);
@@ -32,23 +34,23 @@ function NotificationsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-display text-2xl font-semibold">Benachrichtigungen</h1>
-          <p className="text-sm text-muted-foreground">Punkte, Angebote und Aktivitäten.</p>
+          <h1 className="font-display text-2xl font-semibold">{t("Benachrichtigungen")}</h1>
+          <p className="text-sm text-muted-foreground">{t("Punkte, Angebote und Aktivitäten.")}</p>
         </div>
         {hasUnread && (
           <Button variant="ghost" size="sm" onClick={() => mark.mutate()}>
-            Alle gelesen
+            {t("Alle gelesen")}
           </Button>
         )}
       </div>
 
       {isLoading ? (
-        <p className="text-muted-foreground">Lade…</p>
+        <p className="text-muted-foreground">{t("Lade…")}</p>
       ) : !data || data.length === 0 ? (
         <Card>
           <CardContent className="flex flex-col items-center gap-3 py-12 text-center">
             <Bell className="size-8 text-muted-foreground" />
-            <p className="text-muted-foreground">Noch keine Benachrichtigungen.</p>
+            <p className="text-muted-foreground">{t("Noch keine Benachrichtigungen.")}</p>
           </CardContent>
         </Card>
       ) : (
