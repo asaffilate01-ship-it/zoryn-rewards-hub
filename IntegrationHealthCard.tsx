@@ -1,0 +1,12 @@
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+const cors={"Access-Control-Allow-Origin":"*","Access-Control-Allow-Headers":"authorization,x-client-info,apikey,content-type,x-zoryn-signature"};
+Deno.serve(async(req)=>{if(req.method==='OPTIONS')return new Response('ok',{headers:cors});
+ const supabase=createClient(Deno.env.get('SUPABASE_URL')!,Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!);
+ try{const body=await req.json(); const required=['event_id','event_type','tenant_slug','provider','provider_reference'];
+  for(const f of required)if(!body[f])throw new Error(`missing_${f}`);
+  const {data:tenant,error:te}=await supabase.from('reward_tenants').select('id').eq('slug',body.tenant_slug).single(); if(te)throw te;
+  const {data,eventError}=await supabase.from('reward_external_events').upsert({tenant_id:tenant.id,provider:body.provider,event_type:body.event_type,provider_event_id:body.event_id,platform_user_id:body.platform_user_id||null,amount_cents:body.amount_cents||null,currency:body.currency||'EUR',payload:body,status:'received'},{onConflict:'provider,provider_event_id'}).select().single();
+  if(eventError)throw eventError;
+  await supabase.from('reward_outbox').insert({tenant_id:tenant.id,topic:'rewards.event.received',aggregate_id:event.id,payload:{event_id:event.id}});
+  return new Response(JSON.stringify({accepted:true,event_id:event.id}),{status:202,headers:{...cors,'content-type':'application/json'}});
+ }catch(e){return new Response(JSON.stringify({error:String(e)}),{status:400,headers:{...cors,'content-type':'application/json'}})}});
