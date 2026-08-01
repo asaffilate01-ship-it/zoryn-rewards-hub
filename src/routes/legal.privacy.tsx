@@ -37,7 +37,7 @@ function PrivacyPage() {
           <ul>
             <li>{t("Konto: E-Mail, Anzeigename, Mitgliedsnummer, optional Profilbild")}</li>
             <li>{t("Transaktionen: Punktebuchungen mit Zeitpunkt, Partner, Beleg-ID")}</li>
-            <li>{t("Standort: Nur wenn du „In der Nähe“ nutzt (temporär, nicht gespeichert)“)}</li>
+            <li>{t("Standort: Nur wenn du „In der Nähe“ nutzt (temporär, nicht gespeichert)")}</li>
             <li>{t("Geräte & Diagnose: nur mit deiner Einwilligung im Cookie-Banner")}</li>
           </ul>
           <h2>{t("3. Zwecke")}</h2>
