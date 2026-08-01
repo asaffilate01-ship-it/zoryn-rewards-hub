@@ -17,12 +17,14 @@ import {
   toggleCampaign,
 } from "@/lib/campaigns.functions";
 import { useActiveMerchantId } from "@/lib/active-merchant";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_authenticated/merchant/campaigns")({
   component: CampaignsPage,
 });
 
 function CampaignsPage() {
+  const t = useT();
   const merchantId = useActiveMerchantId();
   const qc = useQueryClient();
   const listFn = useServerFn(listMerchantCampaigns);
@@ -58,12 +60,12 @@ function CampaignsPage() {
         },
       }),
     onSuccess: () => {
-      toast.success("Kampagne angelegt.");
+      toast.success(t("Kampagne angelegt."));
       setShowForm(false);
       setForm({ name: "", description: "", multiplier: "2", startsAt: "", endsAt: "" });
       qc.invalidateQueries({ queryKey: ["merchantCampaigns", merchantId] });
     },
-    onError: (e: unknown) => toast.error(e instanceof Error ? e.message : "Fehler"),
+    onError: (e: unknown) => toast.error(e instanceof Error ? e.message : t("Fehler")),
   });
 
   const toggle = useMutation({
@@ -74,7 +76,7 @@ function CampaignsPage() {
   const remove = useMutation({
     mutationFn: async (campaignId: string) => deleteFn({ data: { campaignId } }),
     onSuccess: () => {
-      toast.success("Kampagne gelöscht.");
+      toast.success(t("Kampagne gelöscht."));
       qc.invalidateQueries({ queryKey: ["merchantCampaigns", merchantId] });
     },
   });
@@ -83,9 +85,9 @@ function CampaignsPage() {
     return (
       <Card>
         <CardContent className="flex flex-col items-center gap-3 py-12 text-center">
-          <p className="text-muted-foreground">Kein Merchant ausgewählt.</p>
+          <p className="text-muted-foreground">{t("Kein Merchant ausgewählt.")}</p>
           <Link to="/merchant">
-            <Button>Merchant wählen</Button>
+            <Button>{t("Merchant wählen")}</Button>
           </Link>
         </CardContent>
       </Card>
@@ -96,30 +98,30 @@ function CampaignsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-display text-2xl font-semibold">Kampagnen</h1>
+          <h1 className="font-display text-2xl font-semibold">{t("Kampagnen")}</h1>
           <p className="text-sm text-muted-foreground">
-            Zeitgesteuerte Punkte-Multiplikatoren für Aktionen.
+            {t("Zeitgesteuerte Punkte-Multiplikatoren für Aktionen.")}
           </p>
         </div>
         <Button onClick={() => setShowForm((v) => !v)}>
-          <Plus className="mr-1 size-4" /> Neue Kampagne
+          <Plus className="mr-1 size-4" /> {t("Neue Kampagne")}
         </Button>
       </div>
 
       {showForm && (
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">Neue Kampagne</CardTitle>
+            <CardTitle className="text-base">{t("Neue Kampagne")}</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-4 md:grid-cols-2">
-            <Field label="Name">
+            <Field label={t("Name")}>
               <Input
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                placeholder="Sommer-Special"
+                placeholder={t("Sommer-Special")}
               />
             </Field>
-            <Field label="Multiplikator (x)">
+            <Field label={t("Multiplikator (x)")}>
               <Input
                 type="number"
                 min={1}
@@ -129,14 +131,14 @@ function CampaignsPage() {
                 onChange={(e) => setForm({ ...form, multiplier: e.target.value })}
               />
             </Field>
-            <Field label="Startet am (optional)">
+            <Field label={t("Startet am (optional)")}>
               <Input
                 type="datetime-local"
                 value={form.startsAt}
                 onChange={(e) => setForm({ ...form, startsAt: e.target.value })}
               />
             </Field>
-            <Field label="Endet am (optional)">
+            <Field label={t("Endet am (optional)")}>
               <Input
                 type="datetime-local"
                 value={form.endsAt}
@@ -144,7 +146,7 @@ function CampaignsPage() {
               />
             </Field>
             <div className="md:col-span-2">
-              <Field label="Beschreibung">
+              <Field label={t("Beschreibung")}>
                 <Textarea
                   rows={2}
                   value={form.description}
@@ -157,7 +159,7 @@ function CampaignsPage() {
                 disabled={create.isPending || form.name.length < 3}
                 onClick={() => create.mutate()}
               >
-                {create.isPending ? "Speichere…" : "Anlegen"}
+                {create.isPending ? t("Speichere…") : t("Anlegen")}
               </Button>
             </div>
           </CardContent>
@@ -165,11 +167,11 @@ function CampaignsPage() {
       )}
 
       {isLoading ? (
-        <p className="text-muted-foreground">Lade…</p>
+        <p className="text-muted-foreground">{t("Lade…")}</p>
       ) : !rows || rows.length === 0 ? (
         <Card>
           <CardContent className="py-8 text-center text-muted-foreground">
-            Noch keine Kampagnen.
+            {t("Noch keine Kampagnen.")}
           </CardContent>
         </Card>
       ) : (
