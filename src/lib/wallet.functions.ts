@@ -116,6 +116,7 @@ export const earnPoints = createServerFn({ method: "POST" })
   });
 
 
+
 /**
  * Redeem points. Server checks balance atomically.
  */
