@@ -115,7 +115,6 @@ export const earnPoints = createServerFn({ method: "POST" })
     return { transaction_id: txnId as string };
   });
 
-
 /**
  * Redeem points. Server checks balance atomically.
  */
