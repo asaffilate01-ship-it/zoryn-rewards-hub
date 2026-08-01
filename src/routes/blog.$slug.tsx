@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { Facebook, Linkedin, Link as LinkIcon, MessageCircle, Twitter } from "lucide-react";
@@ -6,7 +7,8 @@ import { PublicShell } from "@/components/PublicShell";
 import { MarkdownLite } from "@/components/MarkdownLite";
 import { SocialRow } from "@/components/SocialIcons";
 import { getPost } from "@/lib/blog.functions";
-import { useT } from "@/lib/i18n";
+import { setHeadOverride } from "@/lib/head-locale";
+import { useLocale, useT } from "@/lib/i18n";
 
 const postQuery = (slug: string) =>
   queryOptions({
@@ -64,12 +66,24 @@ export const Route = createFileRoute("/blog/$slug")({
 
 function BlogPost() {
   const t = useT();
+  const { locale } = useLocale();
   const { slug } = Route.useParams();
   const { data } = useSuspenseQuery(postQuery(slug));
   const post = data.post!;
+  const pick = (de: string, en: string | null) => (locale === "en" && en ? en : de);
+  const title = pick(post.title, post.title_en);
+  const bodyMd = pick(post.body_md, post.body_md_en);
+  const excerpt = pick(post.excerpt, post.excerpt_en);
+
+  // Head tags render server-side in German; align them with the reader's locale.
+  useEffect(() => {
+    setHeadOverride({ title: `${title} — Zoryn Blog`, description: excerpt });
+    return () => setHeadOverride(null);
+  }, [title, excerpt]);
+
   const url = typeof window !== "undefined" ? window.location.href : `/blog/${slug}`;
   const enc = encodeURIComponent(url);
-  const encT = encodeURIComponent(post.title);
+  const encT = encodeURIComponent(title);
 
   const share = [
     { label: "X", icon: Twitter, href: `https://twitter.com/intent/tweet?url=${enc}&text=${encT}` },
@@ -100,23 +114,23 @@ function BlogPost() {
           ))}
         </div>
         <h1 className="font-display text-4xl font-semibold tracking-tight sm:text-5xl">
-          {post.title}
+          {title}
         </h1>
         <p className="mt-3 text-sm text-muted-foreground">
           {post.author_name} ·{" "}
-          {post.published_at ? new Date(post.published_at).toLocaleDateString("de-DE") : ""}
+          {post.published_at ? new Date(post.published_at).toLocaleDateString(locale === "en" ? "en-GB" : "de-DE") : ""}
         </p>
         {post.cover_url ? (
           <img
             src={post.cover_url}
-            alt={post.title}
+            alt={title}
             className="mt-8 aspect-[16/9] w-full rounded-3xl object-cover"
           />
         ) : (
           <div className="mt-8 aspect-[16/9] w-full rounded-3xl bg-gradient-to-br from-brand/30 via-brand-alt/20 to-background" />
         )}
         <div className="mt-10 text-base leading-relaxed">
-          <MarkdownLite source={post.body_md} />
+          <MarkdownLite source={bodyMd} />
         </div>
 
         <div className="mt-12 rounded-3xl border border-border/60 bg-card/40 p-5">

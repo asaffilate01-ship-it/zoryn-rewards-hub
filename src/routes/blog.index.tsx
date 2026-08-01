@@ -9,7 +9,7 @@ const postsQuery = queryOptions({
   queryFn: () => listPosts(),
 });
 
-export const Route = createFileRoute("/blog")({
+export const Route = createFileRoute("/blog/")({
   head: () => ({
     meta: [
       { title: "Blog — Zoryn" },
