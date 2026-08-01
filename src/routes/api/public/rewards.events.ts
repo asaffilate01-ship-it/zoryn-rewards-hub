@@ -46,15 +46,22 @@ export const Route = createFileRoute("/api/public/rewards/events")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const secret = process.env["ZORYN_WEBHOOK_SECRET"];
-        if (!secret) return json({ error: "webhook_not_configured" }, 503);
+        const secrets = [
+          process.env["REWARDS_INGEST_SECRET"],
+          process.env["ZORYN_WEBHOOK_SECRET"],
+        ].filter((s): s is string => Boolean(s));
+        if (secrets.length === 0) return json({ error: "webhook_not_configured" }, 503);
 
         const raw = await request.text();
-        const provided = request.headers.get("x-zoryn-signature")?.replace(/^sha256=/, "") ?? "";
-        const expected = await hmacHex(secret, raw);
-        if (!provided || !timingSafeEqualHex(provided.toLowerCase(), expected)) {
-          return json({ error: "invalid_signature" }, 401);
+        const provided = (request.headers.get("x-zoryn-signature") ?? "")
+          .replace(/^sha256=/, "")
+          .toLowerCase();
+        let valid = false;
+        for (const secret of secrets) {
+          const expected = await hmacHex(secret, raw);
+          if (provided && timingSafeEqualHex(provided, expected)) valid = true;
         }
+        if (!valid) return json({ error: "invalid_signature" }, 401);
 
         let parsed: z.infer<typeof eventSchema>;
         try {
