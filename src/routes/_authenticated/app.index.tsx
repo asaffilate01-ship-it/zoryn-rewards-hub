@@ -1,9 +1,9 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useSuspenseQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { QrCode, ShoppingBag, ArrowDownRight, ArrowUpRight, Sparkles, Gift } from "lucide-react";
 import { walletQueryOptions, merchantsQueryOptions } from "@/lib/wallet.queries";
-import { earnPoints, redeemPoints } from "@/lib/wallet.functions";
+import { redeemPoints } from "@/lib/wallet.functions";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -48,17 +48,8 @@ function WalletHome() {
     })();
   }, []);
 
-  const earnFn = useServerFn(earnPoints);
+  const navigate = useNavigate();
   const redeemFn = useServerFn(redeemPoints);
-
-  const earnMutation = useMutation({
-    mutationFn: earnFn,
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ["wallet"] });
-      toast.success(t("Punkte gutgeschrieben"));
-    },
-    onError: (e) => toast.error(e.message),
-  });
 
   const redeemMutation = useMutation({
     mutationFn: redeemFn,
@@ -68,20 +59,6 @@ function WalletHome() {
     },
     onError: (e) => toast.error(e.message),
   });
-
-  function demoEarn() {
-    const merchant = merchants[Math.floor(Math.random() * merchants.length)];
-    if (!merchant) return;
-    const amount = 100 + Math.floor(Math.random() * 400);
-    earnMutation.mutate({
-      data: {
-        merchantId: merchant.id,
-        amount,
-        idempotencyKey: crypto.randomUUID(),
-        memo: `${t("Demo-Einkauf bei")} ${merchant.name}`,
-      },
-    });
-  }
 
   function demoRedeem() {
     redeemMutation.mutate({
@@ -128,14 +105,14 @@ function WalletHome() {
           <Action
             icon={QrCode}
             label={t("Scannen")}
-            onClick={() => toast(t("QR-Scanner kommt in Phase 3."))}
+            onClick={() => navigate({ to: "/app/scan" })}
           />
           <Action
             icon={Sparkles}
-            label={earnMutation.isPending ? "…" : "Demo Earn"}
-            onClick={demoEarn}
-            disabled={earnMutation.isPending || merchants.length === 0}
+            label={t("Angebote")}
+            onClick={() => navigate({ to: "/app/offers" })}
           />
+
           <Action
             icon={Gift}
             label={redeemMutation.isPending ? "…" : t("Einlösen")}

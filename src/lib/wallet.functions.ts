@@ -71,22 +71,41 @@ export const getWallet = createServerFn({ method: "GET" })
 
 /**
  * Earn points at a merchant. Server-authoritative, idempotent.
- * Client passes an idempotency key so a double-tap can't double-credit.
+ *
+ * SECURITY: crediting points is a money-printing operation, so it is NOT
+ * self-serve. The caller must be staff at the merchant being charged (POS
+ * flow) or a platform admin. Consumers earn through the merchant POS or by
+ * claiming a signed QR challenge (`claimEarnChallenge`), never directly.
  */
 const earnInput = z.object({
   merchantId: z.string().uuid(),
   amount: z.number().int().positive().max(1_000_000),
   idempotencyKey: z.string().min(8).max(128),
   memo: z.string().max(280).optional(),
+  /** Target user; defaults to the caller (merchant staff testing their own POS). */
+  userId: z.string().uuid().optional(),
 });
 
 export const earnPoints = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((raw: unknown) => earnInput.parse(raw))
   .handler(async ({ data, context }) => {
+    // Authorize against the caller's own RLS-scoped client before escalating.
+    const [{ data: isStaff }, { data: isPlatformAdmin }] = await Promise.all([
+      context.supabase.rpc("is_merchant_member", {
+        _user_id: context.userId,
+        _merchant_id: data.merchantId,
+        _min_role: "staff",
+      }),
+      context.supabase.rpc("has_role", { _user_id: context.userId, _role: "admin" }),
+    ]);
+    if (!isStaff && !isPlatformAdmin) {
+      throw new Error("Forbidden: points can only be issued by the merchant or platform staff.");
+    }
+
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { data: txnId, error } = await supabaseAdmin.rpc("earn_points", {
-      _user_id: context.userId,
+      _user_id: data.userId ?? context.userId,
       _merchant_id: data.merchantId,
       _amount: data.amount,
       _idempotency_key: data.idempotencyKey,
@@ -95,6 +114,7 @@ export const earnPoints = createServerFn({ method: "POST" })
     if (error) throw new Error(error.message);
     return { transaction_id: txnId as string };
   });
+
 
 /**
  * Redeem points. Server checks balance atomically.

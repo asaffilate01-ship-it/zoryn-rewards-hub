@@ -113,12 +113,12 @@ function BlogPost() {
             </span>
           ))}
         </div>
-        <h1 className="font-display text-4xl font-semibold tracking-tight sm:text-5xl">
-          {title}
-        </h1>
+        <h1 className="font-display text-4xl font-semibold tracking-tight sm:text-5xl">{title}</h1>
         <p className="mt-3 text-sm text-muted-foreground">
           {post.author_name} ·{" "}
-          {post.published_at ? new Date(post.published_at).toLocaleDateString(locale === "en" ? "en-GB" : "de-DE") : ""}
+          {post.published_at
+            ? new Date(post.published_at).toLocaleDateString(locale === "en" ? "en-GB" : "de-DE")
+            : ""}
         </p>
         {post.cover_url ? (
           <img
