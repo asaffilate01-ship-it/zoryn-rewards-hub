@@ -136,7 +136,7 @@ export const merchant: Record<string, string> = {
   "Zurück zur Consumer-App?": "Back to the consumer app?",
   bis: "to",
   "gültig bis": "valid until",
-  inaktiv: "inactive",,
+  inaktiv: "inactive",
   "Rewards besitzt Programmregeln und den Ledger. Zoryn Money und ZorynPay senden normalisierte Events — Swan oder Adyen lassen sich austauschen, ohne die Loyalty-Logik neu zu schreiben.":
     "Rewards owns the programme rules and the ledger. Zoryn Money and ZorynPay send normalised events \u2014 Swan or Adyen can be swapped out without rewriting the loyalty logic.",
 };
