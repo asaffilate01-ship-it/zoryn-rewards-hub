@@ -52,7 +52,10 @@ function ImprintPage() {
             <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener noreferrer">
               ec.europa.eu/consumers/odr
             </a>
-            . {t("Wir sind nicht verpflichtet und nicht bereit, an Streitbeilegungsverfahren teilzunehmen.")}
+            .{" "}
+            {t(
+              "Wir sind nicht verpflichtet und nicht bereit, an Streitbeilegungsverfahren teilzunehmen.",
+            )}
           </p>
         </div>
       </section>

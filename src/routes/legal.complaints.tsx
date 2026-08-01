@@ -66,7 +66,9 @@ function ComplaintsPage() {
         <LegalNotice />
         {done ? (
           <div className="rounded-3xl border border-success/40 bg-success/10 p-6 text-sm">
-            {t("Danke — wir haben deine Anfrage erhalten und melden uns innerhalb von 5 Werktagen.")}
+            {t(
+              "Danke — wir haben deine Anfrage erhalten und melden uns innerhalb von 5 Werktagen.",
+            )}
           </div>
         ) : (
           <form

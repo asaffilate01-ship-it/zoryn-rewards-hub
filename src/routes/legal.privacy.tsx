@@ -69,7 +69,8 @@ function PrivacyPage() {
             {t(
               "Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit, Widerspruch. Details siehe",
             )}{" "}
-            <a href="/legal/gdpr">{t("DSGVO")}</a>. {t("Beschwerde bei einer Aufsichtsbehörde möglich.")}
+            <a href="/legal/gdpr">{t("DSGVO")}</a>.{" "}
+            {t("Beschwerde bei einer Aufsichtsbehörde möglich.")}
           </p>
           <h2>{t("8. Cookies")}</h2>
           <p>
