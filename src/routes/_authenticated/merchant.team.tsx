@@ -5,12 +5,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { merchantOverview } from "@/lib/merchant-portal.functions";
 import { useActiveMerchantId } from "@/lib/active-merchant";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_authenticated/merchant/team")({
   component: TeamPage,
 });
 
 function TeamPage() {
+  const t = useT();
   const merchantId = useActiveMerchantId();
   const overviewFn = useServerFn(merchantOverview);
   const { data } = useQuery({
@@ -23,9 +25,9 @@ function TeamPage() {
     return (
       <Card>
         <CardContent className="flex flex-col items-center gap-3 py-12 text-center">
-          <p className="text-muted-foreground">Kein Merchant ausgewählt</p>
+          <p className="text-muted-foreground">{t("Kein Merchant ausgewählt")}</p>
           <Link to="/merchant">
-            <Button>Merchant wählen</Button>
+            <Button>{t("Merchant wählen")}</Button>
           </Link>
         </CardContent>
       </Card>
@@ -37,7 +39,7 @@ function TeamPage() {
       <h1 className="font-display text-2xl font-semibold">Team</h1>
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Mitglieder</CardTitle>
+          <CardTitle className="text-base">{t("Mitglieder")}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-2 text-sm">
           {(data?.members ?? []).map((m) => (
@@ -50,12 +52,12 @@ function TeamPage() {
             </div>
           ))}
           {(!data || data.members.length === 0) && (
-            <p className="text-muted-foreground">Noch keine Mitglieder.</p>
+            <p className="text-muted-foreground">{t("Noch keine Mitglieder.")}</p>
           )}
         </CardContent>
       </Card>
       <p className="text-xs text-muted-foreground">
-        Team-Einladungen per E-Mail folgen in einer der nächsten Phasen.
+        {t("Team-Einladungen per E-Mail folgen in einer der nächsten Phasen.")}
       </p>
     </div>
   );
