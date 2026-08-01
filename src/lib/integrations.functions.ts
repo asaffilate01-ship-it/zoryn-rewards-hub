@@ -94,7 +94,12 @@ export type TenantOverview = {
   }>;
 };
 
-async function assertAdmin(context: { supabase: any; userId: string }) {
+type AdminContext = {
+  supabase: { rpc: (fn: string, args: Record<string, unknown>) => Promise<{ data: unknown }> };
+  userId: string;
+};
+
+async function assertAdmin(context: AdminContext) {
   const { data: admin } = await context.supabase.rpc("has_role", {
     _user_id: context.userId,
     _role: "admin",
@@ -105,7 +110,7 @@ async function assertAdmin(context: { supabase: any; userId: string }) {
 export const tenantOverview = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }): Promise<TenantOverview> => {
-    await assertAdmin(context);
+    await assertAdmin(context as unknown as AdminContext);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
     const [tenants, programmes, merchants, memberships, wallets, events] = await Promise.all([
@@ -124,25 +129,26 @@ export const tenantOverview = createServerFn({ method: "GET" })
     ]);
 
     const memberRows = memberships.data ?? [];
-    const memberTenant = new Map(memberRows.map((m: any) => [m.id, m.tenant_id]));
+    const memberTenant = new Map(memberRows.map((m) => [m.id, m.tenant_id]));
 
     return {
-      tenants: (tenants.data ?? []).map((t: any) => {
+      tenants: (tenants.data ?? []).map((t) => {
         const tenantWallets = (wallets.data ?? []).filter(
-          (w: any) => memberTenant.get(w.membership_id) === t.id,
+          (w) => memberTenant.get(w.membership_id) === t.id,
         );
         return {
           ...t,
-          programmes: (programmes.data ?? []).filter((p: any) => p.tenant_id === t.id).length,
-          merchants: (merchants.data ?? []).filter((m: any) => m.tenant_id === t.id).length,
-          memberships: memberRows.filter((m: any) => m.tenant_id === t.id).length,
+          programmes: (programmes.data ?? []).filter((p) => p.tenant_id === t.id).length,
+          merchants: (merchants.data ?? []).filter((m) => m.tenant_id === t.id).length,
+          memberships: memberRows.filter((m) => m.tenant_id === t.id).length,
           wallets: tenantWallets.length,
-          available: tenantWallets.reduce((s: number, w: any) => s + Number(w.available ?? 0), 0),
+          available: tenantWallets.reduce((s, w) => s + Number(w.available ?? 0), 0),
         };
       }) as TenantOverview["tenants"],
       events: (events.data ?? []) as TenantOverview["events"],
     };
   });
+
 
 export const retryRewardEvent = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
