@@ -904,6 +904,69 @@ export type Database = {
           },
         ]
       }
+      reward_coupons: {
+        Row: {
+          code: string
+          created_at: string
+          discount_type: string
+          discount_value: number
+          ends_at: string | null
+          id: string
+          max_redemptions: number | null
+          merchant_id: string | null
+          redemption_count: number
+          starts_at: string
+          status: string
+          tenant_id: string
+          updated_at: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          discount_type?: string
+          discount_value?: number
+          ends_at?: string | null
+          id?: string
+          max_redemptions?: number | null
+          merchant_id?: string | null
+          redemption_count?: number
+          starts_at?: string
+          status?: string
+          tenant_id: string
+          updated_at?: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          discount_type?: string
+          discount_value?: number
+          ends_at?: string | null
+          id?: string
+          max_redemptions?: number | null
+          merchant_id?: string | null
+          redemption_count?: number
+          starts_at?: string
+          status?: string
+          tenant_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reward_coupons_merchant_id_fkey"
+            columns: ["merchant_id"]
+            isOneToOne: false
+            referencedRelation: "reward_merchants"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reward_coupons_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "reward_tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       reward_external_events: {
         Row: {
           amount_cents: number | null
@@ -1004,6 +1067,73 @@ export type Database = {
           },
           {
             foreignKeyName: "reward_funding_accounts_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "reward_tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      reward_gift_cards: {
+        Row: {
+          code: string
+          created_at: string
+          currency: string
+          expires_at: string | null
+          id: string
+          initial_value_cents: number
+          issued_to_membership_id: string | null
+          merchant_id: string | null
+          remaining_value_cents: number
+          status: string
+          tenant_id: string
+          updated_at: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          currency?: string
+          expires_at?: string | null
+          id?: string
+          initial_value_cents: number
+          issued_to_membership_id?: string | null
+          merchant_id?: string | null
+          remaining_value_cents: number
+          status?: string
+          tenant_id: string
+          updated_at?: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          currency?: string
+          expires_at?: string | null
+          id?: string
+          initial_value_cents?: number
+          issued_to_membership_id?: string | null
+          merchant_id?: string | null
+          remaining_value_cents?: number
+          status?: string
+          tenant_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reward_gift_cards_issued_to_membership_id_fkey"
+            columns: ["issued_to_membership_id"]
+            isOneToOne: false
+            referencedRelation: "reward_memberships"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reward_gift_cards_merchant_id_fkey"
+            columns: ["merchant_id"]
+            isOneToOne: false
+            referencedRelation: "reward_merchants"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reward_gift_cards_tenant_id_fkey"
             columns: ["tenant_id"]
             isOneToOne: false
             referencedRelation: "reward_tenants"
@@ -1266,6 +1396,57 @@ export type Database = {
           },
         ]
       }
+      reward_onboarding_progress: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          id: string
+          merchant_id: string | null
+          notes: string | null
+          status: string
+          step: string
+          tenant_id: string
+          updated_at: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          merchant_id?: string | null
+          notes?: string | null
+          status?: string
+          step: string
+          tenant_id: string
+          updated_at?: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          merchant_id?: string | null
+          notes?: string | null
+          status?: string
+          step?: string
+          tenant_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reward_onboarding_progress_merchant_id_fkey"
+            columns: ["merchant_id"]
+            isOneToOne: false
+            referencedRelation: "reward_merchants"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reward_onboarding_progress_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "reward_tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       reward_outbox: {
         Row: {
           aggregate_id: string | null
@@ -1494,6 +1675,56 @@ export type Database = {
             columns: ["transaction_id"]
             isOneToOne: false
             referencedRelation: "transactions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      reward_subscriptions: {
+        Row: {
+          billing_interval: string
+          created_at: string
+          currency: string
+          current_period_end: string | null
+          id: string
+          plan: string
+          price_cents: number
+          status: string
+          tenant_id: string
+          trial_ends_at: string | null
+          updated_at: string
+        }
+        Insert: {
+          billing_interval?: string
+          created_at?: string
+          currency?: string
+          current_period_end?: string | null
+          id?: string
+          plan?: string
+          price_cents?: number
+          status?: string
+          tenant_id: string
+          trial_ends_at?: string | null
+          updated_at?: string
+        }
+        Update: {
+          billing_interval?: string
+          created_at?: string
+          currency?: string
+          current_period_end?: string | null
+          id?: string
+          plan?: string
+          price_cents?: number
+          status?: string
+          tenant_id?: string
+          trial_ends_at?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reward_subscriptions_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: true
+            referencedRelation: "reward_tenants"
             referencedColumns: ["id"]
           },
         ]
@@ -2506,6 +2737,10 @@ export type Database = {
       reward_ensure_wallet: {
         Args: { _membership: string; _programme: string }
         Returns: string
+      }
+      reward_is_tenant_member: {
+        Args: { _tenant_id: string; _user_id: string }
+        Returns: boolean
       }
       reward_post_entry: {
         Args: {
