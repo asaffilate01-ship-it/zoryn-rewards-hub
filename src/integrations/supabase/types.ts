@@ -2490,6 +2490,14 @@ export type Database = {
           transaction_id: string
         }[]
       }
+      reward_ensure_membership: {
+        Args: { _tenant: string; _user: string }
+        Returns: string
+      }
+      reward_ensure_wallet: {
+        Args: { _membership: string; _programme: string }
+        Returns: string
+      }
       reward_post_entry: {
         Args: {
           p_amount: number
@@ -2503,6 +2511,7 @@ export type Database = {
         }
         Returns: string
       }
+      reward_process_event: { Args: { _event_id: string }; Returns: Json }
       show_limit: { Args: never; Returns: number }
       show_trgm: { Args: { "": string }; Returns: string[] }
       st_3dclosestpoint: {
