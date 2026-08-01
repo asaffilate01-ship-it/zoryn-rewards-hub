@@ -30,7 +30,7 @@ function MerchantRewards() {
   const createFn = useServerFn(createReward);
   const toggleFn = useServerFn(toggleReward);
   const delFn = useServerFn(deleteReward);
-  const useCodeFn = useServerFn(useRewardCode);
+  const redeemCodeFn = useServerFn(useRewardCode);
 
   const { data: list, isLoading } = useQuery({
     queryKey: ["merchantRewards", merchantId],
@@ -75,7 +75,7 @@ function MerchantRewards() {
   });
 
   const redeemCode = useMutation({
-    mutationFn: async () => useCodeFn({ data: { merchantId: merchantId!, code } }),
+    mutationFn: async () => redeemCodeFn({ data: { merchantId: merchantId!, code } }),
     onSuccess: (r) => {
       toast.success(`Eingelöst: ${r.reward_title}`);
       setCode("");
