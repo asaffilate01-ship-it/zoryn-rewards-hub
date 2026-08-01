@@ -41,12 +41,15 @@ function AdminMerchants() {
                 <div>
                   <div className="font-medium">{m.name}</div>
                   <div className="text-xs text-muted-foreground">
-                    {[m.category, m.city].filter(Boolean).join(" · ") || "—"} · {m.points_per_euro} Pkt/€
+                    {[m.category, m.city].filter(Boolean).join(" · ") || "—"} · {m.points_per_euro}{" "}
+                    Pkt/€
                   </div>
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <span className={`text-xs ${m.is_active ? "text-emerald-500" : "text-muted-foreground"}`}>
+                <span
+                  className={`text-xs ${m.is_active ? "text-emerald-500" : "text-muted-foreground"}`}
+                >
                   {m.is_active ? "Aktiv" : "Inaktiv"}
                 </span>
                 <Switch
@@ -58,7 +61,11 @@ function AdminMerchants() {
           </Card>
         ))}
         {data && data.length === 0 && (
-          <Card><CardContent className="py-8 text-center text-muted-foreground">Keine Merchants.</CardContent></Card>
+          <Card>
+            <CardContent className="py-8 text-center text-muted-foreground">
+              Keine Merchants.
+            </CardContent>
+          </Card>
         )}
       </div>
     </>

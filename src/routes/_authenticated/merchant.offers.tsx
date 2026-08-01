@@ -57,7 +57,14 @@ function OffersPage() {
     onSuccess: () => {
       toast.success("Angebot angelegt.");
       setShowForm(false);
-      setForm({ title: "", description: "", rewardMultiplier: "2", bonusPoints: "0", minSpendCents: "0", endsAt: "" });
+      setForm({
+        title: "",
+        description: "",
+        rewardMultiplier: "2",
+        bonusPoints: "0",
+        minSpendCents: "0",
+        endsAt: "",
+      });
       qc.invalidateQueries({ queryKey: ["merchantOffers", merchantId] });
     },
     onError: (e: unknown) => toast.error(e instanceof Error ? e.message : "Fehler"),
@@ -81,7 +88,9 @@ function OffersPage() {
       <Card>
         <CardContent className="flex flex-col items-center gap-3 py-12 text-center">
           <p className="text-muted-foreground">Kein Merchant ausgewählt.</p>
-          <Link to="/merchant"><Button>Merchant wählen</Button></Link>
+          <Link to="/merchant">
+            <Button>Merchant wählen</Button>
+          </Link>
         </CardContent>
       </Card>
     );
@@ -92,7 +101,9 @@ function OffersPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="font-display text-2xl font-semibold">Angebote</h1>
-          <p className="text-sm text-muted-foreground">Boni und Multiplikatoren für deine Kundinnen.</p>
+          <p className="text-sm text-muted-foreground">
+            Boni und Multiplikatoren für deine Kundinnen.
+          </p>
         </div>
         <Button onClick={() => setShowForm((v) => !v)}>
           <Plus className="mr-1 size-4" /> Neues Angebot
@@ -101,18 +112,65 @@ function OffersPage() {
 
       {showForm && (
         <Card>
-          <CardHeader><CardTitle className="text-base">Neues Angebot</CardTitle></CardHeader>
+          <CardHeader>
+            <CardTitle className="text-base">Neues Angebot</CardTitle>
+          </CardHeader>
           <CardContent className="grid gap-4 md:grid-cols-2">
-            <Field label="Titel"><Input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="Doppelte Punkte" /></Field>
-            <Field label="Endet am (optional)"><Input type="datetime-local" value={form.endsAt} onChange={(e) => setForm({ ...form, endsAt: e.target.value })} /></Field>
+            <Field label="Titel">
+              <Input
+                value={form.title}
+                onChange={(e) => setForm({ ...form, title: e.target.value })}
+                placeholder="Doppelte Punkte"
+              />
+            </Field>
+            <Field label="Endet am (optional)">
+              <Input
+                type="datetime-local"
+                value={form.endsAt}
+                onChange={(e) => setForm({ ...form, endsAt: e.target.value })}
+              />
+            </Field>
             <div className="md:col-span-2">
-              <Field label="Beschreibung"><Textarea rows={2} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} /></Field>
+              <Field label="Beschreibung">
+                <Textarea
+                  rows={2}
+                  value={form.description}
+                  onChange={(e) => setForm({ ...form, description: e.target.value })}
+                />
+              </Field>
             </div>
-            <Field label="Multiplikator (x)"><Input type="number" min={1} max={20} step="0.5" value={form.rewardMultiplier} onChange={(e) => setForm({ ...form, rewardMultiplier: e.target.value })} /></Field>
-            <Field label="Bonuspunkte"><Input type="number" min={0} value={form.bonusPoints} onChange={(e) => setForm({ ...form, bonusPoints: e.target.value })} /></Field>
-            <Field label="Mindestumsatz in €"><Input type="number" min={0} step="0.01" value={form.minSpendCents} onChange={(e) => setForm({ ...form, minSpendCents: e.target.value })} /></Field>
+            <Field label="Multiplikator (x)">
+              <Input
+                type="number"
+                min={1}
+                max={20}
+                step="0.5"
+                value={form.rewardMultiplier}
+                onChange={(e) => setForm({ ...form, rewardMultiplier: e.target.value })}
+              />
+            </Field>
+            <Field label="Bonuspunkte">
+              <Input
+                type="number"
+                min={0}
+                value={form.bonusPoints}
+                onChange={(e) => setForm({ ...form, bonusPoints: e.target.value })}
+              />
+            </Field>
+            <Field label="Mindestumsatz in €">
+              <Input
+                type="number"
+                min={0}
+                step="0.01"
+                value={form.minSpendCents}
+                onChange={(e) => setForm({ ...form, minSpendCents: e.target.value })}
+              />
+            </Field>
             <div className="md:col-span-2">
-              <Button disabled={create.isPending || form.title.length < 3} onClick={() => create.mutate()}>
+              <Button
+                disabled={create.isPending || form.title.length < 3}
+                onClick={() => create.mutate()}
+              >
                 {create.isPending ? "Speichere…" : "Anlegen"}
               </Button>
             </div>
@@ -123,7 +181,11 @@ function OffersPage() {
       {isLoading ? (
         <p className="text-muted-foreground">Lade…</p>
       ) : !offers || offers.length === 0 ? (
-        <Card><CardContent className="py-8 text-center text-muted-foreground">Noch keine Angebote.</CardContent></Card>
+        <Card>
+          <CardContent className="py-8 text-center text-muted-foreground">
+            Noch keine Angebote.
+          </CardContent>
+        </Card>
       ) : (
         <div className="grid gap-3">
           {offers.map((o) => (
@@ -135,7 +197,9 @@ function OffersPage() {
                   </div>
                   <div>
                     <div className="font-medium">{o.title}</div>
-                    {o.description && <div className="text-sm text-muted-foreground">{o.description}</div>}
+                    {o.description && (
+                      <div className="text-sm text-muted-foreground">{o.description}</div>
+                    )}
                     <div className="mt-1 text-xs text-muted-foreground">
                       {Number(o.reward_multiplier) > 1 && `${o.reward_multiplier}× · `}
                       {o.bonus_points > 0 && `+${o.bonus_points} Pkt · `}
@@ -163,5 +227,10 @@ function OffersPage() {
 }
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
-  return <div className="space-y-1.5"><Label>{label}</Label>{children}</div>;
+  return (
+    <div className="space-y-1.5">
+      <Label>{label}</Label>
+      {children}
+    </div>
+  );
 }

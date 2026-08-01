@@ -10,7 +10,12 @@ export interface FeatureItem {
 }
 
 export function FeaturePage({
-  eyebrow, title, description, features, ctaLabel = "Loslegen", ctaTo = "/app",
+  eyebrow,
+  title,
+  description,
+  features,
+  ctaLabel = "Loslegen",
+  ctaTo = "/app",
 }: {
   eyebrow: string;
   title: string;
@@ -36,7 +41,9 @@ export function FeaturePage({
       <section className="mx-auto max-w-4xl px-4 pb-20 sm:px-6">
         <div className="rounded-3xl border border-brand/40 bg-gradient-to-br from-brand/15 via-brand-alt/10 to-background p-8 text-center">
           <h3 className="font-display text-2xl font-semibold">Bereit für {title.split(" ")[0]}?</h3>
-          <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">Starte in unter 60 Sekunden — kostenlos.</p>
+          <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
+            Starte in unter 60 Sekunden — kostenlos.
+          </p>
           <div className="mt-5 flex justify-center gap-3">
             <Link to={ctaTo}>
               <Button className="bg-gradient-to-r from-brand to-brand-alt">{ctaLabel}</Button>

@@ -36,17 +36,21 @@ function NotificationsPage() {
           <p className="text-sm text-muted-foreground">Punkte, Angebote und Aktivitäten.</p>
         </div>
         {hasUnread && (
-          <Button variant="ghost" size="sm" onClick={() => mark.mutate()}>Alle gelesen</Button>
+          <Button variant="ghost" size="sm" onClick={() => mark.mutate()}>
+            Alle gelesen
+          </Button>
         )}
       </div>
 
       {isLoading ? (
         <p className="text-muted-foreground">Lade…</p>
       ) : !data || data.length === 0 ? (
-        <Card><CardContent className="flex flex-col items-center gap-3 py-12 text-center">
-          <Bell className="size-8 text-muted-foreground" />
-          <p className="text-muted-foreground">Noch keine Benachrichtigungen.</p>
-        </CardContent></Card>
+        <Card>
+          <CardContent className="flex flex-col items-center gap-3 py-12 text-center">
+            <Bell className="size-8 text-muted-foreground" />
+            <p className="text-muted-foreground">Noch keine Benachrichtigungen.</p>
+          </CardContent>
+        </Card>
       ) : (
         <div className="grid gap-2">
           {data.map((n) => (

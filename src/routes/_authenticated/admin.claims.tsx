@@ -21,7 +21,8 @@ function AdminClaims() {
   const [pts, setPts] = useState<Record<string, string>>({});
 
   const resolve = useMutation({
-    mutationFn: async (v: { claimId: string; approve: boolean; points?: number }) => resolveFn({ data: v }),
+    mutationFn: async (v: { claimId: string; approve: boolean; points?: number }) =>
+      resolveFn({ data: v }),
     onSuccess: () => {
       toast.success("Antrag bearbeitet.");
       qc.invalidateQueries({ queryKey: ["adminClaims"] });
@@ -42,15 +43,24 @@ function AdminClaims() {
                 <div>
                   <div className="font-medium">{c.merchant_name}</div>
                   <div className="text-xs text-muted-foreground">
-                    {new Date(c.purchase_date).toLocaleDateString("de-DE")} · €{(c.amount_cents / 100).toFixed(2)}
+                    {new Date(c.purchase_date).toLocaleDateString("de-DE")} · €
+                    {(c.amount_cents / 100).toFixed(2)}
                     {c.reference && ` · ${c.reference}`}
                   </div>
                   {c.notes && <div className="mt-1 text-sm">{c.notes}</div>}
                   <div className="mt-1 text-xs">
-                    Status: <span className={
-                      c.status === "open" ? "text-amber-500" :
-                      c.status === "approved" ? "text-emerald-500" : "text-muted-foreground"
-                    }>{c.status}</span>
+                    Status:{" "}
+                    <span
+                      className={
+                        c.status === "open"
+                          ? "text-amber-500"
+                          : c.status === "approved"
+                            ? "text-emerald-500"
+                            : "text-muted-foreground"
+                      }
+                    >
+                      {c.status}
+                    </span>
                   </div>
                 </div>
                 {c.status === "open" && (
@@ -62,11 +72,23 @@ function AdminClaims() {
                       value={pts[c.id] ?? ""}
                       onChange={(e) => setPts({ ...pts, [c.id]: e.target.value })}
                     />
-                    <Button size="sm" onClick={() => resolve.mutate({
-                      claimId: c.id, approve: true,
-                      points: pts[c.id] ? Number(pts[c.id]) : suggested,
-                    })}><Check className="mr-1 size-4" /> Genehmigen</Button>
-                    <Button size="sm" variant="outline" onClick={() => resolve.mutate({ claimId: c.id, approve: false })}>
+                    <Button
+                      size="sm"
+                      onClick={() =>
+                        resolve.mutate({
+                          claimId: c.id,
+                          approve: true,
+                          points: pts[c.id] ? Number(pts[c.id]) : suggested,
+                        })
+                      }
+                    >
+                      <Check className="mr-1 size-4" /> Genehmigen
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => resolve.mutate({ claimId: c.id, approve: false })}
+                    >
                       <X className="mr-1 size-4" /> Ablehnen
                     </Button>
                   </div>
@@ -76,7 +98,11 @@ function AdminClaims() {
           );
         })}
         {data && data.length === 0 && (
-          <Card><CardContent className="py-8 text-center text-muted-foreground">Keine Reklamationen.</CardContent></Card>
+          <Card>
+            <CardContent className="py-8 text-center text-muted-foreground">
+              Keine Reklamationen.
+            </CardContent>
+          </Card>
         )}
       </div>
     </>

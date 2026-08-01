@@ -13,16 +13,23 @@ const nav = [
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
-  useEffect(() => { setOpen(false); }, []);
+  useEffect(() => {
+    setOpen(false);
+  }, []);
 
   return (
     <header className="sticky top-0 z-30 border-b border-border/40 bg-background/70 backdrop-blur-xl">
-      <div className="mx-auto flex h-26 max-w-7xl items-center gap-4 px-4 sm:px-6" style={{ height: "104px" }}>
+      <div
+        className="mx-auto flex h-26 max-w-7xl items-center gap-4 px-4 sm:px-6"
+        style={{ height: "104px" }}
+      >
         <Link to="/" className="flex min-w-0 items-center gap-3" aria-label="Zoryn Home">
           <ZorynMark size={56} />
           <div className="min-w-0 leading-tight">
             <div className="font-display text-2xl font-semibold tracking-tight">Zoryn</div>
-            <div className="hidden text-xs text-muted-foreground sm:block">Mehr als nur Punkte.</div>
+            <div className="hidden text-xs text-muted-foreground sm:block">
+              Mehr als nur Punkte.
+            </div>
           </div>
         </Link>
 
@@ -32,7 +39,9 @@ export function SiteHeader() {
               key={n.to}
               to={n.to}
               className="rounded-full px-4 py-2 text-sm text-muted-foreground transition hover:bg-card/60 hover:text-foreground"
-              activeProps={{ className: "rounded-full px-4 py-2 text-sm text-foreground bg-card/70" }}
+              activeProps={{
+                className: "rounded-full px-4 py-2 text-sm text-foreground bg-card/70",
+              }}
             >
               {n.label}
             </Link>
@@ -41,13 +50,20 @@ export function SiteHeader() {
 
         <div className="ml-auto flex items-center gap-2 md:ml-2">
           <Link to="/search" aria-label="Suche" className="hidden sm:inline-flex">
-            <Button variant="ghost" size="icon"><Search className="h-4 w-4" /></Button>
+            <Button variant="ghost" size="icon">
+              <Search className="h-4 w-4" />
+            </Button>
           </Link>
           <Link to="/auth" className="hidden sm:inline-flex">
-            <Button variant="ghost" size="sm">Anmelden</Button>
+            <Button variant="ghost" size="sm">
+              Anmelden
+            </Button>
           </Link>
           <Link to="/app">
-            <Button size="sm" className="bg-gradient-to-r from-brand to-brand-alt text-primary-foreground shadow-lg">
+            <Button
+              size="sm"
+              className="bg-gradient-to-r from-brand to-brand-alt text-primary-foreground shadow-lg"
+            >
               App öffnen
             </Button>
           </Link>
@@ -65,11 +81,20 @@ export function SiteHeader() {
         <div className="border-t border-border/40 bg-background/95 backdrop-blur-xl md:hidden">
           <nav className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-3">
             {nav.map((n) => (
-              <Link key={n.to} to={n.to} className="rounded-xl px-3 py-2 text-sm text-muted-foreground hover:bg-card/60 hover:text-foreground">
+              <Link
+                key={n.to}
+                to={n.to}
+                className="rounded-xl px-3 py-2 text-sm text-muted-foreground hover:bg-card/60 hover:text-foreground"
+              >
                 {n.label}
               </Link>
             ))}
-            <Link to="/auth" className="rounded-xl px-3 py-2 text-sm text-muted-foreground hover:bg-card/60 hover:text-foreground">Anmelden</Link>
+            <Link
+              to="/auth"
+              className="rounded-xl px-3 py-2 text-sm text-muted-foreground hover:bg-card/60 hover:text-foreground"
+            >
+              Anmelden
+            </Link>
           </nav>
         </div>
       ) : null}

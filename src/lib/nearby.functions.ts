@@ -31,7 +31,9 @@ export const nearbyMerchants = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const sb = publicClient();
     const { data: rows, error } = await sb.rpc("nearby_merchants", {
-      _lat: data.lat, _lng: data.lng, _radius_m: data.radiusM,
+      _lat: data.lat,
+      _lng: data.lng,
+      _radius_m: data.radiusM,
     });
     if (error) throw new Error(error.message);
     return rows ?? [];
@@ -41,7 +43,9 @@ export const listActiveOffers = createServerFn({ method: "GET" }).handler(async 
   const sb = publicClient();
   const { data, error } = await sb
     .from("offers")
-    .select("id, title, description, reward_multiplier, bonus_points, min_spend_cents, ends_at, merchant:merchants(id, name, slug, brand_color, category, city)")
+    .select(
+      "id, title, description, reward_multiplier, bonus_points, min_spend_cents, ends_at, merchant:merchants(id, name, slug, brand_color, category, city)",
+    )
     .eq("is_active", true)
     .order("reward_multiplier", { ascending: false })
     .limit(50);

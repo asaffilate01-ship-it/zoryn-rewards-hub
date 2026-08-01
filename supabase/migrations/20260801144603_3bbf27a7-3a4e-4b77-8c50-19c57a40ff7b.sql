@@ -1,0 +1,1 @@
+DELETE FROM public.complaints WHERE email = 't@example.com' AND subject = 'smoke';

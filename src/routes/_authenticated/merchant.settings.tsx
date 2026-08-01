@@ -21,10 +21,14 @@ function SettingsPage() {
 
   if (!merchantId) {
     return (
-      <Card><CardContent className="flex flex-col items-center gap-3 py-12 text-center">
-        <p className="text-muted-foreground">Kein Merchant ausgewählt</p>
-        <Link to="/merchant"><Button>Merchant wählen</Button></Link>
-      </CardContent></Card>
+      <Card>
+        <CardContent className="flex flex-col items-center gap-3 py-12 text-center">
+          <p className="text-muted-foreground">Kein Merchant ausgewählt</p>
+          <Link to="/merchant">
+            <Button>Merchant wählen</Button>
+          </Link>
+        </CardContent>
+      </Card>
     );
   }
 
@@ -34,7 +38,9 @@ function SettingsPage() {
     <div className="space-y-6">
       <h1 className="font-display text-2xl font-semibold">Einstellungen</h1>
       <Card>
-        <CardHeader><CardTitle className="text-base">Merchant-Profil</CardTitle></CardHeader>
+        <CardHeader>
+          <CardTitle className="text-base">Merchant-Profil</CardTitle>
+        </CardHeader>
         <CardContent className="grid gap-3 text-sm md:grid-cols-2">
           <Row label="Name" value={m?.name} />
           <Row label="Slug" value={m?.slug} />
@@ -45,18 +51,27 @@ function SettingsPage() {
         </CardContent>
       </Card>
       <Card>
-        <CardHeader><CardTitle className="text-base">Letzte Transaktionen</CardTitle></CardHeader>
+        <CardHeader>
+          <CardTitle className="text-base">Letzte Transaktionen</CardTitle>
+        </CardHeader>
         <CardContent className="space-y-2 text-sm">
           {(data?.transactions ?? []).map((t) => (
-            <div key={t.id} className="flex items-center justify-between border-b border-border/50 py-2 last:border-none">
+            <div
+              key={t.id}
+              className="flex items-center justify-between border-b border-border/50 py-2 last:border-none"
+            >
               <div>
                 <div className="font-medium">{t.kind === "earn" ? "Gutschrift" : "Einlösung"}</div>
                 {t.memo && <div className="text-xs text-muted-foreground">{t.memo}</div>}
               </div>
-              <div className="text-xs text-muted-foreground">{new Date(t.created_at).toLocaleString("de-DE")}</div>
+              <div className="text-xs text-muted-foreground">
+                {new Date(t.created_at).toLocaleString("de-DE")}
+              </div>
             </div>
           ))}
-          {(!data || data.transactions.length === 0) && <p className="text-muted-foreground">Noch keine Umsätze.</p>}
+          {(!data || data.transactions.length === 0) && (
+            <p className="text-muted-foreground">Noch keine Umsätze.</p>
+          )}
         </CardContent>
       </Card>
       <p className="text-xs text-muted-foreground">

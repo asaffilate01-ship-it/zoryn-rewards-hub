@@ -37,7 +37,9 @@ function OffersPage() {
               {o.description && <p className="text-sm text-muted-foreground">{o.description}</p>}
               <div className="flex flex-wrap gap-2 pt-1 text-xs text-muted-foreground">
                 {o.bonus_points > 0 && (
-                  <span className="inline-flex items-center gap-1"><Sparkles className="size-3" />+{o.bonus_points} Bonuspunkte</span>
+                  <span className="inline-flex items-center gap-1">
+                    <Sparkles className="size-3" />+{o.bonus_points} Bonuspunkte
+                  </span>
                 )}
                 {o.min_spend_cents > 0 && <span>Min. €{(o.min_spend_cents / 100).toFixed(2)}</span>}
                 {o.ends_at && <span>bis {new Date(o.ends_at).toLocaleDateString("de-DE")}</span>}
@@ -46,9 +48,11 @@ function OffersPage() {
           </Card>
         ))}
         {data && data.length === 0 && (
-          <Card><CardContent className="py-10 text-center text-sm text-muted-foreground">
-            Aktuell keine Angebote.
-          </CardContent></Card>
+          <Card>
+            <CardContent className="py-10 text-center text-sm text-muted-foreground">
+              Aktuell keine Angebote.
+            </CardContent>
+          </Card>
         )}
       </div>
     </div>

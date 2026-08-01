@@ -39,7 +39,9 @@ export const listMerchantOffers = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const { data: rows, error } = await context.supabase
       .from("offers")
-      .select("id, title, description, reward_multiplier, bonus_points, min_spend_cents, is_active, ends_at, created_at")
+      .select(
+        "id, title, description, reward_multiplier, bonus_points, min_spend_cents, is_active, ends_at, created_at",
+      )
       .eq("merchant_id", data.merchantId)
       .order("created_at", { ascending: false });
     if (error) throw new Error(error.message);

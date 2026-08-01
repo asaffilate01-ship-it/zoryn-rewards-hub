@@ -43,7 +43,10 @@ function ProfilePage() {
       <h1 className="text-2xl font-semibold">Profil</h1>
 
       <div className="mt-6 rounded-2xl border border-border bg-card/60 p-5">
-        <Row label="Name" value={[profile?.first_name, profile?.last_name].filter(Boolean).join(" ") || "—"} />
+        <Row
+          label="Name"
+          value={[profile?.first_name, profile?.last_name].filter(Boolean).join(" ") || "—"}
+        />
         <Row label="E-Mail" value={email ?? "—"} />
         <Row label="Mitglieds-Nr." value={profile?.membership_number ?? "—"} />
         <Row label="Land" value={profile?.country ?? "—"} />

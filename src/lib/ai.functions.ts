@@ -39,7 +39,8 @@ export const askAssistant = createServerFn({ method: "POST" })
     if (!res.ok) {
       const body = await res.text();
       if (res.status === 429) throw new Error("Zu viele Anfragen – bitte kurz warten.");
-      if (res.status === 402) throw new Error("KI-Guthaben aufgebraucht. Bitte im Workspace aufladen.");
+      if (res.status === 402)
+        throw new Error("KI-Guthaben aufgebraucht. Bitte im Workspace aufladen.");
       throw new Error(`KI-Fehler (${res.status}): ${body.slice(0, 200)}`);
     }
     const json = await res.json();

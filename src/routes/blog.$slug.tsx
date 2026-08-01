@@ -21,7 +21,9 @@ export const Route = createFileRoute("/blog/$slug")({
   },
   head: ({ loaderData, params }) => {
     if (!loaderData?.post) {
-      return { meta: [{ title: "Beitrag nicht gefunden — Zoryn" }, { name: "robots", content: "noindex" }] };
+      return {
+        meta: [{ title: "Beitrag nicht gefunden — Zoryn" }, { name: "robots", content: "noindex" }],
+      };
     }
     const p = loaderData.post;
     const meta = [
@@ -40,18 +42,20 @@ export const Route = createFileRoute("/blog/$slug")({
     return {
       meta,
       links: [{ rel: "canonical", href: `/blog/${params.slug}` }],
-      scripts: [{
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Article",
-          headline: p.title,
-          description: p.excerpt,
-          author: { "@type": "Organization", name: p.author_name },
-          datePublished: p.published_at,
-          image: p.cover_url ? [p.cover_url] : undefined,
-        }),
-      }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: p.title,
+            description: p.excerpt,
+            author: { "@type": "Organization", name: p.author_name },
+            datePublished: p.published_at,
+            image: p.cover_url ? [p.cover_url] : undefined,
+          }),
+        },
+      ],
     };
   },
   component: BlogPost,
@@ -67,8 +71,16 @@ function BlogPost() {
 
   const share = [
     { label: "X", icon: Twitter, href: `https://twitter.com/intent/tweet?url=${enc}&text=${encT}` },
-    { label: "Facebook", icon: Facebook, href: `https://www.facebook.com/sharer/sharer.php?u=${enc}` },
-    { label: "LinkedIn", icon: Linkedin, href: `https://www.linkedin.com/sharing/share-offsite/?url=${enc}` },
+    {
+      label: "Facebook",
+      icon: Facebook,
+      href: `https://www.facebook.com/sharer/sharer.php?u=${enc}`,
+    },
+    {
+      label: "LinkedIn",
+      icon: Linkedin,
+      href: `https://www.linkedin.com/sharing/share-offsite/?url=${enc}`,
+    },
     { label: "WhatsApp", icon: MessageCircle, href: `https://wa.me/?text=${encT}%20${enc}` },
   ];
 
@@ -77,15 +89,27 @@ function BlogPost() {
       <article className="mx-auto max-w-3xl px-4 py-14 sm:px-6">
         <div className="mb-3 flex flex-wrap gap-2">
           {post.tags?.map((t) => (
-            <span key={t} className="rounded-full border border-border/60 bg-card/60 px-2 py-0.5 text-[10px] uppercase tracking-wide text-muted-foreground">{t}</span>
+            <span
+              key={t}
+              className="rounded-full border border-border/60 bg-card/60 px-2 py-0.5 text-[10px] uppercase tracking-wide text-muted-foreground"
+            >
+              {t}
+            </span>
           ))}
         </div>
-        <h1 className="font-display text-4xl font-semibold tracking-tight sm:text-5xl">{post.title}</h1>
+        <h1 className="font-display text-4xl font-semibold tracking-tight sm:text-5xl">
+          {post.title}
+        </h1>
         <p className="mt-3 text-sm text-muted-foreground">
-          {post.author_name} · {post.published_at ? new Date(post.published_at).toLocaleDateString("de-DE") : ""}
+          {post.author_name} ·{" "}
+          {post.published_at ? new Date(post.published_at).toLocaleDateString("de-DE") : ""}
         </p>
         {post.cover_url ? (
-          <img src={post.cover_url} alt={post.title} className="mt-8 aspect-[16/9] w-full rounded-3xl object-cover" />
+          <img
+            src={post.cover_url}
+            alt={post.title}
+            className="mt-8 aspect-[16/9] w-full rounded-3xl object-cover"
+          />
         ) : (
           <div className="mt-8 aspect-[16/9] w-full rounded-3xl bg-gradient-to-br from-brand/30 via-brand-alt/20 to-background" />
         )}
@@ -97,13 +121,21 @@ function BlogPost() {
           <p className="text-sm font-medium">Teilen</p>
           <div className="mt-3 flex flex-wrap gap-2">
             {share.map((s) => (
-              <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/50 px-3 py-1.5 text-xs text-muted-foreground transition hover:text-foreground">
+              <a
+                key={s.label}
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/50 px-3 py-1.5 text-xs text-muted-foreground transition hover:text-foreground"
+              >
                 <s.icon className="h-3.5 w-3.5" /> {s.label}
               </a>
             ))}
             <button
-              onClick={() => { navigator.clipboard.writeText(url); toast.success("Link kopiert"); }}
+              onClick={() => {
+                navigator.clipboard.writeText(url);
+                toast.success("Link kopiert");
+              }}
               className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/50 px-3 py-1.5 text-xs text-muted-foreground transition hover:text-foreground"
             >
               <LinkIcon className="h-3.5 w-3.5" /> Link kopieren

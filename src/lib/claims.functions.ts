@@ -34,7 +34,9 @@ export const listMyClaims = createServerFn({ method: "GET" })
   .handler(async ({ context }) => {
     const { data, error } = await context.supabase
       .from("missing_points_claims")
-      .select("id, merchant_name, purchase_date, amount_cents, status, reference, notes, created_at")
+      .select(
+        "id, merchant_name, purchase_date, amount_cents, status, reference, notes, created_at",
+      )
       .eq("user_id", context.userId)
       .order("created_at", { ascending: false });
     if (error) throw new Error(error.message);
@@ -46,7 +48,9 @@ export const adminListClaims = createServerFn({ method: "GET" })
   .handler(async ({ context }) => {
     const { data, error } = await context.supabase
       .from("missing_points_claims")
-      .select("id, user_id, merchant_id, merchant_name, purchase_date, amount_cents, status, reference, notes, created_at")
+      .select(
+        "id, user_id, merchant_id, merchant_name, purchase_date, amount_cents, status, reference, notes, created_at",
+      )
       .order("created_at", { ascending: false })
       .limit(200);
     if (error) throw new Error(error.message);
@@ -56,11 +60,13 @@ export const adminListClaims = createServerFn({ method: "GET" })
 export const adminResolveClaim = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((raw: unknown) =>
-    z.object({
-      claimId: z.string().uuid(),
-      approve: z.boolean(),
-      points: z.number().int().min(1).max(1_000_000).optional(),
-    }).parse(raw),
+    z
+      .object({
+        claimId: z.string().uuid(),
+        approve: z.boolean(),
+        points: z.number().int().min(1).max(1_000_000).optional(),
+      })
+      .parse(raw),
   )
   .handler(async ({ data, context }) => {
     const { error } = await context.supabase.rpc("admin_resolve_claim", {

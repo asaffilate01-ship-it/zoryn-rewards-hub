@@ -25,11 +25,15 @@ export function CookieConsent() {
     }
   }, [consent.decided]);
 
-  useEffect(() => onOpenConsent(() => {
-    setAnalytics(consent.analytics);
-    setMarketing(consent.marketing);
-    setOpen(true);
-  }), [consent.analytics, consent.marketing]);
+  useEffect(
+    () =>
+      onOpenConsent(() => {
+        setAnalytics(consent.analytics);
+        setMarketing(consent.marketing);
+        setOpen(true);
+      }),
+    [consent.analytics, consent.marketing],
+  );
 
   return (
     <>
@@ -60,8 +64,8 @@ export function CookieConsent() {
                   Wir respektieren deine Privatsphäre
                 </h2>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  Wir nutzen Cookies, damit Zoryn funktioniert und um die App zu verbessern. Du entscheidest,
-                  was wir dürfen. Details in unserer{" "}
+                  Wir nutzen Cookies, damit Zoryn funktioniert und um die App zu verbessern. Du
+                  entscheidest, was wir dürfen. Details in unserer{" "}
                   <Link to="/legal/cookies" className="text-brand underline underline-offset-2">
                     Cookie-Richtlinie
                   </Link>
@@ -71,7 +75,12 @@ export function CookieConsent() {
             </div>
 
             <div className="mt-5 space-y-3">
-              <Row title="Notwendig" desc="Sitzung, Sicherheit, Cookie-Einstellungen." locked checked />
+              <Row
+                title="Notwendig"
+                desc="Sitzung, Sicherheit, Cookie-Einstellungen."
+                locked
+                checked
+              />
               <Row
                 title="Analyse"
                 desc="Hilft uns zu verstehen, wie die App genutzt wird."
@@ -87,14 +96,32 @@ export function CookieConsent() {
             </div>
 
             <div className="mt-6 flex flex-wrap gap-2">
-              <Button variant="ghost" onClick={() => { rejectAll(); setOpen(false); }}>
+              <Button
+                variant="ghost"
+                onClick={() => {
+                  rejectAll();
+                  setOpen(false);
+                }}
+              >
                 Alle ablehnen
               </Button>
-              <Button variant="outline" onClick={() => { setConsent({ analytics, marketing }); setOpen(false); }}>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setConsent({ analytics, marketing });
+                  setOpen(false);
+                }}
+              >
                 <Settings2 className="mr-2 h-4 w-4" />
                 Auswahl speichern
               </Button>
-              <Button className="ml-auto" onClick={() => { acceptAll(); setOpen(false); }}>
+              <Button
+                className="ml-auto"
+                onClick={() => {
+                  acceptAll();
+                  setOpen(false);
+                }}
+              >
                 Alle akzeptieren
               </Button>
             </div>
@@ -106,8 +133,18 @@ export function CookieConsent() {
 }
 
 function Row({
-  title, desc, checked, onChange, locked,
-}: { title: string; desc: string; checked: boolean; onChange?: (v: boolean) => void; locked?: boolean }) {
+  title,
+  desc,
+  checked,
+  onChange,
+  locked,
+}: {
+  title: string;
+  desc: string;
+  checked: boolean;
+  onChange?: (v: boolean) => void;
+  locked?: boolean;
+}) {
   return (
     <div className="flex items-start justify-between gap-4 rounded-2xl border border-border/60 bg-background/40 p-3">
       <div>

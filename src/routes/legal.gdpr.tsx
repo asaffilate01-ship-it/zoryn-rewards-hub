@@ -5,7 +5,10 @@ export const Route = createFileRoute("/legal/gdpr")({
   head: () => ({
     meta: [
       { title: "Deine DSGVO-Rechte — Zoryn" },
-      { name: "description", content: "Übersicht deiner Rechte nach der Datenschutz-Grundverordnung." },
+      {
+        name: "description",
+        content: "Übersicht deiner Rechte nach der Datenschutz-Grundverordnung.",
+      },
       { property: "og:title", content: "DSGVO — Zoryn" },
       { property: "og:description", content: "Deine Rechte als betroffene Person nach DSGVO." },
       { property: "og:url", content: "/legal/gdpr" },
@@ -14,12 +17,18 @@ export const Route = createFileRoute("/legal/gdpr")({
   }),
   component: () => (
     <PublicShell>
-      <PageHeader eyebrow="Rechtliches" title="DSGVO / GDPR" description="Deine Rechte als betroffene Person." />
+      <PageHeader
+        eyebrow="Rechtliches"
+        title="DSGVO / GDPR"
+        description="Deine Rechte als betroffene Person."
+      />
       <section className="mx-auto max-w-3xl space-y-6 px-4 py-14 sm:px-6">
         <LegalNotice />
         <div className="prose prose-invert max-w-none text-foreground [&_h3]:mt-6 [&_h3]:font-semibold [&_p]:text-muted-foreground">
           <h3>Auskunft (Art. 15)</h3>
-          <p>Erhalte eine Kopie aller personenbezogenen Daten, die wir über dich gespeichert haben.</p>
+          <p>
+            Erhalte eine Kopie aller personenbezogenen Daten, die wir über dich gespeichert haben.
+          </p>
           <h3>Berichtigung (Art. 16)</h3>
           <p>Falsche Daten werden auf deinen Wunsch korrigiert.</p>
           <h3>Löschung (Art. 17)</h3>
@@ -32,7 +41,11 @@ export const Route = createFileRoute("/legal/gdpr")({
           <p>Widerspruch gegen Verarbeitung auf Basis berechtigten Interesses.</p>
         </div>
         <p className="text-sm text-muted-foreground">
-          Antrag stellen? Nutze das <Link to="/legal/complaints" className="text-brand underline underline-offset-2">Beschwerde- & Anfrageformular</Link>.
+          Antrag stellen? Nutze das{" "}
+          <Link to="/legal/complaints" className="text-brand underline underline-offset-2">
+            Beschwerde- & Anfrageformular
+          </Link>
+          .
         </p>
       </section>
     </PublicShell>

@@ -40,7 +40,10 @@ function ReferralsPage() {
 
   return (
     <>
-      <Link to="/app/profile" className="mb-2 inline-flex items-center gap-1 text-sm text-muted-foreground">
+      <Link
+        to="/app/profile"
+        className="mb-2 inline-flex items-center gap-1 text-sm text-muted-foreground"
+      >
         <ArrowLeft className="size-4" /> Profil
       </Link>
       <h1 className="text-2xl font-semibold">Freunde einladen</h1>
@@ -49,9 +52,13 @@ function ReferralsPage() {
       </p>
 
       <Card className="mt-6 border-brand/40 bg-brand/5">
-        <CardHeader><CardTitle className="text-base">Dein Empfehlungscode</CardTitle></CardHeader>
+        <CardHeader>
+          <CardTitle className="text-base">Dein Empfehlungscode</CardTitle>
+        </CardHeader>
         <CardContent className="flex items-center justify-between">
-          <div className="font-display text-3xl font-semibold tracking-widest">{data?.code ?? "…"}</div>
+          <div className="font-display text-3xl font-semibold tracking-widest">
+            {data?.code ?? "…"}
+          </div>
           <Button variant="secondary" size="sm" onClick={copyCode}>
             <Copy className="mr-1 size-4" /> Kopieren
           </Button>
@@ -69,7 +76,9 @@ function ReferralsPage() {
 
       {!data?.referred_by && (
         <Card className="mt-4">
-          <CardHeader><CardTitle className="text-base">Einen Code einlösen</CardTitle></CardHeader>
+          <CardHeader>
+            <CardTitle className="text-base">Einen Code einlösen</CardTitle>
+          </CardHeader>
           <CardContent className="flex gap-2">
             <Input
               value={code}

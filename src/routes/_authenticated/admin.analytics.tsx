@@ -3,7 +3,16 @@ import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { adminSeries, adminTopMerchants } from "@/lib/analytics.functions";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, Legend } from "recharts";
+import {
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+  Legend,
+} from "recharts";
 
 export const Route = createFileRoute("/_authenticated/admin/analytics")({
   head: () => ({ meta: [{ title: "Analytics — Zoryn Admin" }] }),
@@ -24,25 +33,56 @@ function AdminAnalytics() {
       </div>
 
       <Card>
-        <CardHeader><CardTitle className="text-base">Punkte-Aktivität & Registrierungen</CardTitle></CardHeader>
+        <CardHeader>
+          <CardTitle className="text-base">Punkte-Aktivität & Registrierungen</CardTitle>
+        </CardHeader>
         <CardContent className="h-80">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={series ?? []}>
               <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
-              <XAxis dataKey="day" tick={{ fontSize: 10 }} tickFormatter={(d) => String(d).slice(5)} />
+              <XAxis
+                dataKey="day"
+                tick={{ fontSize: 10 }}
+                tickFormatter={(d) => String(d).slice(5)}
+              />
               <YAxis tick={{ fontSize: 10 }} />
-              <Tooltip contentStyle={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))" }} />
+              <Tooltip
+                contentStyle={{
+                  background: "hsl(var(--card))",
+                  border: "1px solid hsl(var(--border))",
+                }}
+              />
               <Legend />
-              <Line type="monotone" dataKey="earned" stroke="hsl(var(--primary))" name="Ausgegeben" dot={false} />
-              <Line type="monotone" dataKey="redeemed" stroke="hsl(var(--destructive))" name="Eingelöst" dot={false} />
-              <Line type="monotone" dataKey="new_users" stroke="hsl(var(--accent))" name="Neue Nutzer:innen" dot={false} />
+              <Line
+                type="monotone"
+                dataKey="earned"
+                stroke="hsl(var(--primary))"
+                name="Ausgegeben"
+                dot={false}
+              />
+              <Line
+                type="monotone"
+                dataKey="redeemed"
+                stroke="hsl(var(--destructive))"
+                name="Eingelöst"
+                dot={false}
+              />
+              <Line
+                type="monotone"
+                dataKey="new_users"
+                stroke="hsl(var(--accent))"
+                name="Neue Nutzer:innen"
+                dot={false}
+              />
             </LineChart>
           </ResponsiveContainer>
         </CardContent>
       </Card>
 
       <Card>
-        <CardHeader><CardTitle className="text-base">Top-Merchants (30 Tage)</CardTitle></CardHeader>
+        <CardHeader>
+          <CardTitle className="text-base">Top-Merchants (30 Tage)</CardTitle>
+        </CardHeader>
         <CardContent>
           {(top ?? []).length === 0 ? (
             <p className="text-sm text-muted-foreground">Keine Aktivität.</p>

@@ -187,8 +187,7 @@ function CampaignsPage() {
                       <div className="text-sm text-muted-foreground">{c.description}</div>
                     )}
                     <div className="mt-1 text-xs text-muted-foreground">
-                      {c.multiplier}× ·{" "}
-                      {new Date(c.starts_at).toLocaleDateString("de-DE")}
+                      {c.multiplier}× · {new Date(c.starts_at).toLocaleDateString("de-DE")}
                       {c.ends_at && ` – ${new Date(c.ends_at).toLocaleDateString("de-DE")}`}
                     </div>
                   </div>

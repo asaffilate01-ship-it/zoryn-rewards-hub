@@ -7,7 +7,9 @@ export const listActiveRewards = createServerFn({ method: "GET" })
   .handler(async ({ context }) => {
     const { data, error } = await context.supabase
       .from("rewards")
-      .select("id, title, description, cost_points, stock, merchant_id, merchants(name, brand_color, category)")
+      .select(
+        "id, title, description, cost_points, stock, merchant_id, merchants(name, brand_color, category)",
+      )
       .eq("active", true)
       .order("cost_points", { ascending: true })
       .limit(200);
@@ -19,7 +21,11 @@ export const listActiveRewards = createServerFn({ method: "GET" })
       cost_points: r.cost_points,
       stock: r.stock as number | null,
       merchant_id: r.merchant_id,
-      merchant: r.merchants as { name: string; brand_color: string | null; category: string | null } | null,
+      merchant: r.merchants as {
+        name: string;
+        brand_color: string | null;
+        category: string | null;
+      } | null,
     }));
   });
 
@@ -60,10 +66,14 @@ export const createReward = createServerFn({ method: "POST" })
 
 export const toggleReward = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw: unknown) => z.object({ rewardId: z.string().uuid(), active: z.boolean() }).parse(raw))
+  .inputValidator((raw: unknown) =>
+    z.object({ rewardId: z.string().uuid(), active: z.boolean() }).parse(raw),
+  )
   .handler(async ({ data, context }) => {
     const { error } = await context.supabase
-      .from("rewards").update({ active: data.active }).eq("id", data.rewardId);
+      .from("rewards")
+      .update({ active: data.active })
+      .eq("id", data.rewardId);
     if (error) throw new Error(error.message);
     return { ok: true };
   });
@@ -80,7 +90,9 @@ export const deleteReward = createServerFn({ method: "POST" })
 export const redeemReward = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((raw: unknown) =>
-    z.object({ rewardId: z.string().uuid(), idempotencyKey: z.string().min(8).max(128) }).parse(raw),
+    z
+      .object({ rewardId: z.string().uuid(), idempotencyKey: z.string().min(8).max(128) })
+      .parse(raw),
   )
   .handler(async ({ data, context }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
@@ -106,7 +118,9 @@ export const listMyRedemptions = createServerFn({ method: "GET" })
   .handler(async ({ context }) => {
     const { data, error } = await context.supabase
       .from("reward_redemptions")
-      .select("id, code, status, reward_title, cost_points, created_at, used_at, merchant_id, merchants(name, brand_color)")
+      .select(
+        "id, code, status, reward_title, cost_points, created_at, used_at, merchant_id, merchants(name, brand_color)",
+      )
       .eq("user_id", context.userId)
       .order("created_at", { ascending: false })
       .limit(50);
@@ -137,5 +151,12 @@ export const useRewardCode = createServerFn({ method: "POST" })
       if (/code_already_/.test(m)) throw new Error("Code ist nicht mehr gültig.");
       throw new Error(m);
     }
-    return (rows as Array<{ redemption_id: string; reward_title: string; customer_user_id: string; cost_points: number }>)[0];
+    return (
+      rows as Array<{
+        redemption_id: string;
+        reward_title: string;
+        customer_user_id: string;
+        cost_points: number;
+      }>
+    )[0];
   });

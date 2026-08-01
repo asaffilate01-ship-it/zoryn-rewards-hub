@@ -2,7 +2,6 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
-
 export type IntegrationHealth = {
   tenants: Array<{ id: string; slug: string; name: string; mode: string; status: string }>;
   integrations: Array<{
@@ -95,7 +94,17 @@ export type TenantOverview = {
   }>;
 };
 
-async function assertAdmin(context: { supabase: any; userId: string }) {
+type AdminContext = {
+  supabase: {
+    rpc: (
+      fn: "has_role",
+      args: { _user_id: string; _role: "admin" },
+    ) => PromiseLike<{ data: unknown }>;
+  };
+  userId: string;
+};
+
+async function assertAdmin(context: AdminContext) {
   const { data: admin } = await context.supabase.rpc("has_role", {
     _user_id: context.userId,
     _role: "admin",
@@ -106,7 +115,8 @@ async function assertAdmin(context: { supabase: any; userId: string }) {
 export const tenantOverview = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }): Promise<TenantOverview> => {
-    await assertAdmin(context);
+    await assertAdmin(context as unknown as AdminContext);
+
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
     const [tenants, programmes, merchants, memberships, wallets, events] = await Promise.all([
@@ -117,26 +127,28 @@ export const tenantOverview = createServerFn({ method: "GET" })
       supabaseAdmin.from("reward_wallets").select("id,available,membership_id"),
       supabaseAdmin
         .from("reward_external_events")
-        .select("id,tenant_id,provider,event_type,provider_event_id,amount_cents,status,attempts,error,received_at")
+        .select(
+          "id,tenant_id,provider,event_type,provider_event_id,amount_cents,status,attempts,error,received_at",
+        )
         .order("received_at", { ascending: false })
         .limit(50),
     ]);
 
     const memberRows = memberships.data ?? [];
-    const memberTenant = new Map(memberRows.map((m: any) => [m.id, m.tenant_id]));
+    const memberTenant = new Map(memberRows.map((m) => [m.id, m.tenant_id]));
 
     return {
-      tenants: (tenants.data ?? []).map((t: any) => {
+      tenants: (tenants.data ?? []).map((t) => {
         const tenantWallets = (wallets.data ?? []).filter(
-          (w: any) => memberTenant.get(w.membership_id) === t.id,
+          (w) => memberTenant.get(w.membership_id) === t.id,
         );
         return {
           ...t,
-          programmes: (programmes.data ?? []).filter((p: any) => p.tenant_id === t.id).length,
-          merchants: (merchants.data ?? []).filter((m: any) => m.tenant_id === t.id).length,
-          memberships: memberRows.filter((m: any) => m.tenant_id === t.id).length,
+          programmes: (programmes.data ?? []).filter((p) => p.tenant_id === t.id).length,
+          merchants: (merchants.data ?? []).filter((m) => m.tenant_id === t.id).length,
+          memberships: memberRows.filter((m) => m.tenant_id === t.id).length,
           wallets: tenantWallets.length,
-          available: tenantWallets.reduce((s: number, w: any) => s + Number(w.available ?? 0), 0),
+          available: tenantWallets.reduce((s, w) => s + Number(w.available ?? 0), 0),
         };
       }) as TenantOverview["tenants"],
       events: (events.data ?? []) as TenantOverview["events"],

@@ -61,7 +61,10 @@ export function SiteFooter() {
             <ul className="mt-3 space-y-2 text-sm">
               {c.links.map((l) => (
                 <li key={l.to}>
-                  <Link to={l.to} className="text-muted-foreground transition hover:text-foreground">
+                  <Link
+                    to={l.to}
+                    className="text-muted-foreground transition hover:text-foreground"
+                  >
                     {l.label}
                   </Link>
                 </li>
@@ -80,11 +83,17 @@ export function SiteFooter() {
             © {new Date().getFullYear()} Zoryn. Alle Rechte vorbehalten.
           </div>
           <div className="flex items-center gap-3 text-xs text-muted-foreground">
-            <button onClick={openConsent} className="transition hover:text-foreground">Cookie-Einstellungen</button>
+            <button onClick={openConsent} className="transition hover:text-foreground">
+              Cookie-Einstellungen
+            </button>
             <span className="opacity-40">·</span>
-            <Link to="/legal/privacy" className="transition hover:text-foreground">Datenschutz</Link>
+            <Link to="/legal/privacy" className="transition hover:text-foreground">
+              Datenschutz
+            </Link>
             <span className="opacity-40">·</span>
-            <Link to="/legal/imprint" className="transition hover:text-foreground">Impressum</Link>
+            <Link to="/legal/imprint" className="transition hover:text-foreground">
+              Impressum
+            </Link>
           </div>
         </div>
       </div>

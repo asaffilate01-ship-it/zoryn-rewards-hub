@@ -14,7 +14,11 @@ export const fundingOverview = createServerFn({ method: "GET" })
     return {
       balance_cents: Number(row?.balance_cents ?? 0),
       ledger: (row?.ledger ?? []) as Array<{
-        id: string; kind: string; amount_cents: number; memo: string | null; created_at: string;
+        id: string;
+        kind: string;
+        amount_cents: number;
+        memo: string | null;
+        created_at: string;
       }>,
     };
   });
@@ -22,11 +26,13 @@ export const fundingOverview = createServerFn({ method: "GET" })
 export const depositFunds = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((raw: unknown) =>
-    z.object({
-      merchantId: z.string().uuid(),
-      amountCents: z.number().int().positive().max(10_000_000),
-      memo: z.string().max(200).optional(),
-    }).parse(raw),
+    z
+      .object({
+        merchantId: z.string().uuid(),
+        amountCents: z.number().int().positive().max(10_000_000),
+        memo: z.string().max(200).optional(),
+      })
+      .parse(raw),
   )
   .handler(async ({ data, context }) => {
     const { error } = await context.supabase.rpc("merchant_deposit_funds", {
@@ -47,9 +53,14 @@ export const listSettlements = createServerFn({ method: "GET" })
     });
     if (error) throw new Error(error.message);
     return (rows ?? []) as Array<{
-      id: string; period_start: string; period_end: string;
-      points_issued: number; points_redeemed: number; net_liability_cents: number;
-      status: "open" | "closed" | "paid"; closed_at: string | null;
+      id: string;
+      period_start: string;
+      period_end: string;
+      points_issued: number;
+      points_redeemed: number;
+      net_liability_cents: number;
+      status: "open" | "closed" | "paid";
+      closed_at: string | null;
     }>;
   });
 
@@ -83,16 +94,23 @@ export const adminRecentAudit = createServerFn({ method: "GET" })
   .handler(async ({ context }) => {
     const { data, error } = await context.supabase.rpc("admin_recent_audit", { _limit: 100 });
     if (error) throw new Error(error.message);
-    return (data ?? []).map((r: {
-      id: string; action: string; entity_type: string; entity_id: string | null;
-      details: unknown; created_at: string; actor_user_id: string | null;
-    }) => ({
-      id: r.id,
-      action: r.action,
-      entity_type: r.entity_type,
-      entity_id: r.entity_id,
-      details_json: JSON.stringify(r.details ?? {}),
-      created_at: r.created_at,
-      actor_user_id: r.actor_user_id,
-    }));
+    return (data ?? []).map(
+      (r: {
+        id: string;
+        action: string;
+        entity_type: string;
+        entity_id: string | null;
+        details: unknown;
+        created_at: string;
+        actor_user_id: string | null;
+      }) => ({
+        id: r.id,
+        action: r.action,
+        entity_type: r.entity_type,
+        entity_id: r.entity_id,
+        details_json: JSON.stringify(r.details ?? {}),
+        created_at: r.created_at,
+        actor_user_id: r.actor_user_id,
+      }),
+    );
   });

@@ -32,7 +32,11 @@ function SearchPage() {
 
   return (
     <PublicShell>
-      <PageHeader eyebrow="Entdecken" title="Suche im Zoryn-Netzwerk" description="Geschäfte, Angebote und Prämien." />
+      <PageHeader
+        eyebrow="Entdecken"
+        title="Suche im Zoryn-Netzwerk"
+        description="Geschäfte, Angebote und Prämien."
+      />
       <section className="mx-auto max-w-3xl px-4 pb-16 sm:px-6">
         <div className="relative">
           <SearchIcon className="absolute left-4 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
@@ -46,7 +50,9 @@ function SearchPage() {
         </div>
 
         <div className="mt-6">
-          {q.trim().length < 2 && <p className="text-sm text-muted-foreground">Gib mindestens 2 Zeichen ein.</p>}
+          {q.trim().length < 2 && (
+            <p className="text-sm text-muted-foreground">Gib mindestens 2 Zeichen ein.</p>
+          )}
           {isFetching && <p className="text-sm text-muted-foreground">Suche läuft…</p>}
           {q.trim().length >= 2 && !isFetching && hits.length === 0 && (
             <p className="text-sm text-muted-foreground">Nichts gefunden für „{q}".</p>
@@ -68,16 +74,23 @@ function ResultRow({ hit }: { hit: SearchHit }) {
   const Icon = hit.kind === "merchant" ? Store : hit.kind === "offer" ? Sparkles : Gift;
   const label = hit.kind === "merchant" ? "Geschäft" : hit.kind === "offer" ? "Angebot" : "Prämie";
   return (
-    <Link to="/app" className="flex items-center gap-3 rounded-2xl border border-border/60 bg-card/40 p-4 transition hover:border-brand/50 hover:bg-card/70">
+    <Link
+      to="/app"
+      className="flex items-center gap-3 rounded-2xl border border-border/60 bg-card/40 p-4 transition hover:border-brand/50 hover:bg-card/70"
+    >
       <div className="grid size-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
         <Icon className="size-5" />
       </div>
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2">
           <span className="truncate font-medium">{hit.title}</span>
-          <span className="rounded-full border border-border/70 bg-background/60 px-1.5 py-0.5 text-[10px] uppercase tracking-wider text-muted-foreground">{label}</span>
+          <span className="rounded-full border border-border/70 bg-background/60 px-1.5 py-0.5 text-[10px] uppercase tracking-wider text-muted-foreground">
+            {label}
+          </span>
         </div>
-        {hit.subtitle && <div className="truncate text-xs text-muted-foreground">{hit.subtitle}</div>}
+        {hit.subtitle && (
+          <div className="truncate text-xs text-muted-foreground">{hit.subtitle}</div>
+        )}
       </div>
     </Link>
   );

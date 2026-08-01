@@ -12,7 +12,10 @@ export const Route = createFileRoute("/blog")({
   head: () => ({
     meta: [
       { title: "Blog — Zoryn" },
-      { name: "description", content: "Neues aus dem Zoryn-Netzwerk: Produkt, Merchant-Stories und Erklärungen." },
+      {
+        name: "description",
+        content: "Neues aus dem Zoryn-Netzwerk: Produkt, Merchant-Stories und Erklärungen.",
+      },
       { property: "og:title", content: "Blog — Zoryn" },
       { property: "og:description", content: "Produkt, Merchant-Stories und Erklärungen." },
       { property: "og:url", content: "/blog" },
@@ -27,7 +30,11 @@ function BlogIndex() {
   const { data } = useSuspenseQuery(postsQuery);
   return (
     <PublicShell>
-      <PageHeader eyebrow="Blog" title="Neues aus dem Zoryn-Netzwerk" description="Produkt-Updates, Merchant-Stories und Erklärungen." />
+      <PageHeader
+        eyebrow="Blog"
+        title="Neues aus dem Zoryn-Netzwerk"
+        description="Produkt-Updates, Merchant-Stories und Erklärungen."
+      />
       <section className="mx-auto grid max-w-6xl gap-6 px-4 py-14 sm:px-6 md:grid-cols-2 lg:grid-cols-3">
         {data.posts.map((p) => (
           <Link
@@ -38,18 +45,34 @@ function BlogIndex() {
           >
             <div
               className="aspect-[16/10] bg-gradient-to-br from-brand/30 via-brand-alt/20 to-background"
-              style={p.cover_url ? { backgroundImage: `url(${p.cover_url})`, backgroundSize: "cover", backgroundPosition: "center" } : undefined}
+              style={
+                p.cover_url
+                  ? {
+                      backgroundImage: `url(${p.cover_url})`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }
+                  : undefined
+              }
             />
             <div className="flex flex-1 flex-col gap-3 p-6">
               <div className="flex flex-wrap gap-2">
                 {p.tags?.map((t) => (
-                  <span key={t} className="rounded-full border border-border/60 bg-background/60 px-2 py-0.5 text-[10px] uppercase tracking-wide text-muted-foreground">{t}</span>
+                  <span
+                    key={t}
+                    className="rounded-full border border-border/60 bg-background/60 px-2 py-0.5 text-[10px] uppercase tracking-wide text-muted-foreground"
+                  >
+                    {t}
+                  </span>
                 ))}
               </div>
-              <h2 className="font-display text-xl font-semibold leading-tight group-hover:text-brand">{p.title}</h2>
+              <h2 className="font-display text-xl font-semibold leading-tight group-hover:text-brand">
+                {p.title}
+              </h2>
               <p className="text-sm text-muted-foreground">{p.excerpt}</p>
               <div className="mt-auto text-xs text-muted-foreground">
-                {p.author_name} · {p.published_at ? new Date(p.published_at).toLocaleDateString("de-DE") : ""}
+                {p.author_name} ·{" "}
+                {p.published_at ? new Date(p.published_at).toLocaleDateString("de-DE") : ""}
               </div>
             </div>
           </Link>

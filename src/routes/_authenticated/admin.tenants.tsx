@@ -74,7 +74,9 @@ function TenantsPage() {
                 </span>
                 <div>
                   <p className="font-display text-[15px] font-semibold">{t.name}</p>
-                  <p className="text-xs text-muted-foreground">/{t.slug} · {t.mode}</p>
+                  <p className="text-xs text-muted-foreground">
+                    /{t.slug} · {t.mode}
+                  </p>
                 </div>
               </div>
               <Badge variant={t.status === "active" ? "default" : "secondary"}>{t.status}</Badge>
@@ -87,14 +89,18 @@ function TenantsPage() {
                 { k: "Wallets", v: t.wallets },
               ].map((s) => (
                 <div key={s.k} className="rounded-xl border border-border/50 bg-background/40 py-2">
-                  <dt className="text-[10px] uppercase tracking-wider text-muted-foreground">{s.k}</dt>
+                  <dt className="text-[10px] uppercase tracking-wider text-muted-foreground">
+                    {s.k}
+                  </dt>
                   <dd className="font-display text-base font-semibold">{s.v}</dd>
                 </div>
               ))}
             </dl>
             <p className="mt-3 flex items-center gap-1.5 text-xs text-muted-foreground">
               <Wallet className="size-3.5" /> Verfügbar gesamt:{" "}
-              <span className="font-medium text-foreground">{t.available.toLocaleString("de-DE")}</span>
+              <span className="font-medium text-foreground">
+                {t.available.toLocaleString("de-DE")}
+              </span>
             </p>
           </article>
         ))}

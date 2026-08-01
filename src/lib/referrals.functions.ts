@@ -24,9 +24,7 @@ export const getMyReferral = createServerFn({ method: "GET" })
 
 export const applyReferral = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw: unknown) =>
-    z.object({ code: z.string().min(4).max(16) }).parse(raw),
-  )
+  .inputValidator((raw: unknown) => z.object({ code: z.string().min(4).max(16) }).parse(raw))
   .handler(async ({ data, context }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { data: res, error } = await supabaseAdmin.rpc("apply_referral", {

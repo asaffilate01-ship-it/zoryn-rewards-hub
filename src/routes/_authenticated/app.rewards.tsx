@@ -9,7 +9,15 @@ import { listActiveRewards, listMyRedemptions, redeemReward } from "@/lib/reward
 import { getWallet } from "@/lib/wallet.functions";
 
 export const Route = createFileRoute("/_authenticated/app/rewards")({
-  head: () => ({ meta: [{ title: "Belohnungen — Zoryn" }, { name: "description", content: "Löse deine Zoryn-Punkte gegen Belohnungen aus Berliner Lieblingsläden ein." }] }),
+  head: () => ({
+    meta: [
+      { title: "Belohnungen — Zoryn" },
+      {
+        name: "description",
+        content: "Löse deine Zoryn-Punkte gegen Belohnungen aus Berliner Lieblingsläden ein.",
+      },
+    ],
+  }),
   component: RewardsPage,
 });
 
@@ -27,7 +35,8 @@ function RewardsPage() {
   const balance = wallet?.balance_points ?? 0;
 
   const redeem = useMutation({
-    mutationFn: async (rewardId: string) => redeemFn({ data: { rewardId, idempotencyKey: crypto.randomUUID() } }),
+    mutationFn: async (rewardId: string) =>
+      redeemFn({ data: { rewardId, idempotencyKey: crypto.randomUUID() } }),
     onSuccess: (r) => {
       toast.success(`Belohnung eingelöst — Code ${r.code}`);
       qc.invalidateQueries({ queryKey: ["wallet"] });
@@ -42,7 +51,11 @@ function RewardsPage() {
       <div>
         <h1 className="font-display text-2xl font-semibold">Belohnungen</h1>
         <p className="text-sm text-muted-foreground">
-          Verfügbar: <span className="font-medium text-foreground">{balance.toLocaleString("de-DE")} Punkte</span> (~€{(balance / 100).toFixed(2)})
+          Verfügbar:{" "}
+          <span className="font-medium text-foreground">
+            {balance.toLocaleString("de-DE")} Punkte
+          </span>{" "}
+          (~€{(balance / 100).toFixed(2)})
         </p>
       </div>
 
@@ -50,19 +63,24 @@ function RewardsPage() {
         <section className="space-y-2">
           <h2 className="text-sm font-medium text-muted-foreground">Deine Codes</h2>
           <div className="grid gap-2">
-            {mine.filter((r) => r.status === "pending").slice(0, 3).map((r) => (
-              <Card key={r.id} className="border-primary/40">
-                <CardContent className="flex items-center justify-between gap-3 py-3">
-                  <div>
-                    <div className="text-sm font-medium">{r.reward_title}</div>
-                    <div className="text-xs text-muted-foreground">{r.merchant?.name} · zeige den Code im Geschäft</div>
-                  </div>
-                  <div className="rounded-md bg-primary/10 px-3 py-1.5 font-mono text-lg font-semibold tracking-wider text-primary">
-                    {r.code}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+            {mine
+              .filter((r) => r.status === "pending")
+              .slice(0, 3)
+              .map((r) => (
+                <Card key={r.id} className="border-primary/40">
+                  <CardContent className="flex items-center justify-between gap-3 py-3">
+                    <div>
+                      <div className="text-sm font-medium">{r.reward_title}</div>
+                      <div className="text-xs text-muted-foreground">
+                        {r.merchant?.name} · zeige den Code im Geschäft
+                      </div>
+                    </div>
+                    <div className="rounded-md bg-primary/10 px-3 py-1.5 font-mono text-lg font-semibold tracking-wider text-primary">
+                      {r.code}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
           </div>
         </section>
       )}
@@ -83,10 +101,17 @@ function RewardsPage() {
                     </div>
                     <div>
                       <div className="font-medium">{r.title}</div>
-                      <div className="text-xs text-muted-foreground">{r.merchant?.name}{r.merchant?.category ? ` · ${r.merchant.category}` : ""}</div>
-                      {r.description && <div className="mt-1 text-sm text-muted-foreground">{r.description}</div>}
+                      <div className="text-xs text-muted-foreground">
+                        {r.merchant?.name}
+                        {r.merchant?.category ? ` · ${r.merchant.category}` : ""}
+                      </div>
+                      {r.description && (
+                        <div className="mt-1 text-sm text-muted-foreground">{r.description}</div>
+                      )}
                       {r.stock !== null && !soldOut && (
-                        <div className="mt-1 text-xs text-amber-500">Nur noch {r.stock} verfügbar</div>
+                        <div className="mt-1 text-xs text-amber-500">
+                          Nur noch {r.stock} verfügbar
+                        </div>
                       )}
                     </div>
                   </div>
@@ -109,7 +134,11 @@ function RewardsPage() {
             );
           })}
           {rewards && rewards.length === 0 && (
-            <Card><CardContent className="py-8 text-center text-muted-foreground">Noch keine Belohnungen verfügbar.</CardContent></Card>
+            <Card>
+              <CardContent className="py-8 text-center text-muted-foreground">
+                Noch keine Belohnungen verfügbar.
+              </CardContent>
+            </Card>
           )}
         </div>
       </section>
