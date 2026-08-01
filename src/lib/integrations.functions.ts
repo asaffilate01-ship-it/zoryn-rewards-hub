@@ -155,7 +155,6 @@ export const tenantOverview = createServerFn({ method: "GET" })
     };
   });
 
-
 export const retryRewardEvent = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d: unknown) => z.object({ eventId: z.string().uuid() }).parse(d))
