@@ -20,7 +20,9 @@ function OffersPage() {
     <div className="space-y-6">
       <div>
         <h1 className="font-display text-2xl font-semibold">{t("Angebote")}</h1>
-        <p className="text-sm text-muted-foreground">{t("Aktive Bonus-Aktionen bei Zoryn-Partnern.")}</p>
+        <p className="text-sm text-muted-foreground">
+          {t("Aktive Bonus-Aktionen bei Zoryn-Partnern.")}
+        </p>
       </div>
 
       <div className="grid gap-3 md:grid-cols-2">

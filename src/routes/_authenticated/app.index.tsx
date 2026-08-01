@@ -155,7 +155,9 @@ function WalletHome() {
           </div>
           <div>
             <div className="text-sm font-medium">{t("Belohnungen")}</div>
-            <div className="text-xs text-muted-foreground">{t("Punkte gegen Prämien einlösen")}</div>
+            <div className="text-xs text-muted-foreground">
+              {t("Punkte gegen Prämien einlösen")}
+            </div>
           </div>
         </div>
         <span className="text-xs text-brand-soft">{t("Ansehen →")}</span>
@@ -171,7 +173,9 @@ function WalletHome() {
           </div>
           <div>
             <div className="text-sm font-medium">{t("Frag Zorra")}</div>
-            <div className="text-xs text-muted-foreground">{t("KI-Assistent für deine Wallet")}</div>
+            <div className="text-xs text-muted-foreground">
+              {t("KI-Assistent für deine Wallet")}
+            </div>
           </div>
         </div>
         <span className="text-xs text-brand-soft">{t("Chatten →")}</span>
@@ -184,7 +188,7 @@ function WalletHome() {
         </div>
         {wallet.transactions.length === 0 ? (
           <div className="mt-3 rounded-2xl border border-dashed border-border p-6 text-center text-sm text-muted-foreground">
-            {t('Noch keine Aktivität. Tippe „Demo Earn“, um eine Buchung zu sehen.')}
+            {t("Noch keine Aktivität. Tippe „Demo Earn“, um eine Buchung zu sehen.")}
           </div>
         ) : (
           <ul className="mt-3 divide-y divide-border rounded-2xl border border-border bg-card/60">

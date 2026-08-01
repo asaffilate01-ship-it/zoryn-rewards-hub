@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CheckCircle2, PlugZap, ShieldCheck } from "lucide-react";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_authenticated/merchant/integrations")({
   component: IntegrationsPage,
@@ -41,13 +42,14 @@ const INTEGRATIONS = [
 ];
 
 function IntegrationsPage() {
+  const t = useT();
   return (
     <div>
       <div className="mb-8">
         <p className="text-sm font-medium text-primary">Zoryn Rewards</p>
-        <h1 className="font-display text-3xl font-semibold tracking-tight">Integrationen</h1>
+        <h1 className="font-display text-3xl font-semibold tracking-tight">{t("Integrationen")}</h1>
         <p className="mt-2 text-muted-foreground">
-          Rewards standalone betreiben oder Banking, Payments, POS und LoungeTech anbinden.
+          {t("Rewards standalone betreiben oder Banking, Payments, POS und LoungeTech anbinden.")}
         </p>
       </div>
 
@@ -60,14 +62,14 @@ function IntegrationsPage() {
             <div className="flex items-center justify-between">
               <PlugZap className="size-5 text-primary" />
               <span className="rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary">
-                {item.status}
+                {t(item.status)}
               </span>
             </div>
             <h2 className="mt-5 font-semibold">{item.name}</h2>
-            <p className="mt-2 text-sm text-muted-foreground">{item.detail}</p>
+            <p className="mt-2 text-sm text-muted-foreground">{t(item.detail)}</p>
             <div className="mt-5 flex items-center gap-2 text-xs text-muted-foreground">
               <ShieldCheck className="size-4" />
-              <span>Signierte Events und Idempotenz</span>
+              <span>{t("Signierte Events und Idempotenz")}</span>
             </div>
           </article>
         ))}
@@ -76,12 +78,12 @@ function IntegrationsPage() {
       <div className="mt-8 rounded-2xl border border-border/60 bg-card p-6">
         <div className="flex items-center gap-2">
           <CheckCircle2 className="size-5 text-primary" />
-          <h2 className="font-semibold">Anbieterunabhängig by design</h2>
+          <h2 className="font-semibold">{t("Anbieterunabhängig by design")}</h2>
         </div>
         <p className="mt-2 max-w-3xl text-sm text-muted-foreground">
-          Rewards besitzt Programmregeln und den Ledger. Zoryn Money und ZorynPay senden
-          normalisierte Events — Swan oder Adyen lassen sich austauschen, ohne die Loyalty-Logik neu
-          zu schreiben.
+          {t(
+            "Rewards besitzt Programmregeln und den Ledger. Zoryn Money und ZorynPay senden normalisierte Events — Swan oder Adyen lassen sich austauschen, ohne die Loyalty-Logik neu zu schreiben.",
+          )}
         </p>
         <p className="mt-4 rounded-xl bg-muted/50 p-3 font-mono text-xs text-muted-foreground">
           POST /api/public/rewards/events · Header: x-zoryn-signature (HMAC-SHA256)

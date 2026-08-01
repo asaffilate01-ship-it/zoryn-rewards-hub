@@ -128,7 +128,11 @@ function RewardsPage() {
                       onClick={() => redeem.mutate(r.id)}
                     >
                       <Ticket className="mr-1 size-4" />
-                      {soldOut ? t("Ausverkauft") : affordable ? t("Einlösen") : t("Zu wenig Punkte")}
+                      {soldOut
+                        ? t("Ausverkauft")
+                        : affordable
+                          ? t("Einlösen")
+                          : t("Zu wenig Punkte")}
                     </Button>
                   </div>
                 </CardContent>
