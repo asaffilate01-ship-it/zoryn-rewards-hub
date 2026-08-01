@@ -206,7 +206,8 @@ function OffersPage() {
                       {Number(o.reward_multiplier) > 1 && `${o.reward_multiplier}× · `}
                       {o.bonus_points > 0 && `+${o.bonus_points} ${t("Pkt")} · `}
                       {t("Min.")} €{(o.min_spend_cents / 100).toFixed(2)}
-                      {o.ends_at && ` · ${t("bis")} ${new Date(o.ends_at).toLocaleDateString("de-DE")}`}
+                      {o.ends_at &&
+                        ` · ${t("bis")} ${new Date(o.ends_at).toLocaleDateString("de-DE")}`}
                     </div>
                   </div>
                 </div>

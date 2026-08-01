@@ -171,7 +171,8 @@ function PosPage() {
             </Field>
           </div>
           <div className="text-sm text-muted-foreground">
-            {t("Ergibt")} <span className="text-foreground font-medium">{points}</span> {t("Punkte")}
+            {t("Ergibt")} <span className="text-foreground font-medium">{points}</span>{" "}
+            {t("Punkte")}
           </div>
         </CardContent>
       </Card>

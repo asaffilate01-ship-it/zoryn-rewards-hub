@@ -37,7 +37,9 @@ function MerchantAnalytics() {
   });
 
   if (!merchantId)
-    return <p className="text-sm text-muted-foreground">{t("Bitte wähle zuerst ein Geschäft aus.")}</p>;
+    return (
+      <p className="text-sm text-muted-foreground">{t("Bitte wähle zuerst ein Geschäft aus.")}</p>
+    );
 
   const totalEarned = (series ?? []).reduce((s, r) => s + Number(r.earned), 0);
   const totalRedeemed = (series ?? []).reduce((s, r) => s + Number(r.redeemed), 0);
