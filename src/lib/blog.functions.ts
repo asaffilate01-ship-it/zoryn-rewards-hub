@@ -24,7 +24,9 @@ export const listPosts = createServerFn({ method: "GET" }).handler(async () => {
   const sb = publicClient();
   const { data, error } = await sb
     .from("blog_posts")
-    .select("id, slug, title, excerpt, cover_url, author_name, tags, published_at")
+    .select(
+      "id, slug, title, title_en, excerpt, excerpt_en, cover_url, author_name, tags, published_at",
+    )
     .not("published_at", "is", null)
     .order("published_at", { ascending: false });
   if (error) return { posts: [] as NonNullable<typeof data> };
@@ -37,7 +39,9 @@ export const getPost = createServerFn({ method: "GET" })
     const sb = publicClient();
     const { data: post } = await sb
       .from("blog_posts")
-      .select("id, slug, title, excerpt, body_md, cover_url, author_name, tags, published_at")
+      .select(
+        "id, slug, title, title_en, excerpt, excerpt_en, body_md, body_md_en, cover_url, author_name, tags, published_at",
+      )
       .eq("slug", data.slug)
       .not("published_at", "is", null)
       .maybeSingle();
