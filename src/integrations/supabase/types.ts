@@ -713,6 +713,715 @@ export type Database = {
           },
         ]
       }
+      reward_api_keys: {
+        Row: {
+          created_at: string
+          id: string
+          key_hash: string
+          key_prefix: string
+          last_used_at: string | null
+          name: string
+          revoked_at: string | null
+          scopes: string[]
+          tenant_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          key_hash: string
+          key_prefix: string
+          last_used_at?: string | null
+          name: string
+          revoked_at?: string | null
+          scopes?: string[]
+          tenant_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          key_hash?: string
+          key_prefix?: string
+          last_used_at?: string | null
+          name?: string
+          revoked_at?: string | null
+          scopes?: string[]
+          tenant_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reward_api_keys_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "reward_tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      reward_attributions: {
+        Row: {
+          campaign_id: string | null
+          created_at: string
+          event_id: string
+          funding_source: string
+          id: string
+          ledger_entry_id: string | null
+          membership_id: string
+          reward_amount: number
+          reward_value_cents: number
+          wallet_id: string
+        }
+        Insert: {
+          campaign_id?: string | null
+          created_at?: string
+          event_id: string
+          funding_source: string
+          id?: string
+          ledger_entry_id?: string | null
+          membership_id: string
+          reward_amount: number
+          reward_value_cents?: number
+          wallet_id: string
+        }
+        Update: {
+          campaign_id?: string | null
+          created_at?: string
+          event_id?: string
+          funding_source?: string
+          id?: string
+          ledger_entry_id?: string | null
+          membership_id?: string
+          reward_amount?: number
+          reward_value_cents?: number
+          wallet_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reward_attributions_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "reward_campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reward_attributions_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "reward_external_events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reward_attributions_ledger_entry_id_fkey"
+            columns: ["ledger_entry_id"]
+            isOneToOne: false
+            referencedRelation: "reward_ledger_entries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reward_attributions_membership_id_fkey"
+            columns: ["membership_id"]
+            isOneToOne: false
+            referencedRelation: "reward_memberships"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reward_attributions_wallet_id_fkey"
+            columns: ["wallet_id"]
+            isOneToOne: false
+            referencedRelation: "reward_wallets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      reward_campaigns: {
+        Row: {
+          audience: Json
+          budget: Json
+          campaign_type: string
+          created_at: string
+          ends_at: string | null
+          id: string
+          merchant_id: string | null
+          name: string
+          reward_rules: Json
+          starts_at: string | null
+          status: string
+          tenant_id: string
+          trigger_rules: Json
+        }
+        Insert: {
+          audience?: Json
+          budget?: Json
+          campaign_type: string
+          created_at?: string
+          ends_at?: string | null
+          id?: string
+          merchant_id?: string | null
+          name: string
+          reward_rules?: Json
+          starts_at?: string | null
+          status?: string
+          tenant_id: string
+          trigger_rules?: Json
+        }
+        Update: {
+          audience?: Json
+          budget?: Json
+          campaign_type?: string
+          created_at?: string
+          ends_at?: string | null
+          id?: string
+          merchant_id?: string | null
+          name?: string
+          reward_rules?: Json
+          starts_at?: string | null
+          status?: string
+          tenant_id?: string
+          trigger_rules?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reward_campaigns_merchant_id_fkey"
+            columns: ["merchant_id"]
+            isOneToOne: false
+            referencedRelation: "reward_merchants"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reward_campaigns_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "reward_tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      reward_external_events: {
+        Row: {
+          amount_cents: number | null
+          attempts: number
+          currency: string | null
+          error: string | null
+          event_type: string
+          id: string
+          merchant_id: string | null
+          payload: Json
+          platform_user_id: string | null
+          processed_at: string | null
+          provider: string
+          provider_event_id: string
+          received_at: string
+          status: Database["public"]["Enums"]["reward_event_status"]
+          tenant_id: string
+        }
+        Insert: {
+          amount_cents?: number | null
+          attempts?: number
+          currency?: string | null
+          error?: string | null
+          event_type: string
+          id?: string
+          merchant_id?: string | null
+          payload: Json
+          platform_user_id?: string | null
+          processed_at?: string | null
+          provider: string
+          provider_event_id: string
+          received_at?: string
+          status?: Database["public"]["Enums"]["reward_event_status"]
+          tenant_id: string
+        }
+        Update: {
+          amount_cents?: number | null
+          attempts?: number
+          currency?: string | null
+          error?: string | null
+          event_type?: string
+          id?: string
+          merchant_id?: string | null
+          payload?: Json
+          platform_user_id?: string | null
+          processed_at?: string | null
+          provider?: string
+          provider_event_id?: string
+          received_at?: string
+          status?: Database["public"]["Enums"]["reward_event_status"]
+          tenant_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reward_external_events_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "reward_tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      reward_funding_accounts: {
+        Row: {
+          balance_cents: number
+          currency: string
+          id: string
+          merchant_id: string | null
+          reserved_cents: number
+          tenant_id: string
+          updated_at: string
+        }
+        Insert: {
+          balance_cents?: number
+          currency?: string
+          id?: string
+          merchant_id?: string | null
+          reserved_cents?: number
+          tenant_id: string
+          updated_at?: string
+        }
+        Update: {
+          balance_cents?: number
+          currency?: string
+          id?: string
+          merchant_id?: string | null
+          reserved_cents?: number
+          tenant_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reward_funding_accounts_merchant_id_fkey"
+            columns: ["merchant_id"]
+            isOneToOne: false
+            referencedRelation: "reward_merchants"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reward_funding_accounts_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "reward_tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      reward_integrations: {
+        Row: {
+          config: Json
+          created_at: string
+          id: string
+          integration_type: string
+          last_event_at: string | null
+          provider: string
+          secret_reference: string | null
+          status: string
+          tenant_id: string
+        }
+        Insert: {
+          config?: Json
+          created_at?: string
+          id?: string
+          integration_type: string
+          last_event_at?: string | null
+          provider: string
+          secret_reference?: string | null
+          status?: string
+          tenant_id: string
+        }
+        Update: {
+          config?: Json
+          created_at?: string
+          id?: string
+          integration_type?: string
+          last_event_at?: string | null
+          provider?: string
+          secret_reference?: string | null
+          status?: string
+          tenant_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reward_integrations_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "reward_tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      reward_ledger_entries: {
+        Row: {
+          amount: number
+          available_at: string | null
+          counterparty_wallet_id: string | null
+          created_at: string
+          description: string | null
+          direction: Database["public"]["Enums"]["reward_entry_direction"]
+          expires_at: string | null
+          funding_source: string | null
+          id: string
+          metadata: Json
+          reversed_entry_id: string | null
+          source: Database["public"]["Enums"]["reward_source"]
+          source_reference: string
+          status: Database["public"]["Enums"]["reward_entry_status"]
+          tenant_id: string
+          wallet_id: string
+        }
+        Insert: {
+          amount: number
+          available_at?: string | null
+          counterparty_wallet_id?: string | null
+          created_at?: string
+          description?: string | null
+          direction: Database["public"]["Enums"]["reward_entry_direction"]
+          expires_at?: string | null
+          funding_source?: string | null
+          id?: string
+          metadata?: Json
+          reversed_entry_id?: string | null
+          source: Database["public"]["Enums"]["reward_source"]
+          source_reference: string
+          status: Database["public"]["Enums"]["reward_entry_status"]
+          tenant_id: string
+          wallet_id: string
+        }
+        Update: {
+          amount?: number
+          available_at?: string | null
+          counterparty_wallet_id?: string | null
+          created_at?: string
+          description?: string | null
+          direction?: Database["public"]["Enums"]["reward_entry_direction"]
+          expires_at?: string | null
+          funding_source?: string | null
+          id?: string
+          metadata?: Json
+          reversed_entry_id?: string | null
+          source?: Database["public"]["Enums"]["reward_source"]
+          source_reference?: string
+          status?: Database["public"]["Enums"]["reward_entry_status"]
+          tenant_id?: string
+          wallet_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reward_ledger_entries_reversed_entry_id_fkey"
+            columns: ["reversed_entry_id"]
+            isOneToOne: false
+            referencedRelation: "reward_ledger_entries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reward_ledger_entries_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "reward_tenants"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reward_ledger_entries_wallet_id_fkey"
+            columns: ["wallet_id"]
+            isOneToOne: false
+            referencedRelation: "reward_wallets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      reward_locations: {
+        Row: {
+          address: Json
+          id: string
+          merchant_id: string
+          name: string
+          provider_store_ids: Json
+          status: string
+          timezone: string
+        }
+        Insert: {
+          address?: Json
+          id?: string
+          merchant_id: string
+          name: string
+          provider_store_ids?: Json
+          status?: string
+          timezone?: string
+        }
+        Update: {
+          address?: Json
+          id?: string
+          merchant_id?: string
+          name?: string
+          provider_store_ids?: Json
+          status?: string
+          timezone?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reward_locations_merchant_id_fkey"
+            columns: ["merchant_id"]
+            isOneToOne: false
+            referencedRelation: "reward_merchants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      reward_memberships: {
+        Row: {
+          external_customer_id: string | null
+          family_group_id: string | null
+          id: string
+          joined_at: string
+          membership_number: string
+          platform_user_id: string
+          preferences: Json
+          status: string
+          tenant_id: string
+          tier: string
+        }
+        Insert: {
+          external_customer_id?: string | null
+          family_group_id?: string | null
+          id?: string
+          joined_at?: string
+          membership_number: string
+          platform_user_id: string
+          preferences?: Json
+          status?: string
+          tenant_id: string
+          tier?: string
+        }
+        Update: {
+          external_customer_id?: string | null
+          family_group_id?: string | null
+          id?: string
+          joined_at?: string
+          membership_number?: string
+          platform_user_id?: string
+          preferences?: Json
+          status?: string
+          tenant_id?: string
+          tier?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reward_memberships_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "reward_tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      reward_merchants: {
+        Row: {
+          card_match_rules: Json
+          created_at: string
+          id: string
+          mcc: string | null
+          merchant_group: string | null
+          name: string
+          organisation_id: string | null
+          provider_merchant_ids: Json
+          status: string
+          tenant_id: string
+        }
+        Insert: {
+          card_match_rules?: Json
+          created_at?: string
+          id?: string
+          mcc?: string | null
+          merchant_group?: string | null
+          name: string
+          organisation_id?: string | null
+          provider_merchant_ids?: Json
+          status?: string
+          tenant_id: string
+        }
+        Update: {
+          card_match_rules?: Json
+          created_at?: string
+          id?: string
+          mcc?: string | null
+          merchant_group?: string | null
+          name?: string
+          organisation_id?: string | null
+          provider_merchant_ids?: Json
+          status?: string
+          tenant_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reward_merchants_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "reward_tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      reward_outbox: {
+        Row: {
+          aggregate_id: string | null
+          attempts: number
+          available_at: string
+          created_at: string
+          id: string
+          payload: Json
+          status: string
+          tenant_id: string
+          topic: string
+        }
+        Insert: {
+          aggregate_id?: string | null
+          attempts?: number
+          available_at?: string
+          created_at?: string
+          id?: string
+          payload: Json
+          status?: string
+          tenant_id: string
+          topic: string
+        }
+        Update: {
+          aggregate_id?: string | null
+          attempts?: number
+          available_at?: string
+          created_at?: string
+          id?: string
+          payload?: Json
+          status?: string
+          tenant_id?: string
+          topic?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reward_outbox_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "reward_tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      reward_programmes: {
+        Row: {
+          conversion: Json
+          created_at: string
+          currency: Database["public"]["Enums"]["reward_currency"]
+          id: string
+          name: string
+          programme_type: string
+          rules: Json
+          status: string
+          tenant_id: string
+        }
+        Insert: {
+          conversion?: Json
+          created_at?: string
+          currency: Database["public"]["Enums"]["reward_currency"]
+          id?: string
+          name: string
+          programme_type: string
+          rules?: Json
+          status?: string
+          tenant_id: string
+        }
+        Update: {
+          conversion?: Json
+          created_at?: string
+          currency?: Database["public"]["Enums"]["reward_currency"]
+          id?: string
+          name?: string
+          programme_type?: string
+          rules?: Json
+          status?: string
+          tenant_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reward_programmes_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "reward_tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      reward_redemption_orders: {
+        Row: {
+          created_at: string
+          expires_at: string | null
+          id: string
+          membership_id: string
+          merchant_id: string | null
+          payment_provider: string | null
+          payment_reference: string | null
+          points: number
+          status: string
+          tenant_id: string
+          token_hash: string | null
+          value_cents: number
+          wallet_id: string
+        }
+        Insert: {
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          membership_id: string
+          merchant_id?: string | null
+          payment_provider?: string | null
+          payment_reference?: string | null
+          points: number
+          status?: string
+          tenant_id: string
+          token_hash?: string | null
+          value_cents: number
+          wallet_id: string
+        }
+        Update: {
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          membership_id?: string
+          merchant_id?: string | null
+          payment_provider?: string | null
+          payment_reference?: string | null
+          points?: number
+          status?: string
+          tenant_id?: string
+          token_hash?: string | null
+          value_cents?: number
+          wallet_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reward_redemption_orders_membership_id_fkey"
+            columns: ["membership_id"]
+            isOneToOne: false
+            referencedRelation: "reward_memberships"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reward_redemption_orders_merchant_id_fkey"
+            columns: ["merchant_id"]
+            isOneToOne: false
+            referencedRelation: "reward_merchants"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reward_redemption_orders_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "reward_tenants"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reward_redemption_orders_wallet_id_fkey"
+            columns: ["wallet_id"]
+            isOneToOne: false
+            referencedRelation: "reward_wallets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       reward_redemptions: {
         Row: {
           code: string
@@ -776,6 +1485,125 @@ export type Database = {
             columns: ["transaction_id"]
             isOneToOne: false
             referencedRelation: "transactions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      reward_tenant_members: {
+        Row: {
+          created_at: string
+          location_ids: string[]
+          role: string
+          tenant_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          location_ids?: string[]
+          role: string
+          tenant_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          location_ids?: string[]
+          role?: string
+          tenant_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reward_tenant_members_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "reward_tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      reward_tenants: {
+        Row: {
+          brand: Json
+          created_at: string
+          id: string
+          mode: Database["public"]["Enums"]["reward_tenant_mode"]
+          name: string
+          owner_organisation_id: string | null
+          settings: Json
+          slug: string
+          status: string
+        }
+        Insert: {
+          brand?: Json
+          created_at?: string
+          id?: string
+          mode?: Database["public"]["Enums"]["reward_tenant_mode"]
+          name: string
+          owner_organisation_id?: string | null
+          settings?: Json
+          slug: string
+          status?: string
+        }
+        Update: {
+          brand?: Json
+          created_at?: string
+          id?: string
+          mode?: Database["public"]["Enums"]["reward_tenant_mode"]
+          name?: string
+          owner_organisation_id?: string | null
+          settings?: Json
+          slug?: string
+          status?: string
+        }
+        Relationships: []
+      }
+      reward_wallets: {
+        Row: {
+          available: number
+          id: string
+          lifetime_earned: number
+          lifetime_redeemed: number
+          membership_id: string
+          pending: number
+          programme_id: string
+          updated_at: string
+          version: number
+        }
+        Insert: {
+          available?: number
+          id?: string
+          lifetime_earned?: number
+          lifetime_redeemed?: number
+          membership_id: string
+          pending?: number
+          programme_id: string
+          updated_at?: string
+          version?: number
+        }
+        Update: {
+          available?: number
+          id?: string
+          lifetime_earned?: number
+          lifetime_redeemed?: number
+          membership_id?: string
+          pending?: number
+          programme_id?: string
+          updated_at?: string
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reward_wallets_membership_id_fkey"
+            columns: ["membership_id"]
+            isOneToOne: false
+            referencedRelation: "reward_memberships"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reward_wallets_programme_id_fkey"
+            columns: ["programme_id"]
+            isOneToOne: false
+            referencedRelation: "reward_programmes"
             referencedColumns: ["id"]
           },
         ]
@@ -1502,6 +2330,10 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_reward_tenant_member: {
+        Args: { _tenant_id: string }
+        Returns: boolean
+      }
       list_settlements: {
         Args: { _merchant_id: string }
         Returns: {
@@ -1657,6 +2489,19 @@ export type Database = {
           redemption_id: string
           transaction_id: string
         }[]
+      }
+      reward_post_entry: {
+        Args: {
+          p_amount: number
+          p_description?: string
+          p_direction: Database["public"]["Enums"]["reward_entry_direction"]
+          p_metadata?: Json
+          p_reference: string
+          p_source: Database["public"]["Enums"]["reward_source"]
+          p_status: Database["public"]["Enums"]["reward_entry_status"]
+          p_wallet_id: string
+        }
+        Returns: string
       }
       show_limit: { Args: never; Returns: number }
       show_trgm: { Args: { "": string }; Returns: string[] }
@@ -2302,6 +3147,37 @@ export type Database = {
         | "admin"
       entry_direction: "debit" | "credit"
       merchant_member_role: "owner" | "manager" | "staff"
+      reward_currency:
+        | "universal_points"
+        | "merchant_points"
+        | "cashback_cents"
+        | "gift_credit_cents"
+        | "promo_credit_cents"
+      reward_entry_direction: "credit" | "debit"
+      reward_entry_status:
+        | "pending"
+        | "available"
+        | "reversed"
+        | "expired"
+        | "cancelled"
+      reward_event_status:
+        | "received"
+        | "processing"
+        | "processed"
+        | "ignored"
+        | "failed"
+      reward_source:
+        | "card"
+        | "payment"
+        | "qr"
+        | "affiliate"
+        | "referral"
+        | "campaign"
+        | "manual"
+        | "gift_card"
+        | "loungetech_app"
+        | "adjustment"
+      reward_tenant_mode: "standalone" | "zoryn_integrated" | "white_label"
       transaction_kind: "earn" | "redeem" | "adjust" | "transfer" | "expire"
     }
     CompositeTypes: {
@@ -2470,6 +3346,41 @@ export const Constants = {
       ],
       entry_direction: ["debit", "credit"],
       merchant_member_role: ["owner", "manager", "staff"],
+      reward_currency: [
+        "universal_points",
+        "merchant_points",
+        "cashback_cents",
+        "gift_credit_cents",
+        "promo_credit_cents",
+      ],
+      reward_entry_direction: ["credit", "debit"],
+      reward_entry_status: [
+        "pending",
+        "available",
+        "reversed",
+        "expired",
+        "cancelled",
+      ],
+      reward_event_status: [
+        "received",
+        "processing",
+        "processed",
+        "ignored",
+        "failed",
+      ],
+      reward_source: [
+        "card",
+        "payment",
+        "qr",
+        "affiliate",
+        "referral",
+        "campaign",
+        "manual",
+        "gift_card",
+        "loungetech_app",
+        "adjustment",
+      ],
+      reward_tenant_mode: ["standalone", "zoryn_integrated", "white_label"],
       transaction_kind: ["earn", "redeem", "adjust", "transfer", "expire"],
     },
   },
