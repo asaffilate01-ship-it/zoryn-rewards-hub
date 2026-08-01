@@ -5,12 +5,14 @@ import { adminListMerchants, adminSetMerchantActive } from "@/lib/admin.function
 import { Card, CardContent } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_authenticated/admin/merchants")({
   component: AdminMerchants,
 });
 
 function AdminMerchants() {
+  const t = useT();
   const qc = useQueryClient();
   const listFn = useServerFn(adminListMerchants);
   const toggleFn = useServerFn(adminSetMerchantActive);
@@ -19,16 +21,16 @@ function AdminMerchants() {
   const toggle = useMutation({
     mutationFn: async (v: { merchantId: string; active: boolean }) => toggleFn({ data: v }),
     onSuccess: () => {
-      toast.success("Status aktualisiert.");
+      toast.success(t("Status aktualisiert."));
       qc.invalidateQueries({ queryKey: ["adminMerchants"] });
     },
-    onError: (e: unknown) => toast.error(e instanceof Error ? e.message : "Fehler"),
+    onError: (e: unknown) => toast.error(e instanceof Error ? e.message : t("Fehler")),
   });
 
   return (
     <>
-      <h1 className="font-display text-2xl font-semibold">Merchants</h1>
-      {isLoading && <p className="text-sm text-muted-foreground">Laden…</p>}
+      <h1 className="font-display text-2xl font-semibold">{t("Merchants")}</h1>
+      {isLoading && <p className="text-sm text-muted-foreground">{t("Laden…")}</p>}
       <div className="grid gap-3">
         {(data ?? []).map((m) => (
           <Card key={m.id}>
@@ -42,7 +44,7 @@ function AdminMerchants() {
                   <div className="font-medium">{m.name}</div>
                   <div className="text-xs text-muted-foreground">
                     {[m.category, m.city].filter(Boolean).join(" · ") || "—"} · {m.points_per_euro}{" "}
-                    Pkt/€
+                    {t("Pkt/€")}
                   </div>
                 </div>
               </div>
@@ -50,7 +52,7 @@ function AdminMerchants() {
                 <span
                   className={`text-xs ${m.is_active ? "text-emerald-500" : "text-muted-foreground"}`}
                 >
-                  {m.is_active ? "Aktiv" : "Inaktiv"}
+                  {m.is_active ? t("Aktiv") : t("Inaktiv")}
                 </span>
                 <Switch
                   checked={m.is_active}
@@ -63,7 +65,7 @@ function AdminMerchants() {
         {data && data.length === 0 && (
           <Card>
             <CardContent className="py-8 text-center text-muted-foreground">
-              Keine Merchants.
+              {t("Keine Merchants.")}
             </CardContent>
           </Card>
         )}

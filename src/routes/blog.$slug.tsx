@@ -6,6 +6,7 @@ import { PublicShell } from "@/components/PublicShell";
 import { MarkdownLite } from "@/components/MarkdownLite";
 import { SocialRow } from "@/components/SocialIcons";
 import { getPost } from "@/lib/blog.functions";
+import { useT } from "@/lib/i18n";
 
 const postQuery = (slug: string) =>
   queryOptions({
@@ -62,6 +63,7 @@ export const Route = createFileRoute("/blog/$slug")({
 });
 
 function BlogPost() {
+  const t = useT();
   const { slug } = Route.useParams();
   const { data } = useSuspenseQuery(postQuery(slug));
   const post = data.post!;
@@ -118,7 +120,7 @@ function BlogPost() {
         </div>
 
         <div className="mt-12 rounded-3xl border border-border/60 bg-card/40 p-5">
-          <p className="text-sm font-medium">Teilen</p>
+          <p className="text-sm font-medium">{t("Teilen")}</p>
           <div className="mt-3 flex flex-wrap gap-2">
             {share.map((s) => (
               <a
@@ -134,11 +136,11 @@ function BlogPost() {
             <button
               onClick={() => {
                 navigator.clipboard.writeText(url);
-                toast.success("Link kopiert");
+                toast.success(t("Link kopiert"));
               }}
               className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/50 px-3 py-1.5 text-xs text-muted-foreground transition hover:text-foreground"
             >
-              <LinkIcon className="h-3.5 w-3.5" /> Link kopieren
+              <LinkIcon className="h-3.5 w-3.5" /> {t("Link kopieren")}
             </button>
           </div>
         </div>
