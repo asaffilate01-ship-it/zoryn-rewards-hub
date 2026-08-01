@@ -7,6 +7,7 @@ import { askAssistant } from "@/lib/ai.functions";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_authenticated/app/assistant")({
   head: () => ({ meta: [{ title: "Zorra — KI-Assistent" }] }),
@@ -16,11 +17,13 @@ export const Route = createFileRoute("/_authenticated/app/assistant")({
 type Msg = { role: "user" | "assistant"; content: string };
 
 function AssistantPage() {
+  const t = useT();
   const [messages, setMessages] = useState<Msg[]>([
     {
       role: "assistant",
-      content:
+      content: t(
         "Hi! Ich bin **Zorra**, dein Zoryn-Assistent. Frag mich zu Punkten, Rewards, Angeboten oder wie du deine Wallet nutzt.",
+      ),
     },
   ]);
   const [input, setInput] = useState("");
@@ -55,7 +58,7 @@ function AssistantPage() {
         <div>
           <h1 className="font-display text-xl font-semibold">Zorra</h1>
           <p className="text-xs text-muted-foreground">
-            KI-Assistent · immer freundlich, immer hilfsbereit
+            {t("KI-Assistent · immer freundlich, immer hilfsbereit")}
           </p>
         </div>
       </div>
@@ -84,7 +87,7 @@ function AssistantPage() {
               <Bot className="size-3.5" />
             </div>
             <div className="rounded-2xl bg-background/60 px-3.5 py-2.5 text-sm text-muted-foreground">
-              Zorra denkt nach…
+              {t("Zorra denkt nach…")}
             </div>
           </div>
         )}
@@ -100,7 +103,7 @@ function AssistantPage() {
               send();
             }
           }}
-          placeholder="Frag Zorra etwas…"
+          placeholder={t("Frag Zorra etwas…")}
           rows={2}
           className="resize-none"
         />

@@ -17,12 +17,14 @@ import {
 } from "@/lib/merchant-portal.functions";
 import { createEarnChallenge } from "@/lib/challenges.functions";
 import { useActiveMerchantId, setActiveMerchantId } from "@/lib/active-merchant";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_authenticated/merchant/pos")({
   component: PosPage,
 });
 
 function PosPage() {
+  const t = useT();
   const merchantId = useActiveMerchantId();
   const listFn = useServerFn(myMerchants);
   const lookupFn = useServerFn(lookupCustomer);
@@ -53,11 +55,11 @@ function PosPage() {
     mutationFn: async () => lookupFn({ data: { merchantId: merchantId!, membership } }),
     onSuccess: (c) => {
       setCustomer(c);
-      toast.success(`Kunde: ${c.display_name}`);
+      toast.success(`${t("Kunde:")} ${c.display_name}`);
     },
     onError: (e: unknown) => {
       setCustomer(null);
-      toast.error(e instanceof Error ? e.message : "Nicht gefunden");
+      toast.error(e instanceof Error ? e.message : t("Nicht gefunden"));
     },
   });
 
@@ -73,10 +75,10 @@ function PosPage() {
         },
       }),
     onSuccess: () => {
-      toast.success(`+${points} Punkte gutgeschrieben.`);
+      toast.success(`+${points} ${t("Punkte gutgeschrieben.")}`);
       reset();
     },
-    onError: (e: unknown) => toast.error(e instanceof Error ? e.message : "Fehler"),
+    onError: (e: unknown) => toast.error(e instanceof Error ? e.message : t("Fehler")),
   });
 
   const redeem = useMutation({
@@ -91,10 +93,10 @@ function PosPage() {
         },
       }),
     onSuccess: () => {
-      toast.success(`-${points} Punkte eingelöst.`);
+      toast.success(`-${points} ${t("Punkte eingelöst.")}`);
       reset();
     },
-    onError: (e: unknown) => toast.error(e instanceof Error ? e.message : "Fehler"),
+    onError: (e: unknown) => toast.error(e instanceof Error ? e.message : t("Fehler")),
   });
 
   const issue = useMutation({
@@ -110,7 +112,7 @@ function PosPage() {
     onSuccess: (row) => {
       setChallenge({ code: row.code, expires_at: row.expires_at });
     },
-    onError: (e: unknown) => toast.error(e instanceof Error ? e.message : "Fehler"),
+    onError: (e: unknown) => toast.error(e instanceof Error ? e.message : t("Fehler")),
   });
 
   function reset() {
@@ -120,17 +122,19 @@ function PosPage() {
   }
 
   if (!merchantId) {
-    return <EmptyState title="Kein Merchant ausgewählt" cta="Merchant wählen" to="/merchant" />;
+    return (
+      <EmptyState title={t("Kein Merchant ausgewählt")} cta={t("Merchant wählen")} to="/merchant" />
+    );
   }
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-display text-2xl font-semibold">Kasse</h1>
+          <h1 className="font-display text-2xl font-semibold">{t("Kasse")}</h1>
           <p className="text-sm text-muted-foreground">
             {active
-              ? `${active.merchant.name} · ${active.merchant.points_per_euro} Punkte pro Euro`
+              ? `${active.merchant.name} · ${active.merchant.points_per_euro} ${t("Punkte pro Euro")}`
               : "…"}
           </p>
         </div>
@@ -138,17 +142,17 @@ function PosPage() {
           className="text-xs text-muted-foreground underline-offset-4 hover:underline"
           onClick={() => setActiveMerchantId(null)}
         >
-          Wechseln
+          {t("Wechseln")}
         </button>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Betrag</CardTitle>
+          <CardTitle className="text-base">{t("Betrag")}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="grid gap-3 md:grid-cols-2">
-            <Field label="Umsatz in €">
+            <Field label={t("Umsatz in €")}>
               <Input
                 type="number"
                 min={0}
@@ -158,23 +162,24 @@ function PosPage() {
                 placeholder="12.50"
               />
             </Field>
-            <Field label="Notiz (optional)">
+            <Field label={t("Notiz (optional)")}>
               <Input
                 value={memo}
                 onChange={(e) => setMemo(e.target.value)}
-                placeholder="Bon-Nr., Produkt…"
+                placeholder={t("Bon-Nr., Produkt…")}
               />
             </Field>
           </div>
           <div className="text-sm text-muted-foreground">
-            Ergibt <span className="text-foreground font-medium">{points}</span> Punkte
+            {t("Ergibt")} <span className="text-foreground font-medium">{points}</span>{" "}
+            {t("Punkte")}
           </div>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Option A · QR / Code für Kunden</CardTitle>
+          <CardTitle className="text-base">{t("Option A · QR / Code für Kunden")}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
           <Button
@@ -182,7 +187,7 @@ function PosPage() {
             disabled={points <= 0 || issue.isPending}
             onClick={() => issue.mutate()}
           >
-            <QrCode className="mr-1 size-4" /> Code erzeugen (3 Min)
+            <QrCode className="mr-1 size-4" /> {t("Code erzeugen (3 Min)")}
           </Button>
           {challenge && (
             <div className="flex flex-col items-center gap-3 rounded-md border border-border bg-muted/30 p-4">
@@ -194,7 +199,7 @@ function PosPage() {
               />
               <div className="font-mono text-2xl tracking-widest">{challenge.code}</div>
               <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                <Timer className="size-3" /> gültig bis{" "}
+                <Timer className="size-3" /> {t("gültig bis")}{" "}
                 {new Date(challenge.expires_at).toLocaleTimeString("de-DE")}
               </div>
             </div>
@@ -204,7 +209,7 @@ function PosPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Option B · Mitgliedschaftsnummer</CardTitle>
+          <CardTitle className="text-base">{t("Option B · Mitgliedschaftsnummer")}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="flex gap-2">
@@ -218,7 +223,7 @@ function PosPage() {
               disabled={lookup.isPending || membership.length < 4}
               onClick={() => lookup.mutate()}
             >
-              Suchen
+              {t("Suchen")}
             </Button>
           </div>
           {customer && (
@@ -234,7 +239,7 @@ function PosPage() {
               disabled={!customer || points <= 0 || earn.isPending}
               onClick={() => earn.mutate()}
             >
-              <Plus className="mr-1 size-4" /> Gutschreiben
+              <Plus className="mr-1 size-4" /> {t("Gutschreiben")}
             </Button>
             <Button
               className="flex-1"
@@ -242,7 +247,7 @@ function PosPage() {
               disabled={!customer || points <= 0 || redeem.isPending}
               onClick={() => redeem.mutate()}
             >
-              <Minus className="mr-1 size-4" /> Einlösen
+              <Minus className="mr-1 size-4" /> {t("Einlösen")}
             </Button>
           </div>
         </CardContent>

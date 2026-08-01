@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowLeft } from "lucide-react";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_authenticated/app/claim")({
   head: () => ({ meta: [{ title: "Punkte reklamieren — Zoryn" }] }),
@@ -17,6 +18,7 @@ export const Route = createFileRoute("/_authenticated/app/claim")({
 });
 
 function ClaimPage() {
+  const t = useT();
   const qc = useQueryClient();
   const fileFn = useServerFn(fileClaim);
   const listFn = useServerFn(listMyClaims);
@@ -42,7 +44,7 @@ function ClaimPage() {
         },
       }),
     onSuccess: () => {
-      toast.success("Reklamation eingereicht.");
+      toast.success(t("Reklamation eingereicht."));
       setForm({
         merchantName: "",
         purchaseDate: new Date().toISOString().slice(0, 10),
@@ -52,7 +54,7 @@ function ClaimPage() {
       });
       qc.invalidateQueries({ queryKey: ["myClaims"] });
     },
-    onError: (e: unknown) => toast.error(e instanceof Error ? e.message : "Fehler"),
+    onError: (e: unknown) => toast.error(e instanceof Error ? e.message : t("Fehler")),
   });
 
   return (
@@ -61,33 +63,35 @@ function ClaimPage() {
         to="/app/profile"
         className="mb-2 inline-flex items-center gap-1 text-sm text-muted-foreground"
       >
-        <ArrowLeft className="size-4" /> Profil
+        <ArrowLeft className="size-4" /> {t("Profil")}
       </Link>
-      <h1 className="text-2xl font-semibold">Punkte reklamieren</h1>
+      <h1 className="text-2xl font-semibold">{t("Punkte reklamieren")}</h1>
       <p className="mt-1 text-sm text-muted-foreground">
-        Kein Scan erhalten? Reiche deinen Beleg ein — wir prüfen und schreiben nachträglich gut.
+        {t(
+          "Kein Scan erhalten? Reiche deinen Beleg ein — wir prüfen und schreiben nachträglich gut.",
+        )}
       </p>
 
       <Card className="mt-6">
         <CardHeader>
-          <CardTitle className="text-base">Neue Reklamation</CardTitle>
+          <CardTitle className="text-base">{t("Neue Reklamation")}</CardTitle>
         </CardHeader>
         <CardContent className="grid gap-4 md:grid-cols-2">
-          <Field label="Händler">
+          <Field label={t("Händler")}>
             <Input
               value={form.merchantName}
               onChange={(e) => setForm({ ...form, merchantName: e.target.value })}
-              placeholder="z. B. Café Nord"
+              placeholder={t("z. B. Café Nord")}
             />
           </Field>
-          <Field label="Datum">
+          <Field label={t("Datum")}>
             <Input
               type="date"
               value={form.purchaseDate}
               onChange={(e) => setForm({ ...form, purchaseDate: e.target.value })}
             />
           </Field>
-          <Field label="Betrag (€)">
+          <Field label={t("Betrag (€)")}>
             <Input
               type="number"
               step="0.01"
@@ -95,14 +99,14 @@ function ClaimPage() {
               onChange={(e) => setForm({ ...form, amountEuros: e.target.value })}
             />
           </Field>
-          <Field label="Belegnummer (optional)">
+          <Field label={t("Belegnummer (optional)")}>
             <Input
               value={form.reference}
               onChange={(e) => setForm({ ...form, reference: e.target.value })}
             />
           </Field>
           <div className="md:col-span-2">
-            <Field label="Notiz (optional)">
+            <Field label={t("Notiz (optional)")}>
               <Textarea
                 rows={2}
                 value={form.notes}
@@ -115,14 +119,14 @@ function ClaimPage() {
               disabled={submit.isPending || !form.merchantName || !form.amountEuros}
               onClick={() => submit.mutate()}
             >
-              {submit.isPending ? "Sende…" : "Einreichen"}
+              {submit.isPending ? t("Sende…") : t("Einreichen")}
             </Button>
           </div>
         </CardContent>
       </Card>
 
       <h2 className="mt-8 mb-3 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-        Deine Reklamationen
+        {t("Deine Reklamationen")}
       </h2>
       <div className="grid gap-2">
         {(claims ?? []).map((c) => (
@@ -150,7 +154,7 @@ function ClaimPage() {
           </Card>
         ))}
         {claims && claims.length === 0 && (
-          <p className="text-sm text-muted-foreground">Noch keine Reklamationen.</p>
+          <p className="text-sm text-muted-foreground">{t("Noch keine Reklamationen.")}</p>
         )}
       </div>
     </>

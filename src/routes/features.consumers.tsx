@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Wallet, QrCode, MapPin, Gift, ShieldCheck, Users } from "lucide-react";
 import { FeaturePage } from "@/components/FeaturePage";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/features/consumers")({
   head: () => ({
@@ -20,43 +21,50 @@ export const Route = createFileRoute("/features/consumers")({
     ],
     links: [{ rel: "canonical", href: "/features/consumers" }],
   }),
-  component: () => (
+  component: ConsumersFeaturePage,
+});
+
+function ConsumersFeaturePage() {
+  const t = useT();
+  return (
     <FeaturePage
-      eyebrow="Für Verbraucher:innen"
-      title="Eine Wallet, jedes Angebot"
-      description="Sammle Punkte bei allen Zoryn-Partnern, sieh Angebote in deiner Nähe und löse Rewards an der Kasse ein."
+      eyebrow={t("Für Verbraucher:innen")}
+      title={t("Eine Wallet, jedes Angebot")}
+      description={t(
+        "Sammle Punkte bei allen Zoryn-Partnern, sieh Angebote in deiner Nähe und löse Rewards an der Kasse ein.",
+      )}
       features={[
         {
           icon: Wallet,
-          title: "Eine Mitgliedsnummer",
-          body: "Ein Konto für alle Partner — keine Karten-Chaos, kein Doppel-Login.",
+          title: t("Eine Mitgliedsnummer"),
+          body: t("Ein Konto für alle Partner — keine Karten-Chaos, kein Doppel-Login."),
         },
         {
           icon: QrCode,
-          title: "QR am POS",
-          body: "Code scannen, Punkte einlösen. Ohne App-Zwang für den ersten Kauf.",
+          title: t("QR am POS"),
+          body: t("Code scannen, Punkte einlösen. Ohne App-Zwang für den ersten Kauf."),
         },
         {
           icon: MapPin,
-          title: "In der Nähe",
-          body: "Zeigt Partner in Laufweite mit aktiven Angeboten.",
+          title: t("In der Nähe"),
+          body: t("Zeigt Partner in Laufweite mit aktiven Angeboten."),
         },
         {
           icon: Gift,
-          title: "Rewards & Cashback",
-          body: "Punkte in Prämien, Gutscheine oder Cashback verwandeln.",
+          title: t("Rewards & Cashback"),
+          body: t("Punkte in Prämien, Gutscheine oder Cashback verwandeln."),
         },
         {
           icon: Users,
-          title: "Freunde einladen",
-          body: "500 Punkte für dich, 500 für deine Freundin.",
+          title: t("Freunde einladen"),
+          body: t("500 Punkte für dich, 500 für deine Freundin."),
         },
         {
           icon: ShieldCheck,
-          title: "Sicher & DSGVO",
-          body: "EU-Hosting, doppeltes Ledger, transparente Historie.",
+          title: t("Sicher & DSGVO"),
+          body: t("EU-Hosting, doppeltes Ledger, transparente Historie."),
         },
       ]}
     />
-  ),
-});
+  );
+}

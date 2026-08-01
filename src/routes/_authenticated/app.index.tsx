@@ -8,6 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_authenticated/app/")({
   head: () => ({
@@ -24,6 +25,7 @@ export const Route = createFileRoute("/_authenticated/app/")({
 });
 
 function WalletHome() {
+  const t = useT();
   const qc = useQueryClient();
   const { data: wallet } = useSuspenseQuery(walletQueryOptions());
   const { data: merchants } = useSuspenseQuery(merchantsQueryOptions());
@@ -53,7 +55,7 @@ function WalletHome() {
     mutationFn: earnFn,
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["wallet"] });
-      toast.success("Punkte gutgeschrieben");
+      toast.success(t("Punkte gutgeschrieben"));
     },
     onError: (e) => toast.error(e.message),
   });
@@ -62,7 +64,7 @@ function WalletHome() {
     mutationFn: redeemFn,
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["wallet"] });
-      toast.success("Einlösung erfolgreich");
+      toast.success(t("Einlösung erfolgreich"));
     },
     onError: (e) => toast.error(e.message),
   });
@@ -76,7 +78,7 @@ function WalletHome() {
         merchantId: merchant.id,
         amount,
         idempotencyKey: crypto.randomUUID(),
-        memo: `Demo-Einkauf bei ${merchant.name}`,
+        memo: `${t("Demo-Einkauf bei")} ${merchant.name}`,
       },
     });
   }
@@ -86,7 +88,7 @@ function WalletHome() {
       data: {
         amount: 200,
         idempotencyKey: crypto.randomUUID(),
-        memo: "Einlösung 2,00 €",
+        memo: t("Einlösung 2,00 €"),
       },
     });
   }
@@ -96,34 +98,37 @@ function WalletHome() {
   return (
     <>
       <div className="text-sm text-muted-foreground">
-        Guten Tag{firstName ? `, ${firstName}` : ""}
+        {t("Guten Tag")}
+        {firstName ? `, ${firstName}` : ""}
       </div>
 
       <div className="surface-glass glow-brand mt-4 rounded-3xl p-6">
         <div className="flex items-center justify-between">
           <div className="text-xs uppercase tracking-widest text-muted-foreground">
-            Universelle Wallet
+            {t("Universelle Wallet")}
           </div>
           <span className="rounded-full bg-brand/15 px-2 py-0.5 text-[10px] uppercase tracking-wider text-brand-soft">
-            {tier}
+            {t(tier)}
           </span>
         </div>
         <div className="mt-6 flex items-baseline gap-2">
           <span className="font-display text-5xl font-semibold tabular-nums">
             {wallet.balance_points.toLocaleString("de-DE")}
           </span>
-          <span className="text-sm text-muted-foreground">Punkte</span>
+          <span className="text-sm text-muted-foreground">{t("Punkte")}</span>
         </div>
         <div className="text-sm text-brand-soft">
           ≈ {wallet.euro_equivalent.toLocaleString("de-DE", { style: "currency", currency: "EUR" })}
         </div>
-        <div className="mt-2 text-xs text-muted-foreground">Mitglieds-Nr. {membership ?? "—"}</div>
+        <div className="mt-2 text-xs text-muted-foreground">
+          {t("Mitglieds-Nr.")} {membership ?? "—"}
+        </div>
 
         <div className="mt-6 grid grid-cols-3 gap-2">
           <Action
             icon={QrCode}
-            label="Scannen"
-            onClick={() => toast("QR-Scanner kommt in Phase 3.")}
+            label={t("Scannen")}
+            onClick={() => toast(t("QR-Scanner kommt in Phase 3."))}
           />
           <Action
             icon={Sparkles}
@@ -133,7 +138,7 @@ function WalletHome() {
           />
           <Action
             icon={Gift}
-            label={redeemMutation.isPending ? "…" : "Einlösen"}
+            label={redeemMutation.isPending ? "…" : t("Einlösen")}
             onClick={demoRedeem}
             disabled={redeemMutation.isPending || wallet.balance_points < 200}
           />
@@ -149,11 +154,13 @@ function WalletHome() {
             <Gift className="size-4" />
           </div>
           <div>
-            <div className="text-sm font-medium">Belohnungen</div>
-            <div className="text-xs text-muted-foreground">Punkte gegen Prämien einlösen</div>
+            <div className="text-sm font-medium">{t("Belohnungen")}</div>
+            <div className="text-xs text-muted-foreground">
+              {t("Punkte gegen Prämien einlösen")}
+            </div>
           </div>
         </div>
-        <span className="text-xs text-brand-soft">Ansehen →</span>
+        <span className="text-xs text-brand-soft">{t("Ansehen →")}</span>
       </Link>
 
       <Link
@@ -165,57 +172,59 @@ function WalletHome() {
             <Sparkles className="size-4" />
           </div>
           <div>
-            <div className="text-sm font-medium">Frag Zorra</div>
-            <div className="text-xs text-muted-foreground">KI-Assistent für deine Wallet</div>
+            <div className="text-sm font-medium">{t("Frag Zorra")}</div>
+            <div className="text-xs text-muted-foreground">
+              {t("KI-Assistent für deine Wallet")}
+            </div>
           </div>
         </div>
-        <span className="text-xs text-brand-soft">Chatten →</span>
+        <span className="text-xs text-brand-soft">{t("Chatten →")}</span>
       </Link>
 
       <section className="mt-8">
         <div className="flex items-baseline justify-between">
-          <h2 className="text-lg font-semibold">Aktivität</h2>
-          <span className="text-xs text-muted-foreground">Letzte 20</span>
+          <h2 className="text-lg font-semibold">{t("Aktivität")}</h2>
+          <span className="text-xs text-muted-foreground">{t("Letzte 20")}</span>
         </div>
         {wallet.transactions.length === 0 ? (
           <div className="mt-3 rounded-2xl border border-dashed border-border p-6 text-center text-sm text-muted-foreground">
-            Noch keine Aktivität. Tippe „Demo Earn", um eine Buchung zu sehen.
+            {t("Noch keine Aktivität. Tippe „Demo Earn“, um eine Buchung zu sehen.")}
           </div>
         ) : (
           <ul className="mt-3 divide-y divide-border rounded-2xl border border-border bg-card/60">
-            {wallet.transactions.map((t) => (
-              <li key={t.id} className="flex items-center gap-3 px-4 py-3">
+            {wallet.transactions.map((tx) => (
+              <li key={tx.id} className="flex items-center gap-3 px-4 py-3">
                 <div
                   className="flex size-9 items-center justify-center rounded-full text-xs font-semibold"
                   style={{
-                    background: t.merchant?.brand_color
-                      ? `${t.merchant.brand_color}22`
+                    background: tx.merchant?.brand_color
+                      ? `${tx.merchant.brand_color}22`
                       : "hsl(var(--secondary))",
-                    color: t.merchant?.brand_color ?? "hsl(var(--foreground))",
+                    color: tx.merchant?.brand_color ?? "hsl(var(--foreground))",
                   }}
                 >
-                  {t.merchant?.name?.[0] ?? (t.signed_points > 0 ? "+" : "−")}
+                  {tx.merchant?.name?.[0] ?? (tx.signed_points > 0 ? "+" : "−")}
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="truncate text-sm font-medium">
-                    {t.merchant?.name ?? kindLabel(t.kind)}
+                    {tx.merchant?.name ?? kindLabel(t, tx.kind)}
                   </div>
                   <div className="truncate text-xs text-muted-foreground">
-                    {t.memo ?? kindLabel(t.kind)} · {formatDate(t.created_at)}
+                    {tx.memo ?? kindLabel(t, tx.kind)} · {formatDate(tx.created_at)}
                   </div>
                 </div>
                 <div
                   className={`flex items-center gap-1 text-sm font-semibold tabular-nums ${
-                    t.signed_points >= 0 ? "text-brand-soft" : "text-foreground"
+                    tx.signed_points >= 0 ? "text-brand-soft" : "text-foreground"
                   }`}
                 >
-                  {t.signed_points >= 0 ? (
+                  {tx.signed_points >= 0 ? (
                     <ArrowUpRight className="size-4" />
                   ) : (
                     <ArrowDownRight className="size-4" />
                   )}
-                  {t.signed_points > 0 ? "+" : ""}
-                  {t.signed_points.toLocaleString("de-DE")}
+                  {tx.signed_points > 0 ? "+" : ""}
+                  {tx.signed_points.toLocaleString("de-DE")}
                 </div>
               </li>
             ))}
@@ -225,9 +234,9 @@ function WalletHome() {
 
       <section className="mt-8">
         <div className="flex items-baseline justify-between">
-          <h2 className="text-lg font-semibold">Partner</h2>
+          <h2 className="text-lg font-semibold">{t("Partner")}</h2>
           <Link to="/app/shop" className="text-xs text-brand-soft hover:underline">
-            Alle ansehen
+            {t("Alle ansehen")}
           </Link>
         </div>
         <div className="mt-3 grid gap-3 sm:grid-cols-2">
@@ -246,7 +255,7 @@ function WalletHome() {
                 <div className="min-w-0">
                   <div className="truncate text-sm font-semibold">{m.name}</div>
                   <div className="text-xs text-muted-foreground">
-                    {m.points_per_euro} Punkte / €
+                    {m.points_per_euro} {t("Punkte / €")}
                   </div>
                 </div>
               </div>
@@ -291,18 +300,18 @@ function tierFor(points: number) {
   return "Bronze";
 }
 
-function kindLabel(kind: string) {
+function kindLabel(t: (s: string) => string, kind: string) {
   switch (kind) {
     case "earn":
-      return "Punkte gesammelt";
+      return t("Punkte gesammelt");
     case "redeem":
-      return "Punkte eingelöst";
+      return t("Punkte eingelöst");
     case "adjust":
-      return "Anpassung";
+      return t("Anpassung");
     case "transfer":
-      return "Übertrag";
+      return t("Übertrag");
     case "expire":
-      return "Abgelaufen";
+      return t("Abgelaufen");
     default:
       return kind;
   }

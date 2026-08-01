@@ -12,12 +12,14 @@ import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { createOffer, deleteOffer, listMerchantOffers, toggleOffer } from "@/lib/offers.functions";
 import { useActiveMerchantId } from "@/lib/active-merchant";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_authenticated/merchant/offers")({
   component: OffersPage,
 });
 
 function OffersPage() {
+  const t = useT();
   const merchantId = useActiveMerchantId();
   const qc = useQueryClient();
   const listFn = useServerFn(listMerchantOffers);
@@ -55,7 +57,7 @@ function OffersPage() {
         },
       }),
     onSuccess: () => {
-      toast.success("Angebot angelegt.");
+      toast.success(t("Angebot angelegt."));
       setShowForm(false);
       setForm({
         title: "",
@@ -67,7 +69,7 @@ function OffersPage() {
       });
       qc.invalidateQueries({ queryKey: ["merchantOffers", merchantId] });
     },
-    onError: (e: unknown) => toast.error(e instanceof Error ? e.message : "Fehler"),
+    onError: (e: unknown) => toast.error(e instanceof Error ? e.message : t("Fehler")),
   });
 
   const toggle = useMutation({
@@ -78,7 +80,7 @@ function OffersPage() {
   const remove = useMutation({
     mutationFn: async (offerId: string) => deleteFn({ data: { offerId } }),
     onSuccess: () => {
-      toast.success("Angebot gelöscht.");
+      toast.success(t("Angebot gelöscht."));
       qc.invalidateQueries({ queryKey: ["merchantOffers", merchantId] });
     },
   });
@@ -87,9 +89,9 @@ function OffersPage() {
     return (
       <Card>
         <CardContent className="flex flex-col items-center gap-3 py-12 text-center">
-          <p className="text-muted-foreground">Kein Merchant ausgewählt.</p>
+          <p className="text-muted-foreground">{t("Kein Merchant ausgewählt.")}</p>
           <Link to="/merchant">
-            <Button>Merchant wählen</Button>
+            <Button>{t("Merchant wählen")}</Button>
           </Link>
         </CardContent>
       </Card>
@@ -100,30 +102,30 @@ function OffersPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-display text-2xl font-semibold">Angebote</h1>
+          <h1 className="font-display text-2xl font-semibold">{t("Angebote")}</h1>
           <p className="text-sm text-muted-foreground">
-            Boni und Multiplikatoren für deine Kundinnen.
+            {t("Boni und Multiplikatoren für deine Kundinnen.")}
           </p>
         </div>
         <Button onClick={() => setShowForm((v) => !v)}>
-          <Plus className="mr-1 size-4" /> Neues Angebot
+          <Plus className="mr-1 size-4" /> {t("Neues Angebot")}
         </Button>
       </div>
 
       {showForm && (
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">Neues Angebot</CardTitle>
+            <CardTitle className="text-base">{t("Neues Angebot")}</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-4 md:grid-cols-2">
-            <Field label="Titel">
+            <Field label={t("Titel")}>
               <Input
                 value={form.title}
                 onChange={(e) => setForm({ ...form, title: e.target.value })}
-                placeholder="Doppelte Punkte"
+                placeholder={t("Doppelte Punkte")}
               />
             </Field>
-            <Field label="Endet am (optional)">
+            <Field label={t("Endet am (optional)")}>
               <Input
                 type="datetime-local"
                 value={form.endsAt}
@@ -131,7 +133,7 @@ function OffersPage() {
               />
             </Field>
             <div className="md:col-span-2">
-              <Field label="Beschreibung">
+              <Field label={t("Beschreibung")}>
                 <Textarea
                   rows={2}
                   value={form.description}
@@ -139,7 +141,7 @@ function OffersPage() {
                 />
               </Field>
             </div>
-            <Field label="Multiplikator (x)">
+            <Field label={t("Multiplikator (x)")}>
               <Input
                 type="number"
                 min={1}
@@ -149,7 +151,7 @@ function OffersPage() {
                 onChange={(e) => setForm({ ...form, rewardMultiplier: e.target.value })}
               />
             </Field>
-            <Field label="Bonuspunkte">
+            <Field label={t("Bonuspunkte")}>
               <Input
                 type="number"
                 min={0}
@@ -157,7 +159,7 @@ function OffersPage() {
                 onChange={(e) => setForm({ ...form, bonusPoints: e.target.value })}
               />
             </Field>
-            <Field label="Mindestumsatz in €">
+            <Field label={t("Mindestumsatz in €")}>
               <Input
                 type="number"
                 min={0}
@@ -171,7 +173,7 @@ function OffersPage() {
                 disabled={create.isPending || form.title.length < 3}
                 onClick={() => create.mutate()}
               >
-                {create.isPending ? "Speichere…" : "Anlegen"}
+                {create.isPending ? t("Speichere…") : t("Anlegen")}
               </Button>
             </div>
           </CardContent>
@@ -179,11 +181,11 @@ function OffersPage() {
       )}
 
       {isLoading ? (
-        <p className="text-muted-foreground">Lade…</p>
+        <p className="text-muted-foreground">{t("Lade…")}</p>
       ) : !offers || offers.length === 0 ? (
         <Card>
           <CardContent className="py-8 text-center text-muted-foreground">
-            Noch keine Angebote.
+            {t("Noch keine Angebote.")}
           </CardContent>
         </Card>
       ) : (
@@ -202,9 +204,10 @@ function OffersPage() {
                     )}
                     <div className="mt-1 text-xs text-muted-foreground">
                       {Number(o.reward_multiplier) > 1 && `${o.reward_multiplier}× · `}
-                      {o.bonus_points > 0 && `+${o.bonus_points} Pkt · `}
-                      Min. €{(o.min_spend_cents / 100).toFixed(2)}
-                      {o.ends_at && ` · bis ${new Date(o.ends_at).toLocaleDateString("de-DE")}`}
+                      {o.bonus_points > 0 && `+${o.bonus_points} ${t("Pkt")} · `}
+                      {t("Min.")} €{(o.min_spend_cents / 100).toFixed(2)}
+                      {o.ends_at &&
+                        ` · ${t("bis")} ${new Date(o.ends_at).toLocaleDateString("de-DE")}`}
                     </div>
                   </div>
                 </div>

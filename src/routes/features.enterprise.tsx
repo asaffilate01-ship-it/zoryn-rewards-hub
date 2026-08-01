@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Building2, Network, Settings2, ShieldCheck, LineChart, Users2 } from "lucide-react";
 import { FeaturePage } from "@/components/FeaturePage";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/features/enterprise")({
   head: () => ({
@@ -16,45 +17,52 @@ export const Route = createFileRoute("/features/enterprise")({
     ],
     links: [{ rel: "canonical", href: "/features/enterprise" }],
   }),
-  component: () => (
+  component: EnterpriseFeaturePage,
+});
+
+function EnterpriseFeaturePage() {
+  const t = useT();
+  return (
     <FeaturePage
-      eyebrow="Ketten & Franchise"
-      title="Loyalty im Konzern-Maßstab"
-      description="Mehrere Filialen, mehrere Marken, ein Ledger — mit sauberer Trennung von Rechten und Abrechnung."
+      eyebrow={t("Ketten & Franchise")}
+      title={t("Loyalty im Konzern-Maßstab")}
+      description={t(
+        "Mehrere Filialen, mehrere Marken, ein Ledger — mit sauberer Trennung von Rechten und Abrechnung.",
+      )}
       features={[
         {
           icon: Building2,
-          title: "Filialbaum",
-          body: "Marke → Region → Filiale, klare Hierarchie.",
+          title: t("Filialbaum"),
+          body: t("Marke → Region → Filiale, klare Hierarchie."),
         },
         {
           icon: Network,
-          title: "Cross-Brand-Wallets",
-          body: "Punkte über Marken hinweg — mit Regeln, die du kontrollierst.",
+          title: t("Cross-Brand-Wallets"),
+          body: t("Punkte über Marken hinweg — mit Regeln, die du kontrollierst."),
         },
         {
           icon: Settings2,
-          title: "Zentrale Kampagnen",
-          body: "HQ steuert Aktionen, Filialen tunen lokal.",
+          title: t("Zentrale Kampagnen"),
+          body: t("HQ steuert Aktionen, Filialen tunen lokal."),
         },
         {
           icon: ShieldCheck,
-          title: "SSO-ready",
-          body: "SAML/SCIM auf Roadmap für Konzernanbindung.",
+          title: t("SSO-ready"),
+          body: t("SAML/SCIM auf Roadmap für Konzernanbindung."),
         },
         {
           icon: LineChart,
-          title: "Konsolidiertes Reporting",
-          body: "Ledger + Settlements pro Marke und Region.",
+          title: t("Konsolidiertes Reporting"),
+          body: t("Ledger + Settlements pro Marke und Region."),
         },
         {
           icon: Users2,
-          title: "Rollen fein granular",
-          body: "Owner, Regionalleitung, Filialleitung, Staff.",
+          title: t("Rollen fein granular"),
+          body: t("Owner, Regionalleitung, Filialleitung, Staff."),
         },
       ]}
-      ctaLabel="Enterprise-Kontakt"
+      ctaLabel={t("Enterprise-Kontakt")}
       ctaTo="/legal/complaints"
     />
-  ),
-});
+  );
+}

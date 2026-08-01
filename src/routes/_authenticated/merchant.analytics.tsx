@@ -13,6 +13,7 @@ import {
   Tooltip,
   CartesianGrid,
 } from "recharts";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_authenticated/merchant/analytics")({
   head: () => ({ meta: [{ title: "Analytics — Zoryn Business" }] }),
@@ -20,6 +21,7 @@ export const Route = createFileRoute("/_authenticated/merchant/analytics")({
 });
 
 function MerchantAnalytics() {
+  const t = useT();
   const merchantId = useActiveMerchantId();
   const seriesFn = useServerFn(merchantSeries);
   const topFn = useServerFn(merchantTopCustomers);
@@ -35,7 +37,9 @@ function MerchantAnalytics() {
   });
 
   if (!merchantId)
-    return <p className="text-sm text-muted-foreground">Bitte wähle zuerst ein Geschäft aus.</p>;
+    return (
+      <p className="text-sm text-muted-foreground">{t("Bitte wähle zuerst ein Geschäft aus.")}</p>
+    );
 
   const totalEarned = (series ?? []).reduce((s, r) => s + Number(r.earned), 0);
   const totalRedeemed = (series ?? []).reduce((s, r) => s + Number(r.redeemed), 0);
@@ -45,18 +49,18 @@ function MerchantAnalytics() {
     <div className="space-y-6">
       <div>
         <h1 className="font-display text-2xl font-semibold">Analytics</h1>
-        <p className="text-sm text-muted-foreground">Letzte 30 Tage.</p>
+        <p className="text-sm text-muted-foreground">{t("Letzte 30 Tage.")}</p>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-3">
-        <Stat label="Punkte ausgegeben" value={totalEarned.toLocaleString("de-DE")} />
-        <Stat label="Punkte eingelöst" value={totalRedeemed.toLocaleString("de-DE")} />
-        <Stat label="Transaktionen" value={totalTxns.toLocaleString("de-DE")} />
+        <Stat label={t("Punkte ausgegeben")} value={totalEarned.toLocaleString("de-DE")} />
+        <Stat label={t("Punkte eingelöst")} value={totalRedeemed.toLocaleString("de-DE")} />
+        <Stat label={t("Transaktionen")} value={totalTxns.toLocaleString("de-DE")} />
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Punkte pro Tag</CardTitle>
+          <CardTitle className="text-base">{t("Punkte pro Tag")}</CardTitle>
         </CardHeader>
         <CardContent className="h-72">
           <ResponsiveContainer width="100%" height="100%">
@@ -98,18 +102,18 @@ function MerchantAnalytics() {
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Top-Kund:innen (30 Tage)</CardTitle>
+          <CardTitle className="text-base">{t("Top-Kund:innen (30 Tage)")}</CardTitle>
         </CardHeader>
         <CardContent>
           {(top ?? []).length === 0 ? (
-            <p className="text-sm text-muted-foreground">Noch keine Aktivität.</p>
+            <p className="text-sm text-muted-foreground">{t("Noch keine Aktivität.")}</p>
           ) : (
             <ul className="divide-y divide-border/60">
               {(top ?? []).map((c) => (
                 <li key={c.user_id} className="flex items-center justify-between py-3 text-sm">
                   <span className="font-medium">{c.display_name}</span>
                   <span className="tabular-nums text-muted-foreground">
-                    {Number(c.earned).toLocaleString("de-DE")} P · {c.visits} Besuche
+                    {Number(c.earned).toLocaleString("de-DE")} P · {c.visits} {t("Besuche")}
                   </span>
                 </li>
               ))}

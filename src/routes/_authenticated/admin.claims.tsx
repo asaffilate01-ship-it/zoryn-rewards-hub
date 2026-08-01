@@ -8,12 +8,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Check, X } from "lucide-react";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_authenticated/admin/claims")({
   component: AdminClaims,
 });
 
 function AdminClaims() {
+  const t = useT();
   const qc = useQueryClient();
   const listFn = useServerFn(adminListClaims);
   const resolveFn = useServerFn(adminResolveClaim);
@@ -24,16 +26,16 @@ function AdminClaims() {
     mutationFn: async (v: { claimId: string; approve: boolean; points?: number }) =>
       resolveFn({ data: v }),
     onSuccess: () => {
-      toast.success("Antrag bearbeitet.");
+      toast.success(t("Antrag bearbeitet."));
       qc.invalidateQueries({ queryKey: ["adminClaims"] });
     },
-    onError: (e: unknown) => toast.error(e instanceof Error ? e.message : "Fehler"),
+    onError: (e: unknown) => toast.error(e instanceof Error ? e.message : t("Fehler")),
   });
 
   return (
     <>
-      <h1 className="font-display text-2xl font-semibold">Reklamationen</h1>
-      {isLoading && <p className="text-sm text-muted-foreground">Laden…</p>}
+      <h1 className="font-display text-2xl font-semibold">{t("Reklamationen")}</h1>
+      {isLoading && <p className="text-sm text-muted-foreground">{t("Laden…")}</p>}
       <div className="grid gap-3">
         {(data ?? []).map((c) => {
           const suggested = Math.max(Math.round(c.amount_cents / 100) * 10, 10);
@@ -49,7 +51,7 @@ function AdminClaims() {
                   </div>
                   {c.notes && <div className="mt-1 text-sm">{c.notes}</div>}
                   <div className="mt-1 text-xs">
-                    Status:{" "}
+                    {t("Status:")}{" "}
                     <span
                       className={
                         c.status === "open"
@@ -82,14 +84,14 @@ function AdminClaims() {
                         })
                       }
                     >
-                      <Check className="mr-1 size-4" /> Genehmigen
+                      <Check className="mr-1 size-4" /> {t("Genehmigen")}
                     </Button>
                     <Button
                       size="sm"
                       variant="outline"
                       onClick={() => resolve.mutate({ claimId: c.id, approve: false })}
                     >
-                      <X className="mr-1 size-4" /> Ablehnen
+                      <X className="mr-1 size-4" /> {t("Ablehnen")}
                     </Button>
                   </div>
                 )}
@@ -100,7 +102,7 @@ function AdminClaims() {
         {data && data.length === 0 && (
           <Card>
             <CardContent className="py-8 text-center text-muted-foreground">
-              Keine Reklamationen.
+              {t("Keine Reklamationen.")}
             </CardContent>
           </Card>
         )}

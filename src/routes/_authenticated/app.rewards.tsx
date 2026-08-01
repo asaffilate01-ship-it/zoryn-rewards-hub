@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { listActiveRewards, listMyRedemptions, redeemReward } from "@/lib/rewards.functions";
 import { getWallet } from "@/lib/wallet.functions";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_authenticated/app/rewards")({
   head: () => ({
@@ -22,6 +23,7 @@ export const Route = createFileRoute("/_authenticated/app/rewards")({
 });
 
 function RewardsPage() {
+  const t = useT();
   const qc = useQueryClient();
   const listFn = useServerFn(listActiveRewards);
   const walletFn = useServerFn(getWallet);
@@ -38,22 +40,22 @@ function RewardsPage() {
     mutationFn: async (rewardId: string) =>
       redeemFn({ data: { rewardId, idempotencyKey: crypto.randomUUID() } }),
     onSuccess: (r) => {
-      toast.success(`Belohnung eingelöst — Code ${r.code}`);
+      toast.success(`${t("Belohnung eingelöst — Code")} ${r.code}`);
       qc.invalidateQueries({ queryKey: ["wallet"] });
       qc.invalidateQueries({ queryKey: ["myRedemptions"] });
       qc.invalidateQueries({ queryKey: ["rewards"] });
     },
-    onError: (e: unknown) => toast.error(e instanceof Error ? e.message : "Fehler"),
+    onError: (e: unknown) => toast.error(e instanceof Error ? e.message : t("Fehler")),
   });
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-display text-2xl font-semibold">Belohnungen</h1>
+        <h1 className="font-display text-2xl font-semibold">{t("Belohnungen")}</h1>
         <p className="text-sm text-muted-foreground">
-          Verfügbar:{" "}
+          {t("Verfügbar:")}{" "}
           <span className="font-medium text-foreground">
-            {balance.toLocaleString("de-DE")} Punkte
+            {balance.toLocaleString("de-DE")} {t("Punkte")}
           </span>{" "}
           (~€{(balance / 100).toFixed(2)})
         </p>
@@ -61,7 +63,7 @@ function RewardsPage() {
 
       {mine && mine.length > 0 && (
         <section className="space-y-2">
-          <h2 className="text-sm font-medium text-muted-foreground">Deine Codes</h2>
+          <h2 className="text-sm font-medium text-muted-foreground">{t("Deine Codes")}</h2>
           <div className="grid gap-2">
             {mine
               .filter((r) => r.status === "pending")
@@ -72,7 +74,7 @@ function RewardsPage() {
                     <div>
                       <div className="text-sm font-medium">{r.reward_title}</div>
                       <div className="text-xs text-muted-foreground">
-                        {r.merchant?.name} · zeige den Code im Geschäft
+                        {r.merchant?.name} · {t("zeige den Code im Geschäft")}
                       </div>
                     </div>
                     <div className="rounded-md bg-primary/10 px-3 py-1.5 font-mono text-lg font-semibold tracking-wider text-primary">
@@ -86,8 +88,8 @@ function RewardsPage() {
       )}
 
       <section className="space-y-2">
-        <h2 className="text-sm font-medium text-muted-foreground">Verfügbare Belohnungen</h2>
-        {isLoading && <p className="text-sm text-muted-foreground">Laden…</p>}
+        <h2 className="text-sm font-medium text-muted-foreground">{t("Verfügbare Belohnungen")}</h2>
+        {isLoading && <p className="text-sm text-muted-foreground">{t("Laden…")}</p>}
         <div className="grid gap-3">
           {(rewards ?? []).map((r) => {
             const affordable = balance >= r.cost_points;
@@ -110,7 +112,7 @@ function RewardsPage() {
                       )}
                       {r.stock !== null && !soldOut && (
                         <div className="mt-1 text-xs text-amber-500">
-                          Nur noch {r.stock} verfügbar
+                          {t("Nur noch")} {r.stock} {t("verfügbar")}
                         </div>
                       )}
                     </div>
@@ -126,7 +128,11 @@ function RewardsPage() {
                       onClick={() => redeem.mutate(r.id)}
                     >
                       <Ticket className="mr-1 size-4" />
-                      {soldOut ? "Ausverkauft" : affordable ? "Einlösen" : "Zu wenig Punkte"}
+                      {soldOut
+                        ? t("Ausverkauft")
+                        : affordable
+                          ? t("Einlösen")
+                          : t("Zu wenig Punkte")}
                     </Button>
                   </div>
                 </CardContent>
@@ -136,7 +142,7 @@ function RewardsPage() {
           {rewards && rewards.length === 0 && (
             <Card>
               <CardContent className="py-8 text-center text-muted-foreground">
-                Noch keine Belohnungen verfügbar.
+                {t("Noch keine Belohnungen verfügbar.")}
               </CardContent>
             </Card>
           )}

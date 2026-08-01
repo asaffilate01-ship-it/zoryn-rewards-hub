@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { claimEarnChallenge } from "@/lib/challenges.functions";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_authenticated/app/scan")({
   head: () => ({ meta: [{ title: "Punkte sammeln — Zoryn" }] }),
@@ -15,6 +16,7 @@ export const Route = createFileRoute("/_authenticated/app/scan")({
 });
 
 function ScanPage() {
+  const t = useT();
   const claimFn = useServerFn(claimEarnChallenge);
   const [code, setCode] = useState("");
   const [last, setLast] = useState<{
@@ -27,25 +29,27 @@ function ScanPage() {
     mutationFn: () => claimFn({ data: { code } }),
     onSuccess: (r) => {
       setLast({ points: r.points_awarded, merchant: r.merchant_name, offer: r.offer_title });
-      toast.success(`+${r.points_awarded} Punkte gesammelt`);
+      toast.success(`+${r.points_awarded} ${t("Punkte gesammelt")}`);
       setCode("");
     },
-    onError: (e: unknown) => toast.error(e instanceof Error ? e.message : "Fehler"),
+    onError: (e: unknown) => toast.error(e instanceof Error ? e.message : t("Fehler")),
   });
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-display text-2xl font-semibold">Punkte sammeln</h1>
+        <h1 className="font-display text-2xl font-semibold">{t("Punkte sammeln")}</h1>
         <p className="text-sm text-muted-foreground">
-          Gib den 8-stelligen Code von der Kasse ein. Ein Kamera-Scanner folgt in der nativen App.
+          {t(
+            "Gib den 8-stelligen Code von der Kasse ein. Ein Kamera-Scanner folgt in der nativen App.",
+          )}
         </p>
       </div>
 
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-base">
-            <QrCode className="size-4" /> Code eingeben
+            <QrCode className="size-4" /> {t("Code eingeben")}
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -59,7 +63,7 @@ function ScanPage() {
                   .slice(0, 12),
               )
             }
-            placeholder="Z.B. K7HP2XQR"
+            placeholder={t("Z.B. K7HP2XQR")}
             className="text-center font-mono text-lg tracking-widest"
             autoCapitalize="characters"
             autoComplete="off"
@@ -69,7 +73,7 @@ function ScanPage() {
             disabled={code.length < 6 || claim.isPending}
             onClick={() => claim.mutate()}
           >
-            Einlösen
+            {t("Einlösen")}
           </Button>
         </CardContent>
       </Card>
@@ -80,10 +84,12 @@ function ScanPage() {
             <Sparkles className="size-6 text-brand-soft" />
             <div>
               <div className="font-semibold">
-                +{last.points} Punkte bei {last.merchant}
+                +{last.points} {t("Punkte bei")} {last.merchant}
               </div>
               {last.offer && (
-                <div className="text-xs text-muted-foreground">Bonus-Aktion: {last.offer}</div>
+                <div className="text-xs text-muted-foreground">
+                  {t("Bonus-Aktion:")} {last.offer}
+                </div>
               )}
             </div>
           </CardContent>

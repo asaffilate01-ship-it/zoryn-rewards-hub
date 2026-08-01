@@ -4,7 +4,9 @@ import { useQuery } from "@tanstack/react-query";
 import { Wallet, ShoppingBag, MapPin, User, QrCode, Bell } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { ZorynMark } from "@/components/ZorynMark";
+import { LanguageToggle } from "@/components/LanguageToggle";
 import { listNotifications } from "@/lib/notifications.functions";
+import { useT } from "@/lib/i18n";
 import type { ComponentType } from "react";
 
 export const Route = createFileRoute("/_authenticated/app")({
@@ -12,6 +14,7 @@ export const Route = createFileRoute("/_authenticated/app")({
 });
 
 function AppShell() {
+  const t = useT();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const listFn = useServerFn(listNotifications);
   const { data: notifs } = useQuery({
@@ -35,9 +38,10 @@ function AppShell() {
             <span className="font-display text-[15px] font-semibold tracking-tight">Zoryn</span>
           </Link>
           <div className="flex items-center gap-1">
+            <LanguageToggle />
             <Link
               to="/app/notifications"
-              aria-label="Benachrichtigungen"
+              aria-label={t("Benachrichtigungen")}
               className="relative flex size-9 items-center justify-center rounded-full text-muted-foreground transition hover:bg-card hover:text-foreground"
             >
               <Bell className="size-[18px]" />
@@ -51,7 +55,7 @@ function AppShell() {
               onClick={signOut}
               className="rounded-full px-3 py-1.5 text-xs font-medium text-muted-foreground transition hover:bg-card hover:text-foreground"
             >
-              Abmelden
+              {t("Abmelden")}
             </button>
           </div>
         </div>
@@ -81,7 +85,7 @@ function AppShell() {
           <TabLink
             to="/app/profile"
             icon={User}
-            label="Profil"
+            label={t("Profil")}
             active={pathname.startsWith("/app/profile")}
           />
         </div>
@@ -118,10 +122,11 @@ function TabLink({
 }
 
 function ScanCta({ active }: { active?: boolean }) {
+  const t = useT();
   return (
     <Link
       to="/app/scan"
-      aria-label="Scannen"
+      aria-label={t("Scannen")}
       className={`relative mx-1 flex size-12 items-center justify-center rounded-full gradient-brand text-primary-foreground shadow-lg transition ${
         active ? "scale-105 glow-brand" : "hover:scale-105"
       }`}

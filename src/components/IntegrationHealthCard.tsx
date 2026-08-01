@@ -4,8 +4,10 @@ import { Activity, PlugZap, Radio } from "lucide-react";
 import { integrationHealth } from "@/lib/integrations.functions";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useT } from "@/lib/i18n";
 
 export function IntegrationHealthCard() {
+  const t = useT();
   const healthFn = useServerFn(integrationHealth);
   const { data, isLoading, error } = useQuery({
     queryKey: ["integrationHealth"],
@@ -18,41 +20,41 @@ export function IntegrationHealthCard() {
       <CardHeader className="flex-row items-center justify-between space-y-0">
         <CardTitle className="flex items-center gap-2 font-display text-base">
           <PlugZap className="size-4 text-brand" />
-          Integrations-Health
+          {t("Integrations-Health")}
         </CardTitle>
         {data && (
           <Badge variant={data.events.failed > 0 ? "destructive" : "secondary"}>
-            {data.events.failed > 0 ? `${data.events.failed} Fehler` : "Stabil"}
+            {data.events.failed > 0 ? `${data.events.failed} ${t("Fehler")}` : t("Stabil")}
           </Badge>
         )}
       </CardHeader>
       <CardContent className="space-y-4">
-        {isLoading && <p className="text-sm text-muted-foreground">Laden…</p>}
+        {isLoading && <p className="text-sm text-muted-foreground">{t("Laden…")}</p>}
         {error && (
           <p className="text-sm text-destructive">
-            {error instanceof Error ? error.message : "Fehler"}
+            {error instanceof Error ? error.message : t("Fehler")}
           </p>
         )}
         {data && (
           <>
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-              <Metric label="Mandanten" value={data.tenants.length} />
-              <Metric label="Events (letzte 500)" value={data.events.total} />
-              <Metric label="Verarbeitet" value={data.events.processed} />
-              <Metric label="Outbox offen" value={data.outbox_pending} />
+              <Metric label={t("Mandanten")} value={data.tenants.length} />
+              <Metric label={t("Events (letzte 500)")} value={data.events.total} />
+              <Metric label={t("Verarbeitet")} value={data.events.processed} />
+              <Metric label={t("Outbox offen")} value={data.outbox_pending} />
             </div>
 
             <div className="space-y-2">
-              {data.tenants.map((t) => (
+              {data.tenants.map((t2) => (
                 <div
-                  key={t.id}
+                  key={t2.id}
                   className="flex items-center justify-between rounded-lg border px-3 py-2 text-sm"
                 >
                   <span className="flex items-center gap-2">
                     <Radio className="size-3.5 text-muted-foreground" />
-                    {t.name}
+                    {t2.name}
                   </span>
-                  <span className="text-xs text-muted-foreground">{t.mode}</span>
+                  <span className="text-xs text-muted-foreground">{t2.mode}</span>
                 </div>
               ))}
             </div>
@@ -77,7 +79,7 @@ export function IntegrationHealthCard() {
             )}
 
             <p className="text-xs text-muted-foreground">
-              Letztes Event:{" "}
+              {t("Letztes Event:")}{" "}
               {data.events.last_received_at
                 ? new Date(data.events.last_received_at).toLocaleString("de-DE")
                 : "—"}

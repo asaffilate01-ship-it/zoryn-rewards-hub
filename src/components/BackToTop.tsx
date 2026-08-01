@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { ArrowUp } from "lucide-react";
+import { useT } from "@/lib/i18n";
 
 export function BackToTop() {
+  const t = useT();
   const [progress, setProgress] = useState(0);
   const [visible, setVisible] = useState(false);
 
@@ -35,7 +37,7 @@ export function BackToTop() {
   return (
     <button
       onClick={() => window.scrollTo({ top: 0, behavior: prefersReduced ? "auto" : "smooth" })}
-      aria-label="Nach oben"
+      aria-label={t("Nach oben")}
       className={`fixed bottom-4 right-4 z-40 grid h-12 w-12 place-items-center rounded-full border border-border/60 bg-background/70 text-foreground shadow-lg backdrop-blur-xl transition-all ${
         visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-2 opacity-0"
       }`}

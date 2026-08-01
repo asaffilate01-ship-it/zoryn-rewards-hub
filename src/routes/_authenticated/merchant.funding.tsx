@@ -16,12 +16,14 @@ import {
   computeSettlement,
 } from "@/lib/settlements.functions";
 import { Wallet, TrendingUp, Calendar } from "lucide-react";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_authenticated/merchant/funding")({
   component: FundingPage,
 });
 
 function FundingPage() {
+  const t = useT();
   const merchantId = useActiveMerchantId();
   const qc = useQueryClient();
   const overviewFn = useServerFn(fundingOverview);
@@ -53,7 +55,7 @@ function FundingPage() {
         },
       }),
     onSuccess: () => {
-      toast.success("Guthaben aufgeladen");
+      toast.success(t("Guthaben aufgeladen"));
       setAmount("");
       setMemo("");
       qc.invalidateQueries({ queryKey: ["funding", merchantId] });
@@ -65,7 +67,7 @@ function FundingPage() {
     mutationFn: (periodStart: string) =>
       computeFn({ data: { merchantId: merchantId!, periodStart } }),
     onSuccess: () => {
-      toast.success("Abrechnung aktualisiert");
+      toast.success(t("Abrechnung aktualisiert"));
       qc.invalidateQueries({ queryKey: ["settlements", merchantId] });
     },
     onError: (e: Error) => toast.error(e.message),
@@ -75,9 +77,9 @@ function FundingPage() {
     return (
       <Card>
         <CardContent className="flex flex-col items-center gap-3 py-12 text-center">
-          <p className="text-muted-foreground">Kein Merchant ausgewählt</p>
+          <p className="text-muted-foreground">{t("Kein Merchant ausgewählt")}</p>
           <Link to="/merchant">
-            <Button>Merchant wählen</Button>
+            <Button>{t("Merchant wählen")}</Button>
           </Link>
         </CardContent>
       </Card>
@@ -91,7 +93,7 @@ function FundingPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="font-display text-2xl font-semibold">Guthaben & Abrechnung</h1>
+        <h1 className="font-display text-2xl font-semibold">{t("Guthaben & Abrechnung")}</h1>
       </div>
 
       <Card className="border-primary/20 bg-gradient-to-br from-primary/10 to-transparent">
@@ -100,7 +102,7 @@ function FundingPage() {
             <Wallet className="size-6 text-primary" />
           </div>
           <div className="flex-1">
-            <div className="text-sm text-muted-foreground">Aktuelles Guthaben</div>
+            <div className="text-sm text-muted-foreground">{t("Aktuelles Guthaben")}</div>
             <div className="font-display text-3xl font-semibold">
               {balanceEuro.toLocaleString("de-DE", { style: "currency", currency: "EUR" })}
             </div>
@@ -110,12 +112,12 @@ function FundingPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Guthaben aufladen</CardTitle>
+          <CardTitle className="text-base">{t("Guthaben aufladen")}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="grid gap-3 sm:grid-cols-[1fr_2fr_auto]">
             <div>
-              <Label htmlFor="amount">Betrag (€)</Label>
+              <Label htmlFor="amount">{t("Betrag (€)")}</Label>
               <Input
                 id="amount"
                 type="number"
@@ -127,12 +129,12 @@ function FundingPage() {
               />
             </div>
             <div>
-              <Label htmlFor="memo">Notiz</Label>
+              <Label htmlFor="memo">{t("Notiz")}</Label>
               <Input
                 id="memo"
                 value={memo}
                 onChange={(e) => setMemo(e.target.value)}
-                placeholder="Optional"
+                placeholder={t("Optional")}
               />
             </div>
             <div className="flex items-end">
@@ -141,31 +143,31 @@ function FundingPage() {
                 disabled={!amount || Number(amount) <= 0 || deposit.isPending}
                 className="w-full"
               >
-                Aufladen
+                {t("Aufladen")}
               </Button>
             </div>
           </div>
           <p className="text-xs text-muted-foreground">
-            Simulation — im Live-Betrieb via Zahlungsanbieter.
+            {t("Simulation — im Live-Betrieb via Zahlungsanbieter.")}
           </p>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle className="text-base">Monatsabrechnungen</CardTitle>
+          <CardTitle className="text-base">{t("Monatsabrechnungen")}</CardTitle>
           <Button
             size="sm"
             variant="outline"
             onClick={() => compute.mutate(currentMonth)}
             disabled={compute.isPending}
           >
-            <TrendingUp className="mr-1 size-4" /> Aktuellen Monat berechnen
+            <TrendingUp className="mr-1 size-4" /> {t("Aktuellen Monat berechnen")}
           </Button>
         </CardHeader>
         <CardContent className="space-y-2">
           {(settlements ?? []).length === 0 && (
-            <p className="text-sm text-muted-foreground">Noch keine Abrechnungen.</p>
+            <p className="text-sm text-muted-foreground">{t("Noch keine Abrechnungen.")}</p>
           )}
           {(settlements ?? []).map((s) => (
             <div
@@ -182,7 +184,7 @@ function FundingPage() {
                     })}
                   </div>
                   <div className="text-xs text-muted-foreground">
-                    Ausgegeben: {s.points_issued.toLocaleString("de-DE")} · Eingelöst:{" "}
+                    {t("Ausgegeben:")} {s.points_issued.toLocaleString("de-DE")} · {t("Eingelöst:")}{" "}
                     {s.points_redeemed.toLocaleString("de-DE")}
                   </div>
                 </div>
@@ -195,7 +197,7 @@ function FundingPage() {
                       currency: "EUR",
                     })}
                   </div>
-                  <div className="text-xs text-muted-foreground">Netto-Haftung</div>
+                  <div className="text-xs text-muted-foreground">{t("Netto-Haftung")}</div>
                 </div>
                 <Badge
                   variant={
@@ -207,10 +209,10 @@ function FundingPage() {
                   }
                 >
                   {s.status === "open"
-                    ? "Offen"
+                    ? t("Offen")
                     : s.status === "closed"
-                      ? "Abgeschlossen"
-                      : "Bezahlt"}
+                      ? t("Abgeschlossen")
+                      : t("Bezahlt")}
                 </Badge>
               </div>
             </div>
@@ -220,11 +222,11 @@ function FundingPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Guthaben-Historie</CardTitle>
+          <CardTitle className="text-base">{t("Guthaben-Historie")}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-2 text-sm">
           {(overview?.ledger ?? []).length === 0 && (
-            <p className="text-muted-foreground">Noch keine Bewegungen.</p>
+            <p className="text-muted-foreground">{t("Noch keine Bewegungen.")}</p>
           )}
           {(overview?.ledger ?? []).map((l) => (
             <div

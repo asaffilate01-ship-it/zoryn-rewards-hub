@@ -14,6 +14,7 @@ import heroBg from "@/assets/hero-aurora.jpg";
 import { ZorynMark } from "@/components/ZorynMark";
 import { Button } from "@/components/ui/button";
 import { PublicShell } from "@/components/PublicShell";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -79,6 +80,7 @@ const platformStack = [
 ];
 
 function LandingPage() {
+  const t = useT();
   return (
     <PublicShell>
       <div className="text-foreground">
@@ -98,18 +100,19 @@ function LandingPage() {
             <div>
               <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-3 py-1 text-xs text-muted-foreground backdrop-blur">
                 <Sparkles className="size-3.5 text-brand-soft" />
-                <span>Neu: Eine Loyalty-Infrastruktur für ganz Europa</span>
+                <span>{t("Neu: Eine Loyalty-Infrastruktur für ganz Europa")}</span>
               </div>
 
               <h1 className="mt-6 text-5xl font-semibold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
-                <span className="gradient-brand-text">Mehr als</span>
+                <span className="gradient-brand-text">{t("Mehr als")}</span>
                 <br />
-                nur Punkte.
+                {t("nur Punkte.")}
               </h1>
 
               <p className="mt-6 max-w-xl text-lg text-muted-foreground">
-                Zoryn ist die eine Wallet für Punkte, Cashback, Affiliate-Shopping, lokale Angebote
-                und Händlerbelohnungen. Ein Konto — jedes Angebot, online und im Kiez.
+                {t(
+                  "Zoryn ist die eine Wallet für Punkte, Cashback, Affiliate-Shopping, lokale Angebote und Händlerbelohnungen. Ein Konto — jedes Angebot, online und im Kiez.",
+                )}
               </p>
 
               <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -119,11 +122,11 @@ function LandingPage() {
                   className="gradient-brand text-primary-foreground border-0 glow-brand"
                 >
                   <Link to="/auth">
-                    Kostenlos starten <ArrowRight className="ml-2 size-4" />
+                    {t("Kostenlos starten")} <ArrowRight className="ml-2 size-4" />
                   </Link>
                 </Button>
                 <Button asChild size="lg" variant="outline">
-                  <a href="#merchants">Für Händler</a>
+                  <a href="#merchants">{t("Für Händler")}</a>
                 </Button>
               </div>
 
@@ -134,11 +137,11 @@ function LandingPage() {
                 </div>
                 <div>
                   <div className="text-2xl font-semibold text-foreground">1 App</div>
-                  <div className="text-xs text-muted-foreground">für alle Händler</div>
+                  <div className="text-xs text-muted-foreground">{t("für alle Händler")}</div>
                 </div>
                 <div>
                   <div className="text-2xl font-semibold text-foreground">EU</div>
-                  <div className="text-xs text-muted-foreground">gehostet</div>
+                  <div className="text-xs text-muted-foreground">{t("gehostet")}</div>
                 </div>
               </div>
             </div>
@@ -159,12 +162,12 @@ function LandingPage() {
                 </div>
 
                 <div className="mt-8">
-                  <div className="text-xs text-muted-foreground">Guten Abend, Amer</div>
+                  <div className="text-xs text-muted-foreground">{t("Guten Abend, Amer")}</div>
                   <div className="mt-2 flex items-baseline gap-2">
                     <span className="font-display text-5xl font-semibold tracking-tight">
                       4.850
                     </span>
-                    <span className="text-sm text-muted-foreground">Punkte</span>
+                    <span className="text-sm text-muted-foreground">{t("Punkte")}</span>
                   </div>
                   <div className="text-sm text-brand-soft">≈ 48,50 €</div>
                 </div>
@@ -172,15 +175,15 @@ function LandingPage() {
                 <div className="mt-6 flex gap-2">
                   <div className="flex-1 rounded-xl bg-secondary/60 px-3 py-2 text-center text-xs">
                     <QrCode className="mx-auto mb-1 size-4 text-brand-soft" />
-                    Scannen
+                    {t("Scannen")}
                   </div>
                   <div className="flex-1 rounded-xl bg-secondary/60 px-3 py-2 text-center text-xs">
                     <ShoppingBag className="mx-auto mb-1 size-4 text-brand-soft" />
-                    Shoppen
+                    {t("Shoppen")}
                   </div>
                   <div className="flex-1 rounded-xl bg-secondary/60 px-3 py-2 text-center text-xs">
                     <Wallet className="mx-auto mb-1 size-4 text-brand-soft" />
-                    Einlösen
+                    {t("Einlösen")}
                   </div>
                 </div>
 
@@ -190,7 +193,7 @@ function LandingPage() {
                     <span className="font-medium text-success">+120 pts</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Ausstehend</span>
+                    <span className="text-muted-foreground">{t("Ausstehend")}</span>
                     <span className="font-medium text-warning">620 pts</span>
                   </div>
                 </div>
@@ -203,11 +206,12 @@ function LandingPage() {
         <section id="features" className="mx-auto max-w-7xl px-6 py-24">
           <div className="max-w-2xl">
             <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-              Eine Wallet. Jedes Angebot.
+              {t("Eine Wallet. Jedes Angebot.")}
             </h2>
             <p className="mt-4 text-muted-foreground">
-              Sammle Punkte beim Bäcker um die Ecke, beim Online-Shop und über LoungeTech-Apps — und
-              löse sie überall im Zoryn-Netzwerk ein.
+              {t(
+                "Sammle Punkte beim Bäcker um die Ecke, beim Online-Shop und über LoungeTech-Apps — und löse sie überall im Zoryn-Netzwerk ein.",
+              )}
             </p>
           </div>
 
@@ -220,8 +224,8 @@ function LandingPage() {
                 <div className="inline-flex size-11 items-center justify-center rounded-xl gradient-brand">
                   <Icon className="size-5 text-primary-foreground" />
                 </div>
-                <h3 className="mt-5 text-lg font-semibold">{title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">{body}</p>
+                <h3 className="mt-5 text-lg font-semibold">{t(title)}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">{t(body)}</p>
               </div>
             ))}
           </div>
@@ -231,14 +235,16 @@ function LandingPage() {
         <section id="merchants" className="relative border-t border-border">
           <div className="mx-auto grid max-w-7xl gap-12 px-6 py-24 lg:grid-cols-2 lg:items-center">
             <div>
-              <span className="text-xs uppercase tracking-widest text-brand-soft">Für Händler</span>
+              <span className="text-xs uppercase tracking-widest text-brand-soft">
+                {t("Für Händler")}
+              </span>
               <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
-                Baue Wiederbesucher — nicht nur Umsatz.
+                {t("Baue Wiederbesucher — nicht nur Umsatz.")}
               </h2>
               <p className="mt-4 text-muted-foreground">
-                Zoryn gibt dir händlerspezifische Punkte, universelle Netzwerkpunkte, Kampagnen,
-                Abrechnung und Betrugsschutz in einem Portal. Starte in Minuten, wachse mit dem
-                Netzwerk.
+                {t(
+                  "Zoryn gibt dir händlerspezifische Punkte, universelle Netzwerkpunkte, Kampagnen, Abrechnung und Betrugsschutz in einem Portal. Starte in Minuten, wachse mit dem Netzwerk.",
+                )}
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Button
@@ -246,10 +252,10 @@ function LandingPage() {
                   size="lg"
                   className="gradient-brand text-primary-foreground border-0"
                 >
-                  <Link to="/auth">Händler werden</Link>
+                  <Link to="/auth">{t("Händler werden")}</Link>
                 </Button>
                 <Button asChild size="lg" variant="outline">
-                  <a href="#network">Netzwerk kennenlernen</a>
+                  <a href="#network">{t("Netzwerk kennenlernen")}</a>
                 </Button>
               </div>
             </div>
@@ -259,10 +265,10 @@ function LandingPage() {
                 ["Doppelte Buchführung", "Jeder Punkt hat eine Deckung. Immer."],
                 ["Filialen & Personal", "Rollen, Limits, Kassierer, Analysten."],
                 ["Abrechnung", "Wöchentliche Auszüge, EU-konform."],
-              ].map(([t, b]) => (
-                <div key={t} className="surface-glass rounded-2xl p-5">
-                  <div className="text-sm font-semibold">{t}</div>
-                  <div className="mt-1 text-xs text-muted-foreground">{b}</div>
+              ].map(([title, b]) => (
+                <div key={title} className="surface-glass rounded-2xl p-5">
+                  <div className="text-sm font-semibold">{t(title)}</div>
+                  <div className="mt-1 text-xs text-muted-foreground">{t(b)}</div>
                 </div>
               ))}
             </div>
@@ -276,9 +282,9 @@ function LandingPage() {
               <div key={label} className="rounded-2xl border border-border bg-card/60 p-6">
                 <Icon className="size-6 text-brand-soft" />
                 <div className="mt-4 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-                  {label}
+                  {t(label)}
                 </div>
-                <p className="mt-2 text-base text-foreground">{body}</p>
+                <p className="mt-2 text-base text-foreground">{t(body)}</p>
               </div>
             ))}
           </div>
@@ -288,10 +294,10 @@ function LandingPage() {
         <section className="border-t border-border">
           <div className="mx-auto max-w-5xl px-6 py-24 text-center">
             <h2 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-              Deine Wallet wartet.
+              {t("Deine Wallet wartet.")}
             </h2>
             <p className="mt-4 text-muted-foreground">
-              Erstelle in 30 Sekunden dein Zoryn-Konto und starte mit einem Willkommensbonus.
+              {t("Erstelle in 30 Sekunden dein Zoryn-Konto und starte mit einem Willkommensbonus.")}
             </p>
             <div className="mt-8">
               <Button
@@ -300,7 +306,7 @@ function LandingPage() {
                 className="gradient-brand text-primary-foreground border-0 glow-brand"
               >
                 <Link to="/auth">
-                  Kostenlos starten <ArrowRight className="ml-2 size-4" />
+                  {t("Kostenlos starten")} <ArrowRight className="ml-2 size-4" />
                 </Link>
               </Button>
             </div>

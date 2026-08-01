@@ -2,6 +2,7 @@ import type { ComponentType, SVGProps } from "react";
 import { Link } from "@tanstack/react-router";
 import { PublicShell, PageHeader } from "@/components/PublicShell";
 import { Button } from "@/components/ui/button";
+import { useT } from "@/lib/i18n";
 
 export interface FeatureItem {
   icon: ComponentType<SVGProps<SVGSVGElement>>;
@@ -14,7 +15,7 @@ export function FeaturePage({
   title,
   description,
   features,
-  ctaLabel = "Loslegen",
+  ctaLabel,
   ctaTo = "/app",
 }: {
   eyebrow: string;
@@ -24,6 +25,8 @@ export function FeaturePage({
   ctaLabel?: string;
   ctaTo?: string;
 }) {
+  const t = useT();
+  const resolvedCtaLabel = ctaLabel ?? t("Loslegen");
   return (
     <PublicShell>
       <PageHeader eyebrow={eyebrow} title={title} description={description} />
@@ -40,16 +43,20 @@ export function FeaturePage({
       </section>
       <section className="mx-auto max-w-4xl px-4 pb-20 sm:px-6">
         <div className="rounded-3xl border border-brand/40 bg-gradient-to-br from-brand/15 via-brand-alt/10 to-background p-8 text-center">
-          <h3 className="font-display text-2xl font-semibold">Bereit für {title.split(" ")[0]}?</h3>
+          <h3 className="font-display text-2xl font-semibold">
+            {t("Bereit für {name}?").replace("{name}", title.split(" ")[0])}
+          </h3>
           <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
-            Starte in unter 60 Sekunden — kostenlos.
+            {t("Starte in unter 60 Sekunden — kostenlos.")}
           </p>
           <div className="mt-5 flex justify-center gap-3">
             <Link to={ctaTo}>
-              <Button className="bg-gradient-to-r from-brand to-brand-alt">{ctaLabel}</Button>
+              <Button className="bg-gradient-to-r from-brand to-brand-alt">
+                {resolvedCtaLabel}
+              </Button>
             </Link>
             <Link to="/legal/complaints">
-              <Button variant="outline">Kontakt</Button>
+              <Button variant="outline">{t("Kontakt")}</Button>
             </Link>
           </div>
         </div>

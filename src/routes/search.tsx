@@ -6,6 +6,7 @@ import { Search as SearchIcon, Store, Sparkles, Gift } from "lucide-react";
 import { PublicShell, PageHeader } from "@/components/PublicShell";
 import { Input } from "@/components/ui/input";
 import { globalSearch, type SearchHit } from "@/lib/analytics.functions";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/search")({
   head: () => ({
@@ -20,6 +21,7 @@ export const Route = createFileRoute("/search")({
 });
 
 function SearchPage() {
+  const t = useT();
   const [q, setQ] = useState("");
   const searchFn = useServerFn(globalSearch);
   const { data, isFetching } = useQuery({
@@ -33,9 +35,9 @@ function SearchPage() {
   return (
     <PublicShell>
       <PageHeader
-        eyebrow="Entdecken"
-        title="Suche im Zoryn-Netzwerk"
-        description="Geschäfte, Angebote und Prämien."
+        eyebrow={t("Entdecken")}
+        title={t("Suche im Zoryn-Netzwerk")}
+        description={t("Geschäfte, Angebote und Prämien.")}
       />
       <section className="mx-auto max-w-3xl px-4 pb-16 sm:px-6">
         <div className="relative">
@@ -44,18 +46,20 @@ function SearchPage() {
             autoFocus
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            placeholder="Café, Bäckerei, Rabatt…"
+            placeholder={t("Café, Bäckerei, Rabatt…")}
             className="h-14 rounded-2xl border-border/70 bg-card/50 pl-11 text-base"
           />
         </div>
 
         <div className="mt-6">
           {q.trim().length < 2 && (
-            <p className="text-sm text-muted-foreground">Gib mindestens 2 Zeichen ein.</p>
+            <p className="text-sm text-muted-foreground">{t("Gib mindestens 2 Zeichen ein.")}</p>
           )}
-          {isFetching && <p className="text-sm text-muted-foreground">Suche läuft…</p>}
+          {isFetching && <p className="text-sm text-muted-foreground">{t("Suche läuft…")}</p>}
           {q.trim().length >= 2 && !isFetching && hits.length === 0 && (
-            <p className="text-sm text-muted-foreground">Nichts gefunden für „{q}".</p>
+            <p className="text-sm text-muted-foreground">
+              {t("Nichts gefunden für „X“.").replace("X", q)}
+            </p>
           )}
           <ul className="mt-2 space-y-2">
             {hits.map((h) => (
@@ -71,8 +75,10 @@ function SearchPage() {
 }
 
 function ResultRow({ hit }: { hit: SearchHit }) {
+  const t = useT();
   const Icon = hit.kind === "merchant" ? Store : hit.kind === "offer" ? Sparkles : Gift;
-  const label = hit.kind === "merchant" ? "Geschäft" : hit.kind === "offer" ? "Angebot" : "Prämie";
+  const label =
+    hit.kind === "merchant" ? t("Geschäft") : hit.kind === "offer" ? t("Angebot") : t("Prämie");
   return (
     <Link
       to="/app"

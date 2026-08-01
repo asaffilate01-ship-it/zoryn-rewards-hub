@@ -6,6 +6,7 @@ import { MapPin, Loader2, Navigation } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { nearbyMerchants } from "@/lib/nearby.functions";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_authenticated/app/nearby")({
   head: () => ({ meta: [{ title: "In der Nähe — Zoryn" }] }),
@@ -30,6 +31,7 @@ type Row = {
 };
 
 function NearbyPage() {
+  const t = useT();
   const fn = useServerFn(nearbyMerchants);
   const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
   const [locating, setLocating] = useState(false);
@@ -76,11 +78,11 @@ function NearbyPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-display text-2xl font-semibold">In der Nähe</h1>
+          <h1 className="font-display text-2xl font-semibold">{t("In der Nähe")}</h1>
           <p className="text-sm text-muted-foreground">
             {usedFallback
-              ? "Standort nicht verfügbar — zeige Berlin Mitte."
-              : "Zoryn-Partner in deiner Umgebung."}
+              ? t("Standort nicht verfügbar — zeige Berlin Mitte.")
+              : t("Zoryn-Partner in deiner Umgebung.")}
           </p>
         </div>
         <Button variant="secondary" size="sm" disabled={locating} onClick={requestLocation}>
@@ -89,16 +91,16 @@ function NearbyPage() {
           ) : (
             <Navigation className="mr-1 size-4" />
           )}
-          Standort
+          {t("Standort")}
         </Button>
       </div>
 
-      {query.isPending && <div className="text-sm text-muted-foreground">Suche…</div>}
+      {query.isPending && <div className="text-sm text-muted-foreground">{t("Suche…")}</div>}
 
       {query.data && query.data.length === 0 && (
         <Card>
           <CardContent className="py-10 text-center text-sm text-muted-foreground">
-            Noch keine Zoryn-Partner in deiner Nähe.
+            {t("Noch keine Zoryn-Partner in deiner Nähe.")}
           </CardContent>
         </Card>
       )}
@@ -121,9 +123,11 @@ function NearbyPage() {
                   </div>
                 </div>
                 <div className="truncate text-xs text-muted-foreground">
-                  {m.category ?? "Merchant"} · {m.address ?? m.city ?? "—"}
+                  {m.category ?? t("Merchant")} · {m.address ?? m.city ?? "—"}
                 </div>
-                <div className="mt-1 text-xs text-brand-soft">{m.points_per_euro} Punkte pro €</div>
+                <div className="mt-1 text-xs text-brand-soft">
+                  {m.points_per_euro} {t("Punkte pro €")}
+                </div>
               </div>
               <MapPin className="size-4 text-muted-foreground" />
             </CardContent>

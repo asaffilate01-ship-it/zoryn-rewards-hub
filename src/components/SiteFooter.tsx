@@ -1,7 +1,9 @@
 import { Link } from "@tanstack/react-router";
 import { ZorynMark } from "@/components/ZorynMark";
 import { SocialRow } from "@/components/SocialIcons";
+import { LanguageToggle } from "@/components/LanguageToggle";
 import { openConsent } from "@/lib/consent";
+import { useT } from "@/lib/i18n";
 
 const cols = [
   {
@@ -38,6 +40,7 @@ const cols = [
 ] as const;
 
 export function SiteFooter() {
+  const t = useT();
   return (
     <footer className="border-t border-border/40 bg-card/30">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-[1.4fr_repeat(3,1fr)]">
@@ -46,18 +49,21 @@ export function SiteFooter() {
             <ZorynMark size={40} />
             <div>
               <div className="font-display text-lg font-semibold">Zoryn</div>
-              <div className="text-xs text-muted-foreground">Mehr als nur Punkte.</div>
+              <div className="text-xs text-muted-foreground">{t("Mehr als nur Punkte.")}</div>
             </div>
           </div>
           <p className="mt-4 max-w-xs text-sm text-muted-foreground">
-            Eine Wallet für Punkte, Cashback, Angebote und Rewards — bei allen Zoryn-Partnern.
+            {t(
+              "Eine Wallet für Punkte, Cashback, Angebote und Rewards — bei allen Zoryn-Partnern.",
+            )}
           </p>
           <SocialRow className="mt-5" />
+          <LanguageToggle className="mt-5" />
         </div>
 
         {cols.map((c) => (
           <div key={c.title}>
-            <div className="text-sm font-semibold">{c.title}</div>
+            <div className="text-sm font-semibold">{t(c.title)}</div>
             <ul className="mt-3 space-y-2 text-sm">
               {c.links.map((l) => (
                 <li key={l.to}>
@@ -65,7 +71,7 @@ export function SiteFooter() {
                     to={l.to}
                     className="text-muted-foreground transition hover:text-foreground"
                   >
-                    {l.label}
+                    {t(l.label)}
                   </Link>
                 </li>
               ))}
@@ -80,19 +86,19 @@ export function SiteFooter() {
           style={{ height: "72px" }}
         >
           <div className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} Zoryn. Alle Rechte vorbehalten.
+            © {new Date().getFullYear()} Zoryn. {t("Alle Rechte vorbehalten.")}
           </div>
           <div className="flex items-center gap-3 text-xs text-muted-foreground">
             <button onClick={openConsent} className="transition hover:text-foreground">
-              Cookie-Einstellungen
+              {t("Cookie-Einstellungen")}
             </button>
             <span className="opacity-40">·</span>
             <Link to="/legal/privacy" className="transition hover:text-foreground">
-              Datenschutz
+              {t("Datenschutz")}
             </Link>
             <span className="opacity-40">·</span>
             <Link to="/legal/imprint" className="transition hover:text-foreground">
-              Impressum
+              {t("Impressum")}
             </Link>
           </div>
         </div>
