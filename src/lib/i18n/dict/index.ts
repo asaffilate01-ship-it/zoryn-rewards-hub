@@ -4,6 +4,7 @@ import { legal } from "./legal";
 import { app } from "./app";
 import { merchant } from "./merchant";
 import { admin } from "./admin";
+import { platform } from "./platform";
 
 export const en: Record<string, string> = {
   ...common,
@@ -12,4 +13,5 @@ export const en: Record<string, string> = {
   ...app,
   ...merchant,
   ...admin,
+  ...platform,
 };

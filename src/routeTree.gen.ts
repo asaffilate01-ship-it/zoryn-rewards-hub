@@ -30,7 +30,12 @@ import { Route as FeaturesEnterpriseRouteImport } from './routes/features.enterp
 import { Route as FeaturesDevelopersRouteImport } from './routes/features.developers'
 import { Route as FeaturesConsumersRouteImport } from './routes/features.consumers'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as AuthenticatedRewardsScenarioLabRouteImport } from './routes/_authenticated/rewards-scenario-lab'
+import { Route as AuthenticatedRewardsProductionRouteImport } from './routes/_authenticated/rewards-production'
+import { Route as AuthenticatedMerchantOnboardingRouteImport } from './routes/_authenticated/merchant-onboarding'
 import { Route as AuthenticatedMerchantRouteImport } from './routes/_authenticated/merchant'
+import { Route as AuthenticatedLiabilityCentreRouteImport } from './routes/_authenticated/liability-centre'
+import { Route as AuthenticatedCampaignStudioRouteImport } from './routes/_authenticated/campaign-studio'
 import { Route as AuthenticatedAppRouteImport } from './routes/_authenticated/app'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedMerchantIndexRouteImport } from './routes/_authenticated/merchant.index'
@@ -167,11 +172,41 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRewardsScenarioLabRoute =
+  AuthenticatedRewardsScenarioLabRouteImport.update({
+    id: '/rewards-scenario-lab',
+    path: '/rewards-scenario-lab',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedRewardsProductionRoute =
+  AuthenticatedRewardsProductionRouteImport.update({
+    id: '/rewards-production',
+    path: '/rewards-production',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedMerchantOnboardingRoute =
+  AuthenticatedMerchantOnboardingRouteImport.update({
+    id: '/merchant-onboarding',
+    path: '/merchant-onboarding',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedMerchantRoute = AuthenticatedMerchantRouteImport.update({
   id: '/merchant',
   path: '/merchant',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedLiabilityCentreRoute =
+  AuthenticatedLiabilityCentreRouteImport.update({
+    id: '/liability-centre',
+    path: '/liability-centre',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedCampaignStudioRoute =
+  AuthenticatedCampaignStudioRouteImport.update({
+    id: '/campaign-studio',
+    path: '/campaign-studio',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAppRoute = AuthenticatedAppRouteImport.update({
   id: '/app',
   path: '/app',
@@ -352,7 +387,12 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/app': typeof AuthenticatedAppRouteWithChildren
+  '/campaign-studio': typeof AuthenticatedCampaignStudioRoute
+  '/liability-centre': typeof AuthenticatedLiabilityCentreRoute
   '/merchant': typeof AuthenticatedMerchantRouteWithChildren
+  '/merchant-onboarding': typeof AuthenticatedMerchantOnboardingRoute
+  '/rewards-production': typeof AuthenticatedRewardsProductionRoute
+  '/rewards-scenario-lab': typeof AuthenticatedRewardsScenarioLabRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/features/consumers': typeof FeaturesConsumersRoute
   '/features/developers': typeof FeaturesDevelopersRoute
@@ -404,6 +444,11 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/campaign-studio': typeof AuthenticatedCampaignStudioRoute
+  '/liability-centre': typeof AuthenticatedLiabilityCentreRoute
+  '/merchant-onboarding': typeof AuthenticatedMerchantOnboardingRoute
+  '/rewards-production': typeof AuthenticatedRewardsProductionRoute
+  '/rewards-scenario-lab': typeof AuthenticatedRewardsScenarioLabRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/features/consumers': typeof FeaturesConsumersRoute
   '/features/developers': typeof FeaturesDevelopersRoute
@@ -459,7 +504,12 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/app': typeof AuthenticatedAppRouteWithChildren
+  '/_authenticated/campaign-studio': typeof AuthenticatedCampaignStudioRoute
+  '/_authenticated/liability-centre': typeof AuthenticatedLiabilityCentreRoute
   '/_authenticated/merchant': typeof AuthenticatedMerchantRouteWithChildren
+  '/_authenticated/merchant-onboarding': typeof AuthenticatedMerchantOnboardingRoute
+  '/_authenticated/rewards-production': typeof AuthenticatedRewardsProductionRoute
+  '/_authenticated/rewards-scenario-lab': typeof AuthenticatedRewardsScenarioLabRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/features/consumers': typeof FeaturesConsumersRoute
   '/features/developers': typeof FeaturesDevelopersRoute
@@ -515,7 +565,12 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/admin'
     | '/app'
+    | '/campaign-studio'
+    | '/liability-centre'
     | '/merchant'
+    | '/merchant-onboarding'
+    | '/rewards-production'
+    | '/rewards-scenario-lab'
     | '/blog/$slug'
     | '/features/consumers'
     | '/features/developers'
@@ -567,6 +622,11 @@ export interface FileRouteTypes {
     | '/auth'
     | '/search'
     | '/sitemap.xml'
+    | '/campaign-studio'
+    | '/liability-centre'
+    | '/merchant-onboarding'
+    | '/rewards-production'
+    | '/rewards-scenario-lab'
     | '/blog/$slug'
     | '/features/consumers'
     | '/features/developers'
@@ -621,7 +681,12 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/_authenticated/admin'
     | '/_authenticated/app'
+    | '/_authenticated/campaign-studio'
+    | '/_authenticated/liability-centre'
     | '/_authenticated/merchant'
+    | '/_authenticated/merchant-onboarding'
+    | '/_authenticated/rewards-production'
+    | '/_authenticated/rewards-scenario-lab'
     | '/blog/$slug'
     | '/features/consumers'
     | '/features/developers'
@@ -843,11 +908,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/rewards-scenario-lab': {
+      id: '/_authenticated/rewards-scenario-lab'
+      path: '/rewards-scenario-lab'
+      fullPath: '/rewards-scenario-lab'
+      preLoaderRoute: typeof AuthenticatedRewardsScenarioLabRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/rewards-production': {
+      id: '/_authenticated/rewards-production'
+      path: '/rewards-production'
+      fullPath: '/rewards-production'
+      preLoaderRoute: typeof AuthenticatedRewardsProductionRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/merchant-onboarding': {
+      id: '/_authenticated/merchant-onboarding'
+      path: '/merchant-onboarding'
+      fullPath: '/merchant-onboarding'
+      preLoaderRoute: typeof AuthenticatedMerchantOnboardingRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/merchant': {
       id: '/_authenticated/merchant'
       path: '/merchant'
       fullPath: '/merchant'
       preLoaderRoute: typeof AuthenticatedMerchantRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/liability-centre': {
+      id: '/_authenticated/liability-centre'
+      path: '/liability-centre'
+      fullPath: '/liability-centre'
+      preLoaderRoute: typeof AuthenticatedLiabilityCentreRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/campaign-studio': {
+      id: '/_authenticated/campaign-studio'
+      path: '/campaign-studio'
+      fullPath: '/campaign-studio'
+      preLoaderRoute: typeof AuthenticatedCampaignStudioRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/app': {
@@ -1159,13 +1259,23 @@ const AuthenticatedMerchantRouteWithChildren =
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
   AuthenticatedAppRoute: typeof AuthenticatedAppRouteWithChildren
+  AuthenticatedCampaignStudioRoute: typeof AuthenticatedCampaignStudioRoute
+  AuthenticatedLiabilityCentreRoute: typeof AuthenticatedLiabilityCentreRoute
   AuthenticatedMerchantRoute: typeof AuthenticatedMerchantRouteWithChildren
+  AuthenticatedMerchantOnboardingRoute: typeof AuthenticatedMerchantOnboardingRoute
+  AuthenticatedRewardsProductionRoute: typeof AuthenticatedRewardsProductionRoute
+  AuthenticatedRewardsScenarioLabRoute: typeof AuthenticatedRewardsScenarioLabRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
   AuthenticatedAppRoute: AuthenticatedAppRouteWithChildren,
+  AuthenticatedCampaignStudioRoute: AuthenticatedCampaignStudioRoute,
+  AuthenticatedLiabilityCentreRoute: AuthenticatedLiabilityCentreRoute,
   AuthenticatedMerchantRoute: AuthenticatedMerchantRouteWithChildren,
+  AuthenticatedMerchantOnboardingRoute: AuthenticatedMerchantOnboardingRoute,
+  AuthenticatedRewardsProductionRoute: AuthenticatedRewardsProductionRoute,
+  AuthenticatedRewardsScenarioLabRoute: AuthenticatedRewardsScenarioLabRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

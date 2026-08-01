@@ -1,0 +1,140 @@
+export const platform: Record<string, string> = {
+  // Shell + navigation
+  Produktion: "Production",
+  Onboarding: "Onboarding",
+  "Campaign Studio": "Campaign Studio",
+  "Liability Centre": "Liability Centre",
+  "Scenario Lab": "Scenario Lab",
+  "Lädt …": "Loading …",
+
+  // Production dashboard
+  "Rewards Produktion": "Rewards production",
+  "Ein Loyalty-Betriebssystem für alle Mandanten.":
+    "One loyalty operating system for every tenant.",
+  "Standalone-SaaS und Zoryn-integrierte Programme in einer Ansicht: Wallets, Kampagnen, Finanzierung und Provider-Events.":
+    "Standalone SaaS and Zoryn-integrated programmes in one view: wallets, campaigns, funding and provider events.",
+  Mandanten: "Tenants",
+  Mandant: "Tenant",
+  "Aktive Rewards-Programme": "Active rewards programmes",
+  Händler: "Merchants",
+  "Händler (optional)": "Merchant (optional)",
+  "Alle Händler": "All merchants",
+  "Inklusive Standorte": "Including locations",
+  Mitglieder: "Members",
+  Programme: "Programmes",
+  "Aktive Kampagnen": "Active campaigns",
+  "Ausgegebene Punkte": "Points issued",
+  "Eingelöste Punkte": "Points redeemed",
+  "Offene Verbindlichkeit": "Outstanding liability",
+  "Verfügbar plus ausstehend": "Available plus pending",
+  Finanzierungsguthaben: "Funding balance",
+  "Reserviert: nicht verfügbar": "Reserved: not available",
+  Verfügbar: "Available",
+  Ausstehend: "Pending",
+  "Noch keine Mandanten angelegt.": "No tenants created yet.",
+  "Provider-Events": "Provider events",
+  Gesamt: "Total",
+  Empfangen: "Received",
+  Verarbeitet: "Processed",
+  Fehlgeschlagen: "Failed",
+
+  // Onboarding
+  "Händler-Onboarding": "Merchant onboarding",
+  "Ein Loyalty-Programm starten – ganz ohne Banking.":
+    "Launch a loyalty programme — no banking required.",
+  "Derselbe Mandant kann später Zoryn Money, ZorynPay, POS-, Affiliate- und Card-Linked-Kanäle verbinden.":
+    "The same tenant can later connect Zoryn Money, ZorynPay, POS, affiliate and card-linked channels.",
+  "Noch keine Händler in diesem Mandanten.": "No merchants in this tenant yet.",
+  "Schritte abgeschlossen": "steps completed",
+  Geschäftsprofil: "Business profile",
+  Programmtyp: "Programme type",
+  Standorte: "Locations",
+  "Reward-Regeln": "Reward rules",
+  Branding: "Branding",
+  Finanzierung: "Funding",
+  Team: "Team",
+  Testtransaktion: "Test transaction",
+  "Prüfen und starten": "Review and launch",
+  "In Arbeit": "In progress",
+  "Nicht gestartet": "Not started",
+  Abschließen: "Complete",
+  "Wieder öffnen": "Reopen",
+  "Onboarding aktualisiert": "Onboarding updated",
+
+  // Campaign studio
+  "Kampagnen bauen, budgetieren und messen.": "Build, budget and measure campaigns.",
+  "Zielgruppe, Auslöser, Reward-Regel und Budget – jede Kampagne wird gegen echte Attributionen gemessen.":
+    "Audience, trigger, reward rule and budget — every campaign is measured against real attributions.",
+  "Neue Kampagne": "New campaign",
+  "Ruhige Stunden 3×": "Quiet hours 3×",
+  Typ: "Type",
+  "Punkte-Multiplikator": "Points multiplier",
+  Bonuspunkte: "Bonus points",
+  Cashback: "Cashback",
+  "Win-back": "Win-back",
+  "Reward-Wert": "Reward value",
+  "Budget (€)": "Budget (€)",
+  Zielgruppe: "Audience",
+  "Alle Mitglieder": "All members",
+  "Kampagne anlegen": "Create campaign",
+  "Kampagne als Entwurf gespeichert": "Campaign saved as draft",
+  "Kampagnenstatus aktualisiert": "Campaign status updated",
+  Kampagnen: "Campaigns",
+  "Noch keine Kampagnen.": "No campaigns yet.",
+  Budget: "Budget",
+  Pausieren: "Pause",
+  Aktivieren: "Activate",
+  Standardregel: "Default rule",
+
+  // Liability centre
+  "Jeder Punkt ist eine Verbindlichkeit – und gedeckt.":
+    "Every point is a liability — and it is covered.",
+  "Offene Reward-Verbindlichkeit, hinterlegtes Guthaben, Deckungsgrad und Reichweite je Mandant.":
+    "Outstanding reward liability, deposited funds, coverage ratio and runway per tenant.",
+  "Hinterlegtes Guthaben": "Deposited funds",
+  Reserviert: "Reserved",
+  Deckungsgrad: "Coverage ratio",
+  "Guthaben geteilt durch Verbindlichkeit": "Funds divided by liability",
+  "Deckung je Mandant": "Coverage per tenant",
+  "Keine Daten verfügbar.": "No data available.",
+  gedeckt: "covered",
+  Verbindlichkeit: "Liability",
+  Reichweite: "Runway",
+  Tage: "days",
+  "Letzte Ledger-Bewegungen": "Recent ledger movements",
+  "Noch keine Buchungen.": "No entries yet.",
+
+  // Scenario lab
+  "Die Zustände prüfen, die Produktionssysteme oft übersehen.":
+    "Test the states production systems usually miss.",
+  "Jeder Check läuft gegen echte Daten: ausstehende Rewards, Finanzierungsdeckung, Duplikate, Stornos und Netzwerk-Verbindlichkeit.":
+    "Every check runs against live data: pending rewards, funding coverage, duplicates, reversals and network liability.",
+  "Checks erneut ausführen": "Re-run checks",
+  "Zuletzt geprüft": "Last checked",
+  Kunde: "Consumer",
+  Integration: "Integration",
+  Plattform: "Platform",
+  "In Ordnung": "Healthy",
+  Beobachten: "Attention",
+  Kritisch: "Critical",
+  "Ausstehende Affiliate-Belohnungen": "Pending affiliate rewards",
+  "Punkte warten auf Händlerfreigabe und Ablauf der Rückgabefrist.":
+    "Points are waiting for merchant approval and the return window to close.",
+  "Deckung der Reward-Finanzierung": "Reward funding coverage",
+  "Verhältnis von hinterlegtem Guthaben zur offenen Reward-Verbindlichkeit.":
+    "Ratio of deposited funds to outstanding reward liability.",
+  "Duplikatschutz bei Provider-Events": "Duplicate protection for provider events",
+  "Idempotenz verhindert doppelte Attribution desselben Provider-Events.":
+    "Idempotency prevents double attribution of the same provider event.",
+  "Fehlgeschlagene Event-Verarbeitung": "Failed event processing",
+  "Events, die nach mehreren Versuchen nicht verarbeitet werden konnten.":
+    "Events that could not be processed after several attempts.",
+  "Storno nach Rückerstattung": "Reversal after refund",
+  "Reward-Stornierungen, die auf die ursprüngliche Attribution zurückgeführt wurden.":
+    "Reward reversals traced back to the original attribution.",
+  "Netzwerk-Verbindlichkeit": "Network liability",
+  "Gesamte offene Reward-Verbindlichkeit über alle Mandanten.":
+    "Total outstanding reward liability across all tenants.",
+  "Kampagnen, die aktuell Rewards auslösen können.":
+    "Campaigns that can currently trigger rewards.",
+};
