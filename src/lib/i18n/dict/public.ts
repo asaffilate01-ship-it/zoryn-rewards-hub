@@ -203,7 +203,7 @@ export const public_: Record<string, string> = {
   "Café, Bäckerei, Rabatt…": "Café, bakery, discount…",
   "Gib mindestens 2 Zeichen ein.": "Enter at least 2 characters.",
   "Suche läuft…": "Searching…",
-  'Nichts gefunden für „X".': 'Nothing found for "X".',
+  "Nichts gefunden für „X“.": 'Nothing found for "X".',
   Geschäft: "Shop",
   Angebot: "Deal",
   Prämie: "Reward",

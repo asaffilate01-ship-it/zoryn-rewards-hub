@@ -22,7 +22,7 @@ export const app: Record<string, string> = {
   "Chatten →": "Chat →",
   Aktivität: "Activity",
   "Letzte 20": "Last 20",
-  'Noch keine Aktivität. Tippe „Demo Earn", um eine Buchung zu sehen.':
+  "Noch keine Aktivität. Tippe „Demo Earn“, um eine Buchung zu sehen.":
     "No activity yet. Tap \u201cDemo Earn\u201d to see a transaction.",
   Partner: "Partners",
   "Alle ansehen": "View all",
