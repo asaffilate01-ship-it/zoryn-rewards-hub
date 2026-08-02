@@ -18,7 +18,14 @@
     "check": "npm run typecheck && npm run lint && npm run test:coverage && npm run build",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
-    "smoke": "npm run typecheck && npm run lint && npm run test && npm run build"
+    "smoke": "npm run typecheck && npm run lint && npm run test && npm run build",
+    "ci:doctor": "node scripts/rewards-ci-doctor.mjs",
+    "audit:release-safety": "node scripts/audit-rewards-release-safety.mjs",
+    "test:critical": "vitest run --config vitest.rewards-critical.config.ts",
+    "test:critical:coverage": "vitest run --coverage --config vitest.rewards-critical.config.ts",
+    "test:e2e:release": "playwright test --config playwright.release.config.ts --project=chromium",
+    "check:release": "npm run ci:doctor && npm run typecheck && npm run lint && npm run audit:release-safety && npm run test:critical:coverage && npm run build",
+    "release:proof": "npm run check:release && npm run test:e2e:release"
   },
   "dependencies": {
     "@capacitor/android": "^8.4.2",
