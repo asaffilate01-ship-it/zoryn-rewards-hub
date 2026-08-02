@@ -2245,6 +2245,197 @@ export type Database = {
           },
         ]
       }
+      zr_liability_snapshots: {
+        Row: {
+          calculated_at: string
+          cashback_minor: number
+          funding_available_minor: number
+          gift_credit_minor: number
+          id: string
+          merchant_points_minor: number
+          pending_points_minor: number
+          redemption_payable_minor: number
+          tenant_id: string
+          universal_points_minor: number
+        }
+        Insert: {
+          calculated_at?: string
+          cashback_minor?: number
+          funding_available_minor?: number
+          gift_credit_minor?: number
+          id?: string
+          merchant_points_minor?: number
+          pending_points_minor?: number
+          redemption_payable_minor?: number
+          tenant_id: string
+          universal_points_minor?: number
+        }
+        Update: {
+          calculated_at?: string
+          cashback_minor?: number
+          funding_available_minor?: number
+          gift_credit_minor?: number
+          id?: string
+          merchant_points_minor?: number
+          pending_points_minor?: number
+          redemption_payable_minor?: number
+          tenant_id?: string
+          universal_points_minor?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "zr_liability_snapshots_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "reward_tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      zr_merchant_onboarding_cases: {
+        Row: {
+          beneficial_owners: Json
+          created_at: string
+          id: string
+          legal_form: string | null
+          legal_name: string | null
+          registration_number: string | null
+          required_actions: Json
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string
+          submitted_at: string | null
+          tenant_id: string
+          updated_at: string
+        }
+        Insert: {
+          beneficial_owners?: Json
+          created_at?: string
+          id?: string
+          legal_form?: string | null
+          legal_name?: string | null
+          registration_number?: string | null
+          required_actions?: Json
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          submitted_at?: string | null
+          tenant_id: string
+          updated_at?: string
+        }
+        Update: {
+          beneficial_owners?: Json
+          created_at?: string
+          id?: string
+          legal_form?: string | null
+          legal_name?: string | null
+          registration_number?: string | null
+          required_actions?: Json
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          submitted_at?: string | null
+          tenant_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "zr_merchant_onboarding_cases_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: true
+            referencedRelation: "reward_tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      zr_operational_alerts: {
+        Row: {
+          alert_type: string
+          assigned_to: string | null
+          created_at: string
+          details: Json
+          id: string
+          resolved_at: string | null
+          severity: string
+          status: string
+          tenant_id: string | null
+          title: string
+        }
+        Insert: {
+          alert_type: string
+          assigned_to?: string | null
+          created_at?: string
+          details?: Json
+          id?: string
+          resolved_at?: string | null
+          severity: string
+          status?: string
+          tenant_id?: string | null
+          title: string
+        }
+        Update: {
+          alert_type?: string
+          assigned_to?: string | null
+          created_at?: string
+          details?: Json
+          id?: string
+          resolved_at?: string | null
+          severity?: string
+          status?: string
+          tenant_id?: string | null
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "zr_operational_alerts_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "reward_tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      zr_privacy_requests: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          due_at: string
+          id: string
+          request_type: string
+          status: string
+          tenant_id: string | null
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          due_at?: string
+          id?: string
+          request_type: string
+          status?: string
+          tenant_id?: string | null
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          due_at?: string
+          id?: string
+          request_type?: string
+          status?: string
+          tenant_id?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "zr_privacy_requests_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "reward_tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       zr_qr_challenges: {
         Row: {
           action_type: string
@@ -3702,6 +3893,36 @@ export type Database = {
           _entity_type: string
         }
         Returns: undefined
+      }
+      zr_execute_reward_action: {
+        Args: {
+          p_actor: string
+          p_entries: Json
+          p_idempotency_key: string
+          p_metadata?: Json
+          p_tenant_id: string
+          p_transaction_type: string
+        }
+        Returns: Json
+      }
+      zr_has_tenant_role: {
+        Args: { allowed_roles: string[]; target_tenant: string }
+        Returns: boolean
+      }
+      zr_qr_consume: { Args: { p_token_hash: string }; Returns: Json }
+      zr_qr_issue: {
+        Args: {
+          p_action_type: string
+          p_amount_cents: number
+          p_location_id: string
+          p_member_id: string
+          p_merchant_id: string
+          p_nonce: string
+          p_tenant_id: string
+          p_token_hash: string
+          p_ttl_seconds?: number
+        }
+        Returns: string
       }
     }
     Enums: {
