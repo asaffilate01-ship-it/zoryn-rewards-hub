@@ -69,7 +69,9 @@ export const getPilotOperations = createServerFn({ method: "GET" })
         .limit(20),
       supabase
         .from("zr_backup_restore_evidence")
-        .select("id, environment, backup_reference, restored_at, ledger_verified, tenant_isolation_verified")
+        .select(
+          "id, environment, backup_reference, restored_at, ledger_verified, tenant_isolation_verified",
+        )
         .order("restored_at", { ascending: false })
         .limit(5),
     ]);

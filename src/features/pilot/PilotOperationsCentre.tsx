@@ -43,9 +43,21 @@ export function PilotOperationsCentre() {
   return (
     <div className="space-y-6">
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        <StatTile label="Letzte Jobs" value={String(data.jobs.length)} hint="Geplante Hintergrundläufe" />
-        <StatTile label="Offene Fälle" value={String(openCases.length)} hint="Support und Beschwerden" />
-        <StatTile label="Offene Warnungen" value={String(data.alerts.length)} hint="Betriebswarnungen" />
+        <StatTile
+          label="Letzte Jobs"
+          value={String(data.jobs.length)}
+          hint="Geplante Hintergrundläufe"
+        />
+        <StatTile
+          label="Offene Fälle"
+          value={String(openCases.length)}
+          hint="Support und Beschwerden"
+        />
+        <StatTile
+          label="Offene Warnungen"
+          value={String(data.alerts.length)}
+          hint="Betriebswarnungen"
+        />
         <StatTile
           label="Restore-Nachweise"
           value={String(data.backups.length)}
@@ -65,8 +77,8 @@ export function PilotOperationsCentre() {
             <div>
               <p className="font-medium">{job.jobName}</p>
               <p className="text-xs text-muted-foreground">
-                {new Date(job.startedAt).toLocaleString()} · {t("Verarbeitet")} {job.processedCount} ·{" "}
-                {t("Fehler")} {job.errorCount}
+                {new Date(job.startedAt).toLocaleString()} · {t("Verarbeitet")} {job.processedCount}{" "}
+                · {t("Fehler")} {job.errorCount}
               </p>
             </div>
             <span className={`text-xs font-semibold uppercase tracking-wide ${tone(job.status)}`}>
@@ -106,7 +118,9 @@ export function PilotOperationsCentre() {
               <p className="font-medium">{alert.title}</p>
               <p className="text-xs text-muted-foreground">{alert.alertType}</p>
             </div>
-            <span className={`text-xs font-semibold uppercase tracking-wide ${tone(alert.severity)}`}>
+            <span
+              className={`text-xs font-semibold uppercase tracking-wide ${tone(alert.severity)}`}
+            >
               {alert.severity}
             </span>
           </div>
@@ -115,7 +129,9 @@ export function PilotOperationsCentre() {
 
       <Section title="Backup-Wiederherstellung">
         {data.backups.length === 0 && (
-          <p className="text-sm text-muted-foreground">{t("Noch keine Restore-Nachweise erfasst.")}</p>
+          <p className="text-sm text-muted-foreground">
+            {t("Noch keine Restore-Nachweise erfasst.")}
+          </p>
         )}
         {data.backups.map((backup) => (
           <div
