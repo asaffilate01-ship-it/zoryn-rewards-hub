@@ -1,6 +1,8 @@
 import { defineConfig, devices } from "@playwright/test";
 
 const externalBaseUrl = process.env["PLAYWRIGHT_BASE_URL"];
+// Escape hatch for environments without the headless-shell system libraries.
+const channel = process.env["PLAYWRIGHT_CHANNEL"];
 const port = 4173;
 
 export default defineConfig({
