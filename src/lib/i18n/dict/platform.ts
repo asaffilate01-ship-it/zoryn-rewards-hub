@@ -165,4 +165,29 @@ export const platform: Record<string, string> = {
   Gestartet: "Started",
   "Tägliche Abstimmung von Haftung, Händlerdeckung, Settlement und Affiliate mit Soll-Ist-Differenzen.":
     "Daily reconciliation of liability, merchant funding, settlement and affiliate with expected-vs-actual differences.",
+
+  // Pilot operations
+  "Pilot Ops": "Pilot ops",
+  "Pilot Operations": "Pilot operations",
+  "Jobläufe, Support- und Beschwerdefälle, Betriebswarnungen und Backup-Nachweise für den Pilotbetrieb an einem Ort.":
+    "Job runs, support and complaint cases, operational alerts and backup evidence for the pilot in one place.",
+  "Letzte Jobs": "Recent jobs",
+  "Geplante Hintergrundläufe": "Scheduled background runs",
+  "Offene Fälle": "Open cases",
+  "Support und Beschwerden": "Support and complaints",
+  "Offene Warnungen": "Open alerts",
+  Betriebswarnungen: "Operational alerts",
+  "Restore-Nachweise": "Restore evidence",
+  "Geprüfte Wiederherstellungen": "Verified restores",
+  "Geplante Jobs": "Scheduled jobs",
+  "Noch keine Jobläufe erfasst.": "No job runs recorded yet.",
+  "Keine offenen Fälle.": "No open cases.",
+  "Keine offenen Warnungen.": "No open alerts.",
+  "Backup-Wiederherstellung": "Backup restore",
+  "Noch keine Restore-Nachweise erfasst.": "No restore evidence recorded yet.",
+  Fehler: "Errors",
+  Ledger: "Ledger",
+  Isolation: "Isolation",
+  geprüft: "verified",
+  offen: "open",
 };
