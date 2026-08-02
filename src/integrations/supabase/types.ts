@@ -2892,6 +2892,93 @@ export type Database = {
         }
         Relationships: []
       }
+      zr_release_blockers: {
+        Row: {
+          area: string
+          created_at: string
+          details: string | null
+          due_at: string | null
+          evidence_reference: string | null
+          id: string
+          owner: string | null
+          resolved_at: string | null
+          severity: string
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          area: string
+          created_at?: string
+          details?: string | null
+          due_at?: string | null
+          evidence_reference?: string | null
+          id?: string
+          owner?: string | null
+          resolved_at?: string | null
+          severity: string
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          area?: string
+          created_at?: string
+          details?: string | null
+          due_at?: string | null
+          evidence_reference?: string | null
+          id?: string
+          owner?: string | null
+          resolved_at?: string | null
+          severity?: string
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      zr_release_security_evidence: {
+        Row: {
+          created_at: string
+          details: Json
+          environment: string
+          evidence_reference: string | null
+          evidence_type: string
+          executed_at: string
+          executed_by: string | null
+          id: string
+          release_name: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          details?: Json
+          environment: string
+          evidence_reference?: string | null
+          evidence_type: string
+          executed_at?: string
+          executed_by?: string | null
+          id?: string
+          release_name: string
+          status: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          details?: Json
+          environment?: string
+          evidence_reference?: string | null
+          evidence_type?: string
+          executed_at?: string
+          executed_by?: string | null
+          id?: string
+          release_name?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       zr_scheduled_job_configs: {
         Row: {
           configuration: Json

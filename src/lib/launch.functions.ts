@@ -41,11 +41,33 @@ export type ScheduledJobConfig = {
   lastRunAt: string | null;
 };
 
+export type ReleaseEvidence = {
+  id: string;
+  releaseName: string;
+  environment: string;
+  evidenceType: string;
+  status: string;
+  evidenceReference: string | null;
+  executedAt: string;
+};
+
+export type ReleaseBlocker = {
+  id: string;
+  area: string;
+  severity: string;
+  title: string;
+  status: string;
+  owner: string | null;
+  dueAt: string | null;
+};
+
 export type FinalLaunchOverview = {
   acceptance: LaunchAcceptance | null;
   checks: MonitoringCheck[];
   devices: MobileDevice[];
   jobs: ScheduledJobConfig[];
+  evidence: ReleaseEvidence[];
+  blockers: ReleaseBlocker[];
 };
 
 export const getFinalLaunchOverview = createServerFn({ method: "GET" })
@@ -53,7 +75,7 @@ export const getFinalLaunchOverview = createServerFn({ method: "GET" })
   .handler(async ({ context }): Promise<FinalLaunchOverview> => {
     const { supabase } = context;
 
-    const [acceptance, checks, devices, jobs] = await Promise.all([
+    const [acceptance, checks, devices, jobs, evidence, blockers] = await Promise.all([
       supabase
         .from("zr_launch_acceptance")
         .select(
@@ -78,6 +100,19 @@ export const getFinalLaunchOverview = createServerFn({ method: "GET" })
         .from("zr_scheduled_job_configs")
         .select("id, job_name, enabled, schedule_expression, last_run_at")
         .order("job_name", { ascending: true }),
+      supabase
+        .from("zr_release_security_evidence")
+        .select(
+          "id, release_name, environment, evidence_type, status, evidence_reference, executed_at",
+        )
+        .order("executed_at", { ascending: false })
+        .limit(20),
+      supabase
+        .from("zr_release_blockers")
+        .select("id, area, severity, title, status, owner, due_at")
+        .neq("status", "resolved")
+        .order("created_at", { ascending: false })
+        .limit(20),
     ]);
 
     const a = acceptance.data;
@@ -120,6 +155,24 @@ export const getFinalLaunchOverview = createServerFn({ method: "GET" })
         enabled: Boolean(j.enabled),
         scheduleExpression: j.schedule_expression,
         lastRunAt: j.last_run_at,
+      })),
+      evidence: (evidence.data ?? []).map((e) => ({
+        id: e.id,
+        releaseName: e.release_name,
+        environment: e.environment,
+        evidenceType: e.evidence_type,
+        status: e.status,
+        evidenceReference: e.evidence_reference,
+        executedAt: e.executed_at,
+      })),
+      blockers: (blockers.data ?? []).map((b) => ({
+        id: b.id,
+        area: b.area,
+        severity: b.severity,
+        title: b.title,
+        status: b.status,
+        owner: b.owner,
+        dueAt: b.due_at,
       })),
     };
   });

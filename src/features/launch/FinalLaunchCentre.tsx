@@ -164,6 +164,54 @@ export function FinalLaunchCentre() {
           </div>
         ))}
       </Section>
+
+      <Section title="Release-Nachweise">
+        {data.evidence.length === 0 ? (
+          <p className="text-sm text-muted-foreground">{t("Noch keine Nachweise erfasst.")}</p>
+        ) : (
+          data.evidence.map((e) => (
+            <div
+              key={e.id}
+              className="flex items-center justify-between rounded-xl border border-border/60 bg-background/40 px-4 py-2.5 text-sm"
+            >
+              <span className="font-medium">
+                {e.releaseName} · {e.evidenceType}
+              </span>
+              <span className="flex items-center gap-3 text-xs text-muted-foreground">
+                <span>{e.environment}</span>
+                <span className={TONE[e.status === "passed" ? "healthy" : "failed"]}>
+                  {t(e.status === "passed" ? "Bestanden" : "Fehlgeschlagen")}
+                </span>
+              </span>
+            </div>
+          ))
+        )}
+      </Section>
+
+      <Section title="Offene Release-Blocker">
+        {data.blockers.length === 0 ? (
+          <p className="text-sm text-muted-foreground">{t("Keine offenen Blocker.")}</p>
+        ) : (
+          data.blockers.map((b) => (
+            <div
+              key={b.id}
+              className="flex items-center justify-between rounded-xl border border-border/60 bg-background/40 px-4 py-2.5 text-sm"
+            >
+              <span className="font-medium">
+                {b.title}
+                <span className="ml-2 text-xs text-muted-foreground">{b.area}</span>
+              </span>
+              <span
+                className={
+                  b.severity === "critical" ? "text-xs text-destructive" : "text-xs text-amber-500"
+                }
+              >
+                {t(b.severity === "critical" ? "Kritisch" : "Beobachten")}
+              </span>
+            </div>
+          ))
+        )}
+      </Section>
     </div>
   );
 }
