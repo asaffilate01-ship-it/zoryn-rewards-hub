@@ -102,7 +102,9 @@ export const getFinalLaunchOverview = createServerFn({ method: "GET" })
         .order("job_name", { ascending: true }),
       supabase
         .from("zr_release_security_evidence")
-        .select("id, release_name, environment, evidence_type, status, evidence_reference, executed_at")
+        .select(
+          "id, release_name, environment, evidence_type, status, evidence_reference, executed_at",
+        )
         .order("executed_at", { ascending: false })
         .limit(20),
       supabase

@@ -221,4 +221,8 @@ export const platform: Record<string, string> = {
   Isolation: "Isolation",
   geprüft: "verified",
   offen: "open",
+  "Release-Nachweise": "Release evidence",
+  "Noch keine Nachweise erfasst.": "No evidence recorded yet.",
+  "Offene Release-Blocker": "Open release blockers",
+  "Keine offenen Blocker.": "No open blockers.",
 };
