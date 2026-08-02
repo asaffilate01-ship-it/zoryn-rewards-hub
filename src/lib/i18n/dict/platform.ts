@@ -166,6 +166,37 @@ export const platform: Record<string, string> = {
   "Tägliche Abstimmung von Haftung, Händlerdeckung, Settlement und Affiliate mit Soll-Ist-Differenzen.":
     "Daily reconciliation of liability, merchant funding, settlement and affiliate with expected-vs-actual differences.",
 
+  // Final launch
+  "Final Launch": "Final launch",
+  "Startfreigabe, Monitoring-Prüfungen, Mobilgeräte und geplante Jobs für den finalen Launch an einem Ort.":
+    "Launch sign-off, monitoring checks, mobile devices and scheduled jobs for the final launch in one place.",
+  Freigabestatus: "Approval status",
+  Freigegeben: "Approved",
+  Bestanden: "Passed",
+  "Bestandene Gates": "Passed gates",
+  "Engineering, Sicherheit, Betrieb, Recht, Pilot":
+    "Engineering, security, operations, legal, pilot",
+  "Aktive Geräte": "Active devices",
+  "Registrierte Mobilgeräte": "Registered mobile devices",
+  "Aktive Hintergrundläufe": "Active background runs",
+  Startfreigabe: "Launch sign-off",
+  Sicherheit: "Security",
+  Betrieb: "Operations",
+  Recht: "Legal",
+  "Noch kein Release zur Freigabe erfasst.": "No release recorded for approval yet.",
+  "Monitoring-Prüfungen": "Monitoring checks",
+  "Keine Prüfungen erfasst.": "No checks recorded.",
+  "Mobile Geräte": "Mobile devices",
+  "Keine Geräte registriert.": "No devices registered.",
+  "Push an": "Push on",
+  "Push aus": "Push off",
+  "Biometrie an": "Biometrics on",
+  "Biometrie aus": "Biometrics off",
+  Widerrufen: "Revoke",
+  "Kein Release erfasst": "No release recorded",
+  Aktiv: "Active",
+  Inaktiv: "Inactive",
+
   // Pilot operations
   "Pilot Ops": "Pilot ops",
   "Pilot Operations": "Pilot operations",

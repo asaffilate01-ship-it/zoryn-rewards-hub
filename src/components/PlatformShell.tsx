@@ -10,6 +10,7 @@ import {
   CreditCard,
   Scale,
   Activity,
+  Flag,
 } from "lucide-react";
 import { ZorynMark } from "@/components/ZorynMark";
 import { LanguageToggle } from "@/components/LanguageToggle";
@@ -25,6 +26,7 @@ export const PLATFORM_TABS = [
   { to: "/rewards-scenario-lab", label: "Scenario Lab", icon: FlaskConical },
   { to: "/pilot-operations", label: "Pilot Ops", icon: Activity },
   { to: "/go-live-readiness", label: "Go-Live", icon: Rocket },
+  { to: "/final-launch", label: "Final Launch", icon: Flag },
 ] as const;
 
 export function formatEuroCents(cents: number, locale = "de-DE") {

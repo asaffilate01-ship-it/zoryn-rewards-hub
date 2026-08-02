@@ -39,6 +39,7 @@ import { Route as AuthenticatedMerchantOnboardingRouteImport } from './routes/_a
 import { Route as AuthenticatedMerchantRouteImport } from './routes/_authenticated/merchant'
 import { Route as AuthenticatedLiabilityCentreRouteImport } from './routes/_authenticated/liability-centre'
 import { Route as AuthenticatedGoLiveReadinessRouteImport } from './routes/_authenticated/go-live-readiness'
+import { Route as AuthenticatedFinalLaunchRouteImport } from './routes/_authenticated/final-launch'
 import { Route as AuthenticatedCampaignStudioRouteImport } from './routes/_authenticated/campaign-studio'
 import { Route as AuthenticatedBillingRouteImport } from './routes/_authenticated/billing'
 import { Route as AuthenticatedAppRouteImport } from './routes/_authenticated/app'
@@ -71,9 +72,11 @@ import { Route as AuthenticatedAdminMerchantsRouteImport } from './routes/_authe
 import { Route as AuthenticatedAdminClaimsRouteImport } from './routes/_authenticated/admin.claims'
 import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authenticated/admin.audit'
 import { Route as AuthenticatedAdminAnalyticsRouteImport } from './routes/_authenticated/admin.analytics'
+import { Route as ApiPublicRewardsSchedulerRouteImport } from './routes/api/public/rewards.scheduler'
 import { Route as ApiPublicRewardsScheduledJobsRouteImport } from './routes/api/public/rewards.scheduled-jobs'
 import { Route as ApiPublicRewardsHealthRouteImport } from './routes/api/public/rewards.health'
 import { Route as ApiPublicRewardsEventsRouteImport } from './routes/api/public/rewards.events'
+import { Route as ApiPublicRewardsAffiliateCallbackRouteImport } from './routes/api/public/rewards.affiliate-callback'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -229,6 +232,12 @@ const AuthenticatedGoLiveReadinessRoute =
   AuthenticatedGoLiveReadinessRouteImport.update({
     id: '/go-live-readiness',
     path: '/go-live-readiness',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedFinalLaunchRoute =
+  AuthenticatedFinalLaunchRouteImport.update({
+    id: '/final-launch',
+    path: '/final-launch',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedCampaignStudioRoute =
@@ -409,6 +418,12 @@ const AuthenticatedAdminAnalyticsRoute =
     path: '/analytics',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const ApiPublicRewardsSchedulerRoute =
+  ApiPublicRewardsSchedulerRouteImport.update({
+    id: '/api/public/rewards/scheduler',
+    path: '/api/public/rewards/scheduler',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicRewardsScheduledJobsRoute =
   ApiPublicRewardsScheduledJobsRouteImport.update({
     id: '/api/public/rewards/scheduled-jobs',
@@ -425,6 +440,12 @@ const ApiPublicRewardsEventsRoute = ApiPublicRewardsEventsRouteImport.update({
   path: '/api/public/rewards/events',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicRewardsAffiliateCallbackRoute =
+  ApiPublicRewardsAffiliateCallbackRouteImport.update({
+    id: '/api/public/rewards/affiliate-callback',
+    path: '/api/public/rewards/affiliate-callback',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -435,6 +456,7 @@ export interface FileRoutesByFullPath {
   '/app': typeof AuthenticatedAppRouteWithChildren
   '/billing': typeof AuthenticatedBillingRoute
   '/campaign-studio': typeof AuthenticatedCampaignStudioRoute
+  '/final-launch': typeof AuthenticatedFinalLaunchRoute
   '/go-live-readiness': typeof AuthenticatedGoLiveReadinessRoute
   '/liability-centre': typeof AuthenticatedLiabilityCentreRoute
   '/merchant': typeof AuthenticatedMerchantRouteWithChildren
@@ -488,9 +510,11 @@ export interface FileRoutesByFullPath {
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/app/': typeof AuthenticatedAppIndexRoute
   '/merchant/': typeof AuthenticatedMerchantIndexRoute
+  '/api/public/rewards/affiliate-callback': typeof ApiPublicRewardsAffiliateCallbackRoute
   '/api/public/rewards/events': typeof ApiPublicRewardsEventsRoute
   '/api/public/rewards/health': typeof ApiPublicRewardsHealthRoute
   '/api/public/rewards/scheduled-jobs': typeof ApiPublicRewardsScheduledJobsRoute
+  '/api/public/rewards/scheduler': typeof ApiPublicRewardsSchedulerRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -499,6 +523,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/billing': typeof AuthenticatedBillingRoute
   '/campaign-studio': typeof AuthenticatedCampaignStudioRoute
+  '/final-launch': typeof AuthenticatedFinalLaunchRoute
   '/go-live-readiness': typeof AuthenticatedGoLiveReadinessRoute
   '/liability-centre': typeof AuthenticatedLiabilityCentreRoute
   '/merchant-onboarding': typeof AuthenticatedMerchantOnboardingRoute
@@ -551,9 +576,11 @@ export interface FileRoutesByTo {
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/app': typeof AuthenticatedAppIndexRoute
   '/merchant': typeof AuthenticatedMerchantIndexRoute
+  '/api/public/rewards/affiliate-callback': typeof ApiPublicRewardsAffiliateCallbackRoute
   '/api/public/rewards/events': typeof ApiPublicRewardsEventsRoute
   '/api/public/rewards/health': typeof ApiPublicRewardsHealthRoute
   '/api/public/rewards/scheduled-jobs': typeof ApiPublicRewardsScheduledJobsRoute
+  '/api/public/rewards/scheduler': typeof ApiPublicRewardsSchedulerRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -566,6 +593,7 @@ export interface FileRoutesById {
   '/_authenticated/app': typeof AuthenticatedAppRouteWithChildren
   '/_authenticated/billing': typeof AuthenticatedBillingRoute
   '/_authenticated/campaign-studio': typeof AuthenticatedCampaignStudioRoute
+  '/_authenticated/final-launch': typeof AuthenticatedFinalLaunchRoute
   '/_authenticated/go-live-readiness': typeof AuthenticatedGoLiveReadinessRoute
   '/_authenticated/liability-centre': typeof AuthenticatedLiabilityCentreRoute
   '/_authenticated/merchant': typeof AuthenticatedMerchantRouteWithChildren
@@ -619,9 +647,11 @@ export interface FileRoutesById {
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/app/': typeof AuthenticatedAppIndexRoute
   '/_authenticated/merchant/': typeof AuthenticatedMerchantIndexRoute
+  '/api/public/rewards/affiliate-callback': typeof ApiPublicRewardsAffiliateCallbackRoute
   '/api/public/rewards/events': typeof ApiPublicRewardsEventsRoute
   '/api/public/rewards/health': typeof ApiPublicRewardsHealthRoute
   '/api/public/rewards/scheduled-jobs': typeof ApiPublicRewardsScheduledJobsRoute
+  '/api/public/rewards/scheduler': typeof ApiPublicRewardsSchedulerRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -634,6 +664,7 @@ export interface FileRouteTypes {
     | '/app'
     | '/billing'
     | '/campaign-studio'
+    | '/final-launch'
     | '/go-live-readiness'
     | '/liability-centre'
     | '/merchant'
@@ -687,9 +718,11 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/app/'
     | '/merchant/'
+    | '/api/public/rewards/affiliate-callback'
     | '/api/public/rewards/events'
     | '/api/public/rewards/health'
     | '/api/public/rewards/scheduled-jobs'
+    | '/api/public/rewards/scheduler'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -698,6 +731,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/billing'
     | '/campaign-studio'
+    | '/final-launch'
     | '/go-live-readiness'
     | '/liability-centre'
     | '/merchant-onboarding'
@@ -750,9 +784,11 @@ export interface FileRouteTypes {
     | '/admin'
     | '/app'
     | '/merchant'
+    | '/api/public/rewards/affiliate-callback'
     | '/api/public/rewards/events'
     | '/api/public/rewards/health'
     | '/api/public/rewards/scheduled-jobs'
+    | '/api/public/rewards/scheduler'
   id:
     | '__root__'
     | '/'
@@ -764,6 +800,7 @@ export interface FileRouteTypes {
     | '/_authenticated/app'
     | '/_authenticated/billing'
     | '/_authenticated/campaign-studio'
+    | '/_authenticated/final-launch'
     | '/_authenticated/go-live-readiness'
     | '/_authenticated/liability-centre'
     | '/_authenticated/merchant'
@@ -817,9 +854,11 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/'
     | '/_authenticated/app/'
     | '/_authenticated/merchant/'
+    | '/api/public/rewards/affiliate-callback'
     | '/api/public/rewards/events'
     | '/api/public/rewards/health'
     | '/api/public/rewards/scheduled-jobs'
+    | '/api/public/rewards/scheduler'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -844,9 +883,11 @@ export interface RootRouteChildren {
   LegalPrivacyRoute: typeof LegalPrivacyRoute
   LegalTermsRoute: typeof LegalTermsRoute
   BlogIndexRoute: typeof BlogIndexRoute
+  ApiPublicRewardsAffiliateCallbackRoute: typeof ApiPublicRewardsAffiliateCallbackRoute
   ApiPublicRewardsEventsRoute: typeof ApiPublicRewardsEventsRoute
   ApiPublicRewardsHealthRoute: typeof ApiPublicRewardsHealthRoute
   ApiPublicRewardsScheduledJobsRoute: typeof ApiPublicRewardsScheduledJobsRoute
+  ApiPublicRewardsSchedulerRoute: typeof ApiPublicRewardsSchedulerRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -1059,6 +1100,13 @@ declare module '@tanstack/react-router' {
       path: '/go-live-readiness'
       fullPath: '/go-live-readiness'
       preLoaderRoute: typeof AuthenticatedGoLiveReadinessRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/final-launch': {
+      id: '/_authenticated/final-launch'
+      path: '/final-launch'
+      fullPath: '/final-launch'
+      preLoaderRoute: typeof AuthenticatedFinalLaunchRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/campaign-studio': {
@@ -1285,6 +1333,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminAnalyticsRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/api/public/rewards/scheduler': {
+      id: '/api/public/rewards/scheduler'
+      path: '/api/public/rewards/scheduler'
+      fullPath: '/api/public/rewards/scheduler'
+      preLoaderRoute: typeof ApiPublicRewardsSchedulerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/rewards/scheduled-jobs': {
       id: '/api/public/rewards/scheduled-jobs'
       path: '/api/public/rewards/scheduled-jobs'
@@ -1304,6 +1359,13 @@ declare module '@tanstack/react-router' {
       path: '/api/public/rewards/events'
       fullPath: '/api/public/rewards/events'
       preLoaderRoute: typeof ApiPublicRewardsEventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/rewards/affiliate-callback': {
+      id: '/api/public/rewards/affiliate-callback'
+      path: '/api/public/rewards/affiliate-callback'
+      fullPath: '/api/public/rewards/affiliate-callback'
+      preLoaderRoute: typeof ApiPublicRewardsAffiliateCallbackRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -1400,6 +1462,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAppRoute: typeof AuthenticatedAppRouteWithChildren
   AuthenticatedBillingRoute: typeof AuthenticatedBillingRoute
   AuthenticatedCampaignStudioRoute: typeof AuthenticatedCampaignStudioRoute
+  AuthenticatedFinalLaunchRoute: typeof AuthenticatedFinalLaunchRoute
   AuthenticatedGoLiveReadinessRoute: typeof AuthenticatedGoLiveReadinessRoute
   AuthenticatedLiabilityCentreRoute: typeof AuthenticatedLiabilityCentreRoute
   AuthenticatedMerchantRoute: typeof AuthenticatedMerchantRouteWithChildren
@@ -1416,6 +1479,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAppRoute: AuthenticatedAppRouteWithChildren,
   AuthenticatedBillingRoute: AuthenticatedBillingRoute,
   AuthenticatedCampaignStudioRoute: AuthenticatedCampaignStudioRoute,
+  AuthenticatedFinalLaunchRoute: AuthenticatedFinalLaunchRoute,
   AuthenticatedGoLiveReadinessRoute: AuthenticatedGoLiveReadinessRoute,
   AuthenticatedLiabilityCentreRoute: AuthenticatedLiabilityCentreRoute,
   AuthenticatedMerchantRoute: AuthenticatedMerchantRouteWithChildren,
@@ -1452,9 +1516,12 @@ const rootRouteChildren: RootRouteChildren = {
   LegalPrivacyRoute: LegalPrivacyRoute,
   LegalTermsRoute: LegalTermsRoute,
   BlogIndexRoute: BlogIndexRoute,
+  ApiPublicRewardsAffiliateCallbackRoute:
+    ApiPublicRewardsAffiliateCallbackRoute,
   ApiPublicRewardsEventsRoute: ApiPublicRewardsEventsRoute,
   ApiPublicRewardsHealthRoute: ApiPublicRewardsHealthRoute,
   ApiPublicRewardsScheduledJobsRoute: ApiPublicRewardsScheduledJobsRoute,
+  ApiPublicRewardsSchedulerRoute: ApiPublicRewardsSchedulerRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
