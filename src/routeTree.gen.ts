@@ -33,11 +33,13 @@ import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AuthenticatedRewardsV4RouteImport } from './routes/_authenticated/rewards-v4'
 import { Route as AuthenticatedRewardsScenarioLabRouteImport } from './routes/_authenticated/rewards-scenario-lab'
 import { Route as AuthenticatedRewardsProductionRouteImport } from './routes/_authenticated/rewards-production'
+import { Route as AuthenticatedReconciliationRouteImport } from './routes/_authenticated/reconciliation'
 import { Route as AuthenticatedMerchantOnboardingRouteImport } from './routes/_authenticated/merchant-onboarding'
 import { Route as AuthenticatedMerchantRouteImport } from './routes/_authenticated/merchant'
 import { Route as AuthenticatedLiabilityCentreRouteImport } from './routes/_authenticated/liability-centre'
 import { Route as AuthenticatedGoLiveReadinessRouteImport } from './routes/_authenticated/go-live-readiness'
 import { Route as AuthenticatedCampaignStudioRouteImport } from './routes/_authenticated/campaign-studio'
+import { Route as AuthenticatedBillingRouteImport } from './routes/_authenticated/billing'
 import { Route as AuthenticatedAppRouteImport } from './routes/_authenticated/app'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedMerchantIndexRouteImport } from './routes/_authenticated/merchant.index'
@@ -191,6 +193,12 @@ const AuthenticatedRewardsProductionRoute =
     path: '/rewards-production',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedReconciliationRoute =
+  AuthenticatedReconciliationRouteImport.update({
+    id: '/reconciliation',
+    path: '/reconciliation',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedMerchantOnboardingRoute =
   AuthenticatedMerchantOnboardingRouteImport.update({
     id: '/merchant-onboarding',
@@ -220,6 +228,11 @@ const AuthenticatedCampaignStudioRoute =
     path: '/campaign-studio',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedBillingRoute = AuthenticatedBillingRouteImport.update({
+  id: '/billing',
+  path: '/billing',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedAppRoute = AuthenticatedAppRouteImport.update({
   id: '/app',
   path: '/app',
@@ -400,11 +413,13 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/app': typeof AuthenticatedAppRouteWithChildren
+  '/billing': typeof AuthenticatedBillingRoute
   '/campaign-studio': typeof AuthenticatedCampaignStudioRoute
   '/go-live-readiness': typeof AuthenticatedGoLiveReadinessRoute
   '/liability-centre': typeof AuthenticatedLiabilityCentreRoute
   '/merchant': typeof AuthenticatedMerchantRouteWithChildren
   '/merchant-onboarding': typeof AuthenticatedMerchantOnboardingRoute
+  '/reconciliation': typeof AuthenticatedReconciliationRoute
   '/rewards-production': typeof AuthenticatedRewardsProductionRoute
   '/rewards-scenario-lab': typeof AuthenticatedRewardsScenarioLabRoute
   '/rewards-v4': typeof AuthenticatedRewardsV4Route
@@ -459,10 +474,12 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/billing': typeof AuthenticatedBillingRoute
   '/campaign-studio': typeof AuthenticatedCampaignStudioRoute
   '/go-live-readiness': typeof AuthenticatedGoLiveReadinessRoute
   '/liability-centre': typeof AuthenticatedLiabilityCentreRoute
   '/merchant-onboarding': typeof AuthenticatedMerchantOnboardingRoute
+  '/reconciliation': typeof AuthenticatedReconciliationRoute
   '/rewards-production': typeof AuthenticatedRewardsProductionRoute
   '/rewards-scenario-lab': typeof AuthenticatedRewardsScenarioLabRoute
   '/rewards-v4': typeof AuthenticatedRewardsV4Route
@@ -521,11 +538,13 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/app': typeof AuthenticatedAppRouteWithChildren
+  '/_authenticated/billing': typeof AuthenticatedBillingRoute
   '/_authenticated/campaign-studio': typeof AuthenticatedCampaignStudioRoute
   '/_authenticated/go-live-readiness': typeof AuthenticatedGoLiveReadinessRoute
   '/_authenticated/liability-centre': typeof AuthenticatedLiabilityCentreRoute
   '/_authenticated/merchant': typeof AuthenticatedMerchantRouteWithChildren
   '/_authenticated/merchant-onboarding': typeof AuthenticatedMerchantOnboardingRoute
+  '/_authenticated/reconciliation': typeof AuthenticatedReconciliationRoute
   '/_authenticated/rewards-production': typeof AuthenticatedRewardsProductionRoute
   '/_authenticated/rewards-scenario-lab': typeof AuthenticatedRewardsScenarioLabRoute
   '/_authenticated/rewards-v4': typeof AuthenticatedRewardsV4Route
@@ -584,11 +603,13 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/admin'
     | '/app'
+    | '/billing'
     | '/campaign-studio'
     | '/go-live-readiness'
     | '/liability-centre'
     | '/merchant'
     | '/merchant-onboarding'
+    | '/reconciliation'
     | '/rewards-production'
     | '/rewards-scenario-lab'
     | '/rewards-v4'
@@ -643,10 +664,12 @@ export interface FileRouteTypes {
     | '/auth'
     | '/search'
     | '/sitemap.xml'
+    | '/billing'
     | '/campaign-studio'
     | '/go-live-readiness'
     | '/liability-centre'
     | '/merchant-onboarding'
+    | '/reconciliation'
     | '/rewards-production'
     | '/rewards-scenario-lab'
     | '/rewards-v4'
@@ -704,11 +727,13 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/_authenticated/admin'
     | '/_authenticated/app'
+    | '/_authenticated/billing'
     | '/_authenticated/campaign-studio'
     | '/_authenticated/go-live-readiness'
     | '/_authenticated/liability-centre'
     | '/_authenticated/merchant'
     | '/_authenticated/merchant-onboarding'
+    | '/_authenticated/reconciliation'
     | '/_authenticated/rewards-production'
     | '/_authenticated/rewards-scenario-lab'
     | '/_authenticated/rewards-v4'
@@ -954,6 +979,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRewardsProductionRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/reconciliation': {
+      id: '/_authenticated/reconciliation'
+      path: '/reconciliation'
+      fullPath: '/reconciliation'
+      preLoaderRoute: typeof AuthenticatedReconciliationRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/merchant-onboarding': {
       id: '/_authenticated/merchant-onboarding'
       path: '/merchant-onboarding'
@@ -987,6 +1019,13 @@ declare module '@tanstack/react-router' {
       path: '/campaign-studio'
       fullPath: '/campaign-studio'
       preLoaderRoute: typeof AuthenticatedCampaignStudioRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/billing': {
+      id: '/_authenticated/billing'
+      path: '/billing'
+      fullPath: '/billing'
+      preLoaderRoute: typeof AuthenticatedBillingRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/app': {
@@ -1298,11 +1337,13 @@ const AuthenticatedMerchantRouteWithChildren =
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
   AuthenticatedAppRoute: typeof AuthenticatedAppRouteWithChildren
+  AuthenticatedBillingRoute: typeof AuthenticatedBillingRoute
   AuthenticatedCampaignStudioRoute: typeof AuthenticatedCampaignStudioRoute
   AuthenticatedGoLiveReadinessRoute: typeof AuthenticatedGoLiveReadinessRoute
   AuthenticatedLiabilityCentreRoute: typeof AuthenticatedLiabilityCentreRoute
   AuthenticatedMerchantRoute: typeof AuthenticatedMerchantRouteWithChildren
   AuthenticatedMerchantOnboardingRoute: typeof AuthenticatedMerchantOnboardingRoute
+  AuthenticatedReconciliationRoute: typeof AuthenticatedReconciliationRoute
   AuthenticatedRewardsProductionRoute: typeof AuthenticatedRewardsProductionRoute
   AuthenticatedRewardsScenarioLabRoute: typeof AuthenticatedRewardsScenarioLabRoute
   AuthenticatedRewardsV4Route: typeof AuthenticatedRewardsV4Route
@@ -1311,11 +1352,13 @@ interface AuthenticatedRouteRouteChildren {
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
   AuthenticatedAppRoute: AuthenticatedAppRouteWithChildren,
+  AuthenticatedBillingRoute: AuthenticatedBillingRoute,
   AuthenticatedCampaignStudioRoute: AuthenticatedCampaignStudioRoute,
   AuthenticatedGoLiveReadinessRoute: AuthenticatedGoLiveReadinessRoute,
   AuthenticatedLiabilityCentreRoute: AuthenticatedLiabilityCentreRoute,
   AuthenticatedMerchantRoute: AuthenticatedMerchantRouteWithChildren,
   AuthenticatedMerchantOnboardingRoute: AuthenticatedMerchantOnboardingRoute,
+  AuthenticatedReconciliationRoute: AuthenticatedReconciliationRoute,
   AuthenticatedRewardsProductionRoute: AuthenticatedRewardsProductionRoute,
   AuthenticatedRewardsScenarioLabRoute: AuthenticatedRewardsScenarioLabRoute,
   AuthenticatedRewardsV4Route: AuthenticatedRewardsV4Route,
@@ -1351,13 +1394,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
