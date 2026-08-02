@@ -1,6 +1,6 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import { Gauge, Store, Megaphone, Landmark, FlaskConical } from "lucide-react";
+import { Gauge, Store, Megaphone, Landmark, FlaskConical, Rocket } from "lucide-react";
 import { ZorynMark } from "@/components/ZorynMark";
 import { LanguageToggle } from "@/components/LanguageToggle";
 import { useT } from "@/lib/i18n";
@@ -11,6 +11,7 @@ export const PLATFORM_TABS = [
   { to: "/campaign-studio", label: "Campaign Studio", icon: Megaphone },
   { to: "/liability-centre", label: "Liability Centre", icon: Landmark },
   { to: "/rewards-scenario-lab", label: "Scenario Lab", icon: FlaskConical },
+  { to: "/go-live-readiness", label: "Go-Live", icon: Rocket },
 ] as const;
 
 export function formatEuroCents(cents: number, locale = "de-DE") {
