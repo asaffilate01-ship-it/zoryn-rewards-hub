@@ -1035,6 +1035,7 @@ export type Database = {
           currency: string
           id: string
           merchant_id: string | null
+          minimum_threshold_cents: number
           reserved_cents: number
           tenant_id: string
           updated_at: string
@@ -1044,6 +1045,7 @@ export type Database = {
           currency?: string
           id?: string
           merchant_id?: string | null
+          minimum_threshold_cents?: number
           reserved_cents?: number
           tenant_id: string
           updated_at?: string
@@ -1053,6 +1055,7 @@ export type Database = {
           currency?: string
           id?: string
           merchant_id?: string | null
+          minimum_threshold_cents?: number
           reserved_cents?: number
           tenant_id?: string
           updated_at?: string
@@ -2148,6 +2151,81 @@ export type Database = {
           },
         ]
       }
+      zr_billing_plans: {
+        Row: {
+          active: boolean
+          annual_price_minor: number
+          api_request_limit: number | null
+          campaign_limit: number | null
+          code: string
+          created_at: string
+          id: string
+          location_limit: number | null
+          monthly_price_minor: number
+          name: string
+          staff_limit: number | null
+          white_label_enabled: boolean
+        }
+        Insert: {
+          active?: boolean
+          annual_price_minor?: number
+          api_request_limit?: number | null
+          campaign_limit?: number | null
+          code: string
+          created_at?: string
+          id?: string
+          location_limit?: number | null
+          monthly_price_minor?: number
+          name: string
+          staff_limit?: number | null
+          white_label_enabled?: boolean
+        }
+        Update: {
+          active?: boolean
+          annual_price_minor?: number
+          api_request_limit?: number | null
+          campaign_limit?: number | null
+          code?: string
+          created_at?: string
+          id?: string
+          location_limit?: number | null
+          monthly_price_minor?: number
+          name?: string
+          staff_limit?: number | null
+          white_label_enabled?: boolean
+        }
+        Relationships: []
+      }
+      zr_consent_records: {
+        Row: {
+          consent_type: string
+          created_at: string
+          granted: boolean
+          id: string
+          policy_version: string
+          source: string
+          user_id: string
+        }
+        Insert: {
+          consent_type: string
+          created_at?: string
+          granted: boolean
+          id?: string
+          policy_version: string
+          source?: string
+          user_id: string
+        }
+        Update: {
+          consent_type?: string
+          created_at?: string
+          granted?: boolean
+          id?: string
+          policy_version?: string
+          source?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       zr_customer_segments: {
         Row: {
           created_at: string
@@ -2489,6 +2567,86 @@ export type Database = {
           },
         ]
       }
+      zr_reconciliation_runs: {
+        Row: {
+          actual_minor: number
+          completed_at: string | null
+          details: Json
+          difference_minor: number | null
+          expected_minor: number
+          id: string
+          run_type: string
+          started_at: string
+          status: string
+          tenant_id: string | null
+        }
+        Insert: {
+          actual_minor?: number
+          completed_at?: string | null
+          details?: Json
+          difference_minor?: number | null
+          expected_minor?: number
+          id?: string
+          run_type: string
+          started_at?: string
+          status?: string
+          tenant_id?: string | null
+        }
+        Update: {
+          actual_minor?: number
+          completed_at?: string | null
+          details?: Json
+          difference_minor?: number | null
+          expected_minor?: number
+          id?: string
+          run_type?: string
+          started_at?: string
+          status?: string
+          tenant_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "zr_reconciliation_runs_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "reward_tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      zr_release_acceptance: {
+        Row: {
+          approved: boolean
+          approved_at: string | null
+          approved_by: string | null
+          checklist: Json
+          created_at: string
+          environment: string
+          id: string
+          release_name: string
+        }
+        Insert: {
+          approved?: boolean
+          approved_at?: string | null
+          approved_by?: string | null
+          checklist?: Json
+          created_at?: string
+          environment: string
+          id?: string
+          release_name: string
+        }
+        Update: {
+          approved?: boolean
+          approved_at?: string | null
+          approved_by?: string | null
+          checklist?: Json
+          created_at?: string
+          environment?: string
+          id?: string
+          release_name?: string
+        }
+        Relationships: []
+      }
       zr_security_events: {
         Row: {
           created_at: string
@@ -2578,6 +2736,66 @@ export type Database = {
             foreignKeyName: "zr_stamp_cards_tenant_id_fkey"
             columns: ["tenant_id"]
             isOneToOne: false
+            referencedRelation: "reward_tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      zr_subscriptions_v2: {
+        Row: {
+          cancel_at_period_end: boolean
+          created_at: string
+          current_period_end: string | null
+          current_period_start: string | null
+          id: string
+          plan_id: string
+          provider_customer_id: string | null
+          provider_subscription_id: string | null
+          status: string
+          tenant_id: string
+          trial_ends_at: string | null
+          updated_at: string
+        }
+        Insert: {
+          cancel_at_period_end?: boolean
+          created_at?: string
+          current_period_end?: string | null
+          current_period_start?: string | null
+          id?: string
+          plan_id: string
+          provider_customer_id?: string | null
+          provider_subscription_id?: string | null
+          status?: string
+          tenant_id: string
+          trial_ends_at?: string | null
+          updated_at?: string
+        }
+        Update: {
+          cancel_at_period_end?: boolean
+          created_at?: string
+          current_period_end?: string | null
+          current_period_start?: string | null
+          id?: string
+          plan_id?: string
+          provider_customer_id?: string | null
+          provider_subscription_id?: string | null
+          status?: string
+          tenant_id?: string
+          trial_ends_at?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "zr_subscriptions_v2_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "zr_billing_plans"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "zr_subscriptions_v2_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: true
             referencedRelation: "reward_tenants"
             referencedColumns: ["id"]
           },
@@ -3894,6 +4112,7 @@ export type Database = {
         }
         Returns: undefined
       }
+      zr_enforce_funding_thresholds: { Args: never; Returns: number }
       zr_execute_reward_action: {
         Args: {
           p_actor: string
@@ -3923,6 +4142,15 @@ export type Database = {
           p_ttl_seconds?: number
         }
         Returns: string
+      }
+      zr_reverse_reward_transaction: {
+        Args: {
+          p_idempotency_key: string
+          p_original_reference: string
+          p_reason: string
+          p_tenant_id: string
+        }
+        Returns: Json
       }
     }
     Enums: {
