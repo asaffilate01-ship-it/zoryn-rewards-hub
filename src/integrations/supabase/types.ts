@@ -2151,6 +2151,42 @@ export type Database = {
           },
         ]
       }
+      zr_backup_restore_evidence: {
+        Row: {
+          backup_reference: string
+          created_at: string
+          environment: string
+          id: string
+          ledger_verified: boolean
+          restored_at: string
+          tenant_isolation_verified: boolean
+          verification_notes: string | null
+          verified_by: string | null
+        }
+        Insert: {
+          backup_reference: string
+          created_at?: string
+          environment: string
+          id?: string
+          ledger_verified?: boolean
+          restored_at: string
+          tenant_isolation_verified?: boolean
+          verification_notes?: string | null
+          verified_by?: string | null
+        }
+        Update: {
+          backup_reference?: string
+          created_at?: string
+          environment?: string
+          id?: string
+          ledger_verified?: boolean
+          restored_at?: string
+          tenant_isolation_verified?: boolean
+          verification_notes?: string | null
+          verified_by?: string | null
+        }
+        Relationships: []
+      }
       zr_billing_plans: {
         Row: {
           active: boolean
@@ -2323,6 +2359,39 @@ export type Database = {
           },
         ]
       }
+      zr_job_runs: {
+        Row: {
+          completed_at: string | null
+          details: Json
+          error_count: number
+          id: string
+          job_name: string
+          processed_count: number
+          started_at: string
+          status: string
+        }
+        Insert: {
+          completed_at?: string | null
+          details?: Json
+          error_count?: number
+          id?: string
+          job_name: string
+          processed_count?: number
+          started_at?: string
+          status: string
+        }
+        Update: {
+          completed_at?: string | null
+          details?: Json
+          error_count?: number
+          id?: string
+          job_name?: string
+          processed_count?: number
+          started_at?: string
+          status?: string
+        }
+        Relationships: []
+      }
       zr_liability_snapshots: {
         Row: {
           calculated_at: string
@@ -2421,6 +2490,59 @@ export type Database = {
             foreignKeyName: "zr_merchant_onboarding_cases_tenant_id_fkey"
             columns: ["tenant_id"]
             isOneToOne: true
+            referencedRelation: "reward_tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      zr_notification_outbox: {
+        Row: {
+          attempt_count: number
+          channel: string
+          created_at: string
+          id: string
+          last_error: string | null
+          next_attempt_at: string | null
+          payload: Json
+          sent_at: string | null
+          status: string
+          template_key: string
+          tenant_id: string | null
+          user_id: string | null
+        }
+        Insert: {
+          attempt_count?: number
+          channel: string
+          created_at?: string
+          id?: string
+          last_error?: string | null
+          next_attempt_at?: string | null
+          payload?: Json
+          sent_at?: string | null
+          status?: string
+          template_key: string
+          tenant_id?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          attempt_count?: number
+          channel?: string
+          created_at?: string
+          id?: string
+          last_error?: string | null
+          next_attempt_at?: string | null
+          payload?: Json
+          sent_at?: string | null
+          status?: string
+          template_key?: string
+          tenant_id?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "zr_notification_outbox_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
             referencedRelation: "reward_tenants"
             referencedColumns: ["id"]
           },
@@ -2796,6 +2918,100 @@ export type Database = {
             foreignKeyName: "zr_subscriptions_v2_tenant_id_fkey"
             columns: ["tenant_id"]
             isOneToOne: true
+            referencedRelation: "reward_tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      zr_support_case_events: {
+        Row: {
+          actor_user_id: string | null
+          case_id: string
+          created_at: string
+          event_type: string
+          id: string
+          metadata: Json
+          note: string | null
+        }
+        Insert: {
+          actor_user_id?: string | null
+          case_id: string
+          created_at?: string
+          event_type: string
+          id?: string
+          metadata?: Json
+          note?: string | null
+        }
+        Update: {
+          actor_user_id?: string | null
+          case_id?: string
+          created_at?: string
+          event_type?: string
+          id?: string
+          metadata?: Json
+          note?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "zr_support_case_events_case_id_fkey"
+            columns: ["case_id"]
+            isOneToOne: false
+            referencedRelation: "zr_support_cases_v2"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      zr_support_cases_v2: {
+        Row: {
+          assigned_to: string | null
+          case_type: string
+          created_at: string
+          description: string | null
+          due_at: string | null
+          id: string
+          priority: string
+          resolved_at: string | null
+          status: string
+          subject: string
+          tenant_id: string | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          assigned_to?: string | null
+          case_type: string
+          created_at?: string
+          description?: string | null
+          due_at?: string | null
+          id?: string
+          priority?: string
+          resolved_at?: string | null
+          status?: string
+          subject: string
+          tenant_id?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          assigned_to?: string | null
+          case_type?: string
+          created_at?: string
+          description?: string | null
+          due_at?: string | null
+          id?: string
+          priority?: string
+          resolved_at?: string | null
+          status?: string
+          subject?: string
+          tenant_id?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "zr_support_cases_v2_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
             referencedRelation: "reward_tenants"
             referencedColumns: ["id"]
           },
@@ -4112,6 +4328,10 @@ export type Database = {
         }
         Returns: undefined
       }
+      zr_create_liability_snapshot: {
+        Args: { p_tenant_id: string }
+        Returns: string
+      }
       zr_enforce_funding_thresholds: { Args: never; Returns: number }
       zr_execute_reward_action: {
         Args: {
@@ -4140,6 +4360,16 @@ export type Database = {
           p_tenant_id: string
           p_token_hash: string
           p_ttl_seconds?: number
+        }
+        Returns: string
+      }
+      zr_queue_notification: {
+        Args: {
+          p_channel: string
+          p_payload?: Json
+          p_template_key: string
+          p_tenant_id: string
+          p_user_id: string
         }
         Returns: string
       }
