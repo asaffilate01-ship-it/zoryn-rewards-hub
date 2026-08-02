@@ -154,6 +154,24 @@ export const getFinalLaunchOverview = createServerFn({ method: "GET" })
         scheduleExpression: j.schedule_expression,
         lastRunAt: j.last_run_at,
       })),
+      evidence: (evidence.data ?? []).map((e) => ({
+        id: e.id,
+        releaseName: e.release_name,
+        environment: e.environment,
+        evidenceType: e.evidence_type,
+        status: e.status,
+        evidenceReference: e.evidence_reference,
+        executedAt: e.executed_at,
+      })),
+      blockers: (blockers.data ?? []).map((b) => ({
+        id: b.id,
+        area: b.area,
+        severity: b.severity,
+        title: b.title,
+        status: b.status,
+        owner: b.owner,
+        dueAt: b.due_at,
+      })),
     };
   });
 
