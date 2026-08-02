@@ -1,0 +1,1 @@
+REVOKE EXECUTE ON FUNCTION public.reward_is_tenant_member(uuid, uuid) FROM anon, PUBLIC;
