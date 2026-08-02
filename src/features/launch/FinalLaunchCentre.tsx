@@ -74,7 +74,10 @@ export function FinalLaunchCentre() {
       <Section title="Startfreigabe">
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
           {gates.map(([label, ok]) => (
-            <article key={label} className="rounded-xl border border-border/60 bg-background/40 p-4">
+            <article
+              key={label}
+              className="rounded-xl border border-border/60 bg-background/40 p-4"
+            >
               <p className="text-xs uppercase tracking-wide text-muted-foreground">{t(label)}</p>
               <p
                 className={`mt-1.5 text-base font-semibold ${ok ? "text-emerald-500" : "text-muted-foreground"}`}

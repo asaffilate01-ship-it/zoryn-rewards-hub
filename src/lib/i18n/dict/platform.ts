@@ -174,7 +174,8 @@ export const platform: Record<string, string> = {
   Freigegeben: "Approved",
   Bestanden: "Passed",
   "Bestandene Gates": "Passed gates",
-  "Engineering, Sicherheit, Betrieb, Recht, Pilot": "Engineering, security, operations, legal, pilot",
+  "Engineering, Sicherheit, Betrieb, Recht, Pilot":
+    "Engineering, security, operations, legal, pilot",
   "Aktive Geräte": "Active devices",
   "Registrierte Mobilgeräte": "Registered mobile devices",
   "Aktive Hintergrundläufe": "Active background runs",

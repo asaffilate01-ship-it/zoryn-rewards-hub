@@ -69,7 +69,9 @@ export const getFinalLaunchOverview = createServerFn({ method: "GET" })
         .limit(12),
       supabase
         .from("zr_mobile_devices")
-        .select("id, platform, device_name, push_enabled, biometric_enabled, revoked_at, last_seen_at")
+        .select(
+          "id, platform, device_name, push_enabled, biometric_enabled, revoked_at, last_seen_at",
+        )
         .order("last_seen_at", { ascending: false })
         .limit(20),
       supabase
