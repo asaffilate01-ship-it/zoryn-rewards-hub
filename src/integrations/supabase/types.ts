@@ -2392,6 +2392,57 @@ export type Database = {
         }
         Relationships: []
       }
+      zr_launch_acceptance: {
+        Row: {
+          approved: boolean | null
+          approved_at: string | null
+          approved_by: string | null
+          created_at: string
+          engineering_passed: boolean
+          environment: string
+          id: string
+          legal_passed: boolean
+          notes: string | null
+          operations_passed: boolean
+          pilot_passed: boolean
+          release_name: string
+          security_passed: boolean
+          updated_at: string
+        }
+        Insert: {
+          approved?: boolean | null
+          approved_at?: string | null
+          approved_by?: string | null
+          created_at?: string
+          engineering_passed?: boolean
+          environment: string
+          id?: string
+          legal_passed?: boolean
+          notes?: string | null
+          operations_passed?: boolean
+          pilot_passed?: boolean
+          release_name: string
+          security_passed?: boolean
+          updated_at?: string
+        }
+        Update: {
+          approved?: boolean | null
+          approved_at?: string | null
+          approved_by?: string | null
+          created_at?: string
+          engineering_passed?: boolean
+          environment?: string
+          id?: string
+          legal_passed?: boolean
+          notes?: string | null
+          operations_passed?: boolean
+          pilot_passed?: boolean
+          release_name?: string
+          security_passed?: boolean
+          updated_at?: string
+        }
+        Relationships: []
+      }
       zr_liability_snapshots: {
         Row: {
           calculated_at: string
@@ -2494,6 +2545,78 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      zr_mobile_devices: {
+        Row: {
+          biometric_enabled: boolean
+          created_at: string
+          device_name: string | null
+          device_token_hash: string | null
+          id: string
+          last_seen_at: string
+          platform: string
+          push_enabled: boolean
+          revoked_at: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          biometric_enabled?: boolean
+          created_at?: string
+          device_name?: string | null
+          device_token_hash?: string | null
+          id?: string
+          last_seen_at?: string
+          platform: string
+          push_enabled?: boolean
+          revoked_at?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          biometric_enabled?: boolean
+          created_at?: string
+          device_name?: string | null
+          device_token_hash?: string | null
+          id?: string
+          last_seen_at?: string
+          platform?: string
+          push_enabled?: boolean
+          revoked_at?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      zr_monitoring_checks: {
+        Row: {
+          check_name: string
+          checked_at: string
+          created_at: string
+          details: Json
+          id: string
+          latency_ms: number | null
+          status: string
+        }
+        Insert: {
+          check_name: string
+          checked_at?: string
+          created_at?: string
+          details?: Json
+          id?: string
+          latency_ms?: number | null
+          status: string
+        }
+        Update: {
+          check_name?: string
+          checked_at?: string
+          created_at?: string
+          details?: Json
+          id?: string
+          latency_ms?: number | null
+          status?: string
+        }
+        Relationships: []
       }
       zr_notification_outbox: {
         Row: {
@@ -2766,6 +2889,42 @@ export type Database = {
           environment?: string
           id?: string
           release_name?: string
+        }
+        Relationships: []
+      }
+      zr_scheduled_job_configs: {
+        Row: {
+          configuration: Json
+          created_at: string
+          enabled: boolean
+          id: string
+          job_name: string
+          last_run_at: string | null
+          next_run_at: string | null
+          schedule_expression: string
+          updated_at: string
+        }
+        Insert: {
+          configuration?: Json
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          job_name: string
+          last_run_at?: string | null
+          next_run_at?: string | null
+          schedule_expression: string
+          updated_at?: string
+        }
+        Update: {
+          configuration?: Json
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          job_name?: string
+          last_run_at?: string | null
+          next_run_at?: string | null
+          schedule_expression?: string
+          updated_at?: string
         }
         Relationships: []
       }
@@ -4382,6 +4541,7 @@ export type Database = {
         }
         Returns: Json
       }
+      zr_update_campaign_states: { Args: never; Returns: number }
     }
     Enums: {
       account_kind:
