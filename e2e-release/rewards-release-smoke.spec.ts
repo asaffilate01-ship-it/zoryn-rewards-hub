@@ -1,0 +1,4 @@
+import { test, expect } from "@playwright/test";
+for(const route of ["/","/rewards-v4","/pilot-operations","/final-launch"]){test(`${route} responds safely`,async({page})=>{const response=await page.goto(route);expect(response?.status()).toBeLessThan(500);await expect(page.locator("body")).toBeVisible();await expect(page.locator("body")).not.toContainText(/SUPABASE_SERVICE_ROLE|AFFILIATE_WEBHOOK_SECRET|CRON_SHARED_SECRET|stack trace/i)})}
+test("scheduler rejects unsigned calls",async({request})=>{const response=await request.post("/api/public/rewards/scheduler",{data:{job:"campaign-state-update"}});expect([401,403,404]).toContain(response.status())});
+test("affiliate callback rejects unsigned calls",async({request})=>{const response=await request.post("/api/public/rewards/affiliate-callback",{data:{id:"test",tenantId:"00000000-0000-0000-0000-000000000000",status:"pending",commissionMinor:100}});expect([401,403,404,503]).toContain(response.status())});
