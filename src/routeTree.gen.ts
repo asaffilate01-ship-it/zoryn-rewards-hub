@@ -39,6 +39,7 @@ import { Route as AuthenticatedMerchantOnboardingRouteImport } from './routes/_a
 import { Route as AuthenticatedMerchantRouteImport } from './routes/_authenticated/merchant'
 import { Route as AuthenticatedLiabilityCentreRouteImport } from './routes/_authenticated/liability-centre'
 import { Route as AuthenticatedGoLiveReadinessRouteImport } from './routes/_authenticated/go-live-readiness'
+import { Route as AuthenticatedFinalLaunchRouteImport } from './routes/_authenticated/final-launch'
 import { Route as AuthenticatedCampaignStudioRouteImport } from './routes/_authenticated/campaign-studio'
 import { Route as AuthenticatedBillingRouteImport } from './routes/_authenticated/billing'
 import { Route as AuthenticatedAppRouteImport } from './routes/_authenticated/app'
@@ -231,6 +232,12 @@ const AuthenticatedGoLiveReadinessRoute =
   AuthenticatedGoLiveReadinessRouteImport.update({
     id: '/go-live-readiness',
     path: '/go-live-readiness',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedFinalLaunchRoute =
+  AuthenticatedFinalLaunchRouteImport.update({
+    id: '/final-launch',
+    path: '/final-launch',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedCampaignStudioRoute =
@@ -449,6 +456,7 @@ export interface FileRoutesByFullPath {
   '/app': typeof AuthenticatedAppRouteWithChildren
   '/billing': typeof AuthenticatedBillingRoute
   '/campaign-studio': typeof AuthenticatedCampaignStudioRoute
+  '/final-launch': typeof AuthenticatedFinalLaunchRoute
   '/go-live-readiness': typeof AuthenticatedGoLiveReadinessRoute
   '/liability-centre': typeof AuthenticatedLiabilityCentreRoute
   '/merchant': typeof AuthenticatedMerchantRouteWithChildren
@@ -515,6 +523,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/billing': typeof AuthenticatedBillingRoute
   '/campaign-studio': typeof AuthenticatedCampaignStudioRoute
+  '/final-launch': typeof AuthenticatedFinalLaunchRoute
   '/go-live-readiness': typeof AuthenticatedGoLiveReadinessRoute
   '/liability-centre': typeof AuthenticatedLiabilityCentreRoute
   '/merchant-onboarding': typeof AuthenticatedMerchantOnboardingRoute
@@ -584,6 +593,7 @@ export interface FileRoutesById {
   '/_authenticated/app': typeof AuthenticatedAppRouteWithChildren
   '/_authenticated/billing': typeof AuthenticatedBillingRoute
   '/_authenticated/campaign-studio': typeof AuthenticatedCampaignStudioRoute
+  '/_authenticated/final-launch': typeof AuthenticatedFinalLaunchRoute
   '/_authenticated/go-live-readiness': typeof AuthenticatedGoLiveReadinessRoute
   '/_authenticated/liability-centre': typeof AuthenticatedLiabilityCentreRoute
   '/_authenticated/merchant': typeof AuthenticatedMerchantRouteWithChildren
@@ -654,6 +664,7 @@ export interface FileRouteTypes {
     | '/app'
     | '/billing'
     | '/campaign-studio'
+    | '/final-launch'
     | '/go-live-readiness'
     | '/liability-centre'
     | '/merchant'
@@ -720,6 +731,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/billing'
     | '/campaign-studio'
+    | '/final-launch'
     | '/go-live-readiness'
     | '/liability-centre'
     | '/merchant-onboarding'
@@ -788,6 +800,7 @@ export interface FileRouteTypes {
     | '/_authenticated/app'
     | '/_authenticated/billing'
     | '/_authenticated/campaign-studio'
+    | '/_authenticated/final-launch'
     | '/_authenticated/go-live-readiness'
     | '/_authenticated/liability-centre'
     | '/_authenticated/merchant'
@@ -1087,6 +1100,13 @@ declare module '@tanstack/react-router' {
       path: '/go-live-readiness'
       fullPath: '/go-live-readiness'
       preLoaderRoute: typeof AuthenticatedGoLiveReadinessRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/final-launch': {
+      id: '/_authenticated/final-launch'
+      path: '/final-launch'
+      fullPath: '/final-launch'
+      preLoaderRoute: typeof AuthenticatedFinalLaunchRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/campaign-studio': {
@@ -1442,6 +1462,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAppRoute: typeof AuthenticatedAppRouteWithChildren
   AuthenticatedBillingRoute: typeof AuthenticatedBillingRoute
   AuthenticatedCampaignStudioRoute: typeof AuthenticatedCampaignStudioRoute
+  AuthenticatedFinalLaunchRoute: typeof AuthenticatedFinalLaunchRoute
   AuthenticatedGoLiveReadinessRoute: typeof AuthenticatedGoLiveReadinessRoute
   AuthenticatedLiabilityCentreRoute: typeof AuthenticatedLiabilityCentreRoute
   AuthenticatedMerchantRoute: typeof AuthenticatedMerchantRouteWithChildren
@@ -1458,6 +1479,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAppRoute: AuthenticatedAppRouteWithChildren,
   AuthenticatedBillingRoute: AuthenticatedBillingRoute,
   AuthenticatedCampaignStudioRoute: AuthenticatedCampaignStudioRoute,
+  AuthenticatedFinalLaunchRoute: AuthenticatedFinalLaunchRoute,
   AuthenticatedGoLiveReadinessRoute: AuthenticatedGoLiveReadinessRoute,
   AuthenticatedLiabilityCentreRoute: AuthenticatedLiabilityCentreRoute,
   AuthenticatedMerchantRoute: AuthenticatedMerchantRouteWithChildren,
