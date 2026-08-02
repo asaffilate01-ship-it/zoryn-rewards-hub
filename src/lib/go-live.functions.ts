@@ -1,4 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
+import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Database, Json } from "@/integrations/supabase/types";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
@@ -137,11 +139,11 @@ const rewardActionInput = z.object({
 });
 
 async function assertTenantStaff(
-  context: { supabase: { rpc: (fn: string, args: unknown) => Promise<{ data: unknown }> } },
+  supabase: SupabaseClient<Database>,
   userId: string,
   tenantId: string,
 ) {
-  const { data: isAdmin } = await context.supabase.rpc("has_role", {
+  const { data: isAdmin } = await supabase.rpc("has_role", {
     _user_id: userId,
     _role: "admin",
   });
@@ -161,7 +163,7 @@ export const secureRewardAction = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((raw: unknown) => rewardActionInput.parse(raw))
   .handler(async ({ data, context }) => {
-    await assertTenantStaff(context, context.userId, data.tenantId);
+    await assertTenantStaff(context.supabase, context.userId, data.tenantId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
     const { data: result, error } = await supabaseAdmin.rpc("zr_execute_reward_action", {
@@ -169,8 +171,8 @@ export const secureRewardAction = createServerFn({ method: "POST" })
       p_actor: context.userId,
       p_transaction_type: data.transactionType,
       p_idempotency_key: data.idempotencyKey,
-      p_entries: data.entries,
-      p_metadata: data.metadata ?? {},
+      p_entries: data.entries as unknown as Json,
+      p_metadata: (data.metadata ?? {}) as unknown as Json,
     });
     if (error) throw new Error(error.message);
     return result as { ok: boolean; duplicate: boolean; entry_ids: string[] };
@@ -215,7 +217,7 @@ export const issueSecureQr = createServerFn({ method: "POST" })
       .parse(raw),
   )
   .handler(async ({ data, context }) => {
-    await assertTenantStaff(context, context.userId, data.tenantId);
+    await assertTenantStaff(context.supabase, context.userId, data.tenantId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
     const nonce = crypto.randomUUID();
@@ -233,7 +235,7 @@ export const issueSecureQr = createServerFn({ method: "POST" })
     const token = `${nonce}.${signature}`;
     const tokenHash = await hmacHex(qrSecret(), token);
 
-    const { data: id, error } = await supabaseAdmin.rpc("zr_qr_issue", {
+    const qrArgs = {
       p_tenant_id: data.tenantId,
       p_action_type: data.actionType,
       p_token_hash: tokenHash,
@@ -243,7 +245,8 @@ export const issueSecureQr = createServerFn({ method: "POST" })
       p_location_id: data.locationId ?? null,
       p_amount_cents: data.amountCents,
       p_ttl_seconds: QR_TTL_SECONDS,
-    });
+    };
+    const { data: id, error } = await supabaseAdmin.rpc("zr_qr_issue", qrArgs as never);
     if (error) throw new Error(error.message);
     return { challengeId: id as string, token, expiresAt };
   });
