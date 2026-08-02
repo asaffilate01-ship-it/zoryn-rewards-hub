@@ -33,6 +33,7 @@ import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AuthenticatedRewardsV4RouteImport } from './routes/_authenticated/rewards-v4'
 import { Route as AuthenticatedRewardsScenarioLabRouteImport } from './routes/_authenticated/rewards-scenario-lab'
 import { Route as AuthenticatedRewardsProductionRouteImport } from './routes/_authenticated/rewards-production'
+import { Route as AuthenticatedReconciliationRouteImport } from './routes/_authenticated/reconciliation'
 import { Route as AuthenticatedMerchantOnboardingRouteImport } from './routes/_authenticated/merchant-onboarding'
 import { Route as AuthenticatedMerchantRouteImport } from './routes/_authenticated/merchant'
 import { Route as AuthenticatedLiabilityCentreRouteImport } from './routes/_authenticated/liability-centre'
@@ -190,6 +191,12 @@ const AuthenticatedRewardsProductionRoute =
   AuthenticatedRewardsProductionRouteImport.update({
     id: '/rewards-production',
     path: '/rewards-production',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedReconciliationRoute =
+  AuthenticatedReconciliationRouteImport.update({
+    id: '/reconciliation',
+    path: '/reconciliation',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedMerchantOnboardingRoute =
@@ -412,6 +419,7 @@ export interface FileRoutesByFullPath {
   '/liability-centre': typeof AuthenticatedLiabilityCentreRoute
   '/merchant': typeof AuthenticatedMerchantRouteWithChildren
   '/merchant-onboarding': typeof AuthenticatedMerchantOnboardingRoute
+  '/reconciliation': typeof AuthenticatedReconciliationRoute
   '/rewards-production': typeof AuthenticatedRewardsProductionRoute
   '/rewards-scenario-lab': typeof AuthenticatedRewardsScenarioLabRoute
   '/rewards-v4': typeof AuthenticatedRewardsV4Route
@@ -471,6 +479,7 @@ export interface FileRoutesByTo {
   '/go-live-readiness': typeof AuthenticatedGoLiveReadinessRoute
   '/liability-centre': typeof AuthenticatedLiabilityCentreRoute
   '/merchant-onboarding': typeof AuthenticatedMerchantOnboardingRoute
+  '/reconciliation': typeof AuthenticatedReconciliationRoute
   '/rewards-production': typeof AuthenticatedRewardsProductionRoute
   '/rewards-scenario-lab': typeof AuthenticatedRewardsScenarioLabRoute
   '/rewards-v4': typeof AuthenticatedRewardsV4Route
@@ -535,6 +544,7 @@ export interface FileRoutesById {
   '/_authenticated/liability-centre': typeof AuthenticatedLiabilityCentreRoute
   '/_authenticated/merchant': typeof AuthenticatedMerchantRouteWithChildren
   '/_authenticated/merchant-onboarding': typeof AuthenticatedMerchantOnboardingRoute
+  '/_authenticated/reconciliation': typeof AuthenticatedReconciliationRoute
   '/_authenticated/rewards-production': typeof AuthenticatedRewardsProductionRoute
   '/_authenticated/rewards-scenario-lab': typeof AuthenticatedRewardsScenarioLabRoute
   '/_authenticated/rewards-v4': typeof AuthenticatedRewardsV4Route
@@ -599,6 +609,7 @@ export interface FileRouteTypes {
     | '/liability-centre'
     | '/merchant'
     | '/merchant-onboarding'
+    | '/reconciliation'
     | '/rewards-production'
     | '/rewards-scenario-lab'
     | '/rewards-v4'
@@ -658,6 +669,7 @@ export interface FileRouteTypes {
     | '/go-live-readiness'
     | '/liability-centre'
     | '/merchant-onboarding'
+    | '/reconciliation'
     | '/rewards-production'
     | '/rewards-scenario-lab'
     | '/rewards-v4'
@@ -721,6 +733,7 @@ export interface FileRouteTypes {
     | '/_authenticated/liability-centre'
     | '/_authenticated/merchant'
     | '/_authenticated/merchant-onboarding'
+    | '/_authenticated/reconciliation'
     | '/_authenticated/rewards-production'
     | '/_authenticated/rewards-scenario-lab'
     | '/_authenticated/rewards-v4'
@@ -964,6 +977,13 @@ declare module '@tanstack/react-router' {
       path: '/rewards-production'
       fullPath: '/rewards-production'
       preLoaderRoute: typeof AuthenticatedRewardsProductionRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/reconciliation': {
+      id: '/_authenticated/reconciliation'
+      path: '/reconciliation'
+      fullPath: '/reconciliation'
+      preLoaderRoute: typeof AuthenticatedReconciliationRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/merchant-onboarding': {
@@ -1323,6 +1343,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedLiabilityCentreRoute: typeof AuthenticatedLiabilityCentreRoute
   AuthenticatedMerchantRoute: typeof AuthenticatedMerchantRouteWithChildren
   AuthenticatedMerchantOnboardingRoute: typeof AuthenticatedMerchantOnboardingRoute
+  AuthenticatedReconciliationRoute: typeof AuthenticatedReconciliationRoute
   AuthenticatedRewardsProductionRoute: typeof AuthenticatedRewardsProductionRoute
   AuthenticatedRewardsScenarioLabRoute: typeof AuthenticatedRewardsScenarioLabRoute
   AuthenticatedRewardsV4Route: typeof AuthenticatedRewardsV4Route
@@ -1337,6 +1358,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedLiabilityCentreRoute: AuthenticatedLiabilityCentreRoute,
   AuthenticatedMerchantRoute: AuthenticatedMerchantRouteWithChildren,
   AuthenticatedMerchantOnboardingRoute: AuthenticatedMerchantOnboardingRoute,
+  AuthenticatedReconciliationRoute: AuthenticatedReconciliationRoute,
   AuthenticatedRewardsProductionRoute: AuthenticatedRewardsProductionRoute,
   AuthenticatedRewardsScenarioLabRoute: AuthenticatedRewardsScenarioLabRoute,
   AuthenticatedRewardsV4Route: AuthenticatedRewardsV4Route,
