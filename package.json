@@ -15,7 +15,10 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:sql": "supabase test db",
-    "check": "npm run typecheck && npm run lint && npm run test:coverage && npm run build"
+    "check": "npm run typecheck && npm run lint && npm run test:coverage && npm run build",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "smoke": "npm run typecheck && npm run lint && npm run test && npm run build"
   },
   "dependencies": {
     "@capacitor/android": "^8.4.2",
@@ -81,6 +84,7 @@
   "devDependencies": {
     "@eslint/js": "^9.32.0",
     "@lovable.dev/vite-tanstack-config": "2.8.5",
+    "@playwright/test": "^1.62.1",
     "@types/node": "^22.16.5",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
