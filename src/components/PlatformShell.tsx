@@ -9,6 +9,7 @@ import {
   Rocket,
   CreditCard,
   Scale,
+  Activity,
 } from "lucide-react";
 import { ZorynMark } from "@/components/ZorynMark";
 import { LanguageToggle } from "@/components/LanguageToggle";
@@ -22,6 +23,7 @@ export const PLATFORM_TABS = [
   { to: "/reconciliation", label: "Abstimmung", icon: Scale },
   { to: "/billing", label: "Abrechnung", icon: CreditCard },
   { to: "/rewards-scenario-lab", label: "Scenario Lab", icon: FlaskConical },
+  { to: "/pilot-operations", label: "Pilot Ops", icon: Activity },
   { to: "/go-live-readiness", label: "Go-Live", icon: Rocket },
 ] as const;
 
