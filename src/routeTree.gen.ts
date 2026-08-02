@@ -75,6 +75,7 @@ import { Route as ApiPublicRewardsSchedulerRouteImport } from './routes/api/publ
 import { Route as ApiPublicRewardsScheduledJobsRouteImport } from './routes/api/public/rewards.scheduled-jobs'
 import { Route as ApiPublicRewardsHealthRouteImport } from './routes/api/public/rewards.health'
 import { Route as ApiPublicRewardsEventsRouteImport } from './routes/api/public/rewards.events'
+import { Route as ApiPublicRewardsAffiliateCallbackRouteImport } from './routes/api/public/rewards.affiliate-callback'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -432,6 +433,12 @@ const ApiPublicRewardsEventsRoute = ApiPublicRewardsEventsRouteImport.update({
   path: '/api/public/rewards/events',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicRewardsAffiliateCallbackRoute =
+  ApiPublicRewardsAffiliateCallbackRouteImport.update({
+    id: '/api/public/rewards/affiliate-callback',
+    path: '/api/public/rewards/affiliate-callback',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -495,6 +502,7 @@ export interface FileRoutesByFullPath {
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/app/': typeof AuthenticatedAppIndexRoute
   '/merchant/': typeof AuthenticatedMerchantIndexRoute
+  '/api/public/rewards/affiliate-callback': typeof ApiPublicRewardsAffiliateCallbackRoute
   '/api/public/rewards/events': typeof ApiPublicRewardsEventsRoute
   '/api/public/rewards/health': typeof ApiPublicRewardsHealthRoute
   '/api/public/rewards/scheduled-jobs': typeof ApiPublicRewardsScheduledJobsRoute
@@ -559,6 +567,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/app': typeof AuthenticatedAppIndexRoute
   '/merchant': typeof AuthenticatedMerchantIndexRoute
+  '/api/public/rewards/affiliate-callback': typeof ApiPublicRewardsAffiliateCallbackRoute
   '/api/public/rewards/events': typeof ApiPublicRewardsEventsRoute
   '/api/public/rewards/health': typeof ApiPublicRewardsHealthRoute
   '/api/public/rewards/scheduled-jobs': typeof ApiPublicRewardsScheduledJobsRoute
@@ -628,6 +637,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/app/': typeof AuthenticatedAppIndexRoute
   '/_authenticated/merchant/': typeof AuthenticatedMerchantIndexRoute
+  '/api/public/rewards/affiliate-callback': typeof ApiPublicRewardsAffiliateCallbackRoute
   '/api/public/rewards/events': typeof ApiPublicRewardsEventsRoute
   '/api/public/rewards/health': typeof ApiPublicRewardsHealthRoute
   '/api/public/rewards/scheduled-jobs': typeof ApiPublicRewardsScheduledJobsRoute
@@ -697,6 +707,7 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/app/'
     | '/merchant/'
+    | '/api/public/rewards/affiliate-callback'
     | '/api/public/rewards/events'
     | '/api/public/rewards/health'
     | '/api/public/rewards/scheduled-jobs'
@@ -761,6 +772,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/app'
     | '/merchant'
+    | '/api/public/rewards/affiliate-callback'
     | '/api/public/rewards/events'
     | '/api/public/rewards/health'
     | '/api/public/rewards/scheduled-jobs'
@@ -829,6 +841,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/'
     | '/_authenticated/app/'
     | '/_authenticated/merchant/'
+    | '/api/public/rewards/affiliate-callback'
     | '/api/public/rewards/events'
     | '/api/public/rewards/health'
     | '/api/public/rewards/scheduled-jobs'
@@ -857,6 +870,7 @@ export interface RootRouteChildren {
   LegalPrivacyRoute: typeof LegalPrivacyRoute
   LegalTermsRoute: typeof LegalTermsRoute
   BlogIndexRoute: typeof BlogIndexRoute
+  ApiPublicRewardsAffiliateCallbackRoute: typeof ApiPublicRewardsAffiliateCallbackRoute
   ApiPublicRewardsEventsRoute: typeof ApiPublicRewardsEventsRoute
   ApiPublicRewardsHealthRoute: typeof ApiPublicRewardsHealthRoute
   ApiPublicRewardsScheduledJobsRoute: typeof ApiPublicRewardsScheduledJobsRoute
@@ -1327,6 +1341,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicRewardsEventsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/rewards/affiliate-callback': {
+      id: '/api/public/rewards/affiliate-callback'
+      path: '/api/public/rewards/affiliate-callback'
+      fullPath: '/api/public/rewards/affiliate-callback'
+      preLoaderRoute: typeof ApiPublicRewardsAffiliateCallbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -1473,6 +1494,8 @@ const rootRouteChildren: RootRouteChildren = {
   LegalPrivacyRoute: LegalPrivacyRoute,
   LegalTermsRoute: LegalTermsRoute,
   BlogIndexRoute: BlogIndexRoute,
+  ApiPublicRewardsAffiliateCallbackRoute:
+    ApiPublicRewardsAffiliateCallbackRoute,
   ApiPublicRewardsEventsRoute: ApiPublicRewardsEventsRoute,
   ApiPublicRewardsHealthRoute: ApiPublicRewardsHealthRoute,
   ApiPublicRewardsScheduledJobsRoute: ApiPublicRewardsScheduledJobsRoute,
