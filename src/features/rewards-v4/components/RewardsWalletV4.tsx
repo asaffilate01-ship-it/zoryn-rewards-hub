@@ -6,15 +6,7 @@ import { formatEuroCents, formatNumber } from "@/components/PlatformShell";
 import type { RewardsV4Overview } from "@/lib/rewards-v4.functions";
 import { useT } from "@/lib/i18n";
 
-function Balance({
-  label,
-  value,
-  hint,
-}: {
-  label: string;
-  value: string;
-  hint: string;
-}) {
+function Balance({ label, value, hint }: { label: string; value: string; hint: string }) {
   return (
     <div className="rounded-2xl border border-border/60 bg-card/50 p-4">
       <p className="text-xs uppercase tracking-wider text-muted-foreground">{label}</p>

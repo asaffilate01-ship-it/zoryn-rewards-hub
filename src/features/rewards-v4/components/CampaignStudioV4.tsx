@@ -30,7 +30,8 @@ export function CampaignStudioV4({ data }: { data: RewardsV4Overview }) {
   const budgetCents = Math.round(Number(budget || 0) * 100);
   const estimate = useMemo(() => {
     const costPerMember = Math.max(50, Number(multiplier || 1) * 75);
-    const reachable = costPerMember > 0 ? Math.min(reach, Math.floor(budgetCents / costPerMember)) : 0;
+    const reachable =
+      costPerMember > 0 ? Math.min(reach, Math.floor(budgetCents / costPerMember)) : 0;
     return { reachable, costPerMember };
   }, [multiplier, budgetCents, reach]);
 
@@ -100,7 +101,9 @@ export function CampaignStudioV4({ data }: { data: RewardsV4Overview }) {
                       value={segment?.id ?? ""}
                       onChange={(e) => setSegmentId(e.target.value)}
                     >
-                      {data.segments.length === 0 && <option value="">{t("Alle Mitglieder")}</option>}
+                      {data.segments.length === 0 && (
+                        <option value="">{t("Alle Mitglieder")}</option>
+                      )}
                       {data.segments.map((s) => (
                         <option key={s.id} value={s.id}>
                           {s.name}
@@ -206,7 +209,9 @@ export function CampaignStudioV4({ data }: { data: RewardsV4Overview }) {
               <div key={c.id} className="rounded-xl border border-border/50 bg-card/40 p-3">
                 <div className="flex flex-wrap items-center gap-2">
                   <p className="text-sm font-medium">{c.name}</p>
-                  <Badge variant={c.status === "active" ? "default" : "secondary"}>{c.status}</Badge>
+                  <Badge variant={c.status === "active" ? "default" : "secondary"}>
+                    {c.status}
+                  </Badge>
                   <Badge variant="outline">{c.goal}</Badge>
                 </div>
                 <p className="mt-1 text-xs text-muted-foreground">
