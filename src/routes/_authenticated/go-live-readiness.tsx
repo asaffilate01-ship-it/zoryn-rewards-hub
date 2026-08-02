@@ -21,11 +21,7 @@ export const Route = createFileRoute("/_authenticated/go-live-readiness")({
 
 function GoLiveReadinessPage() {
   return (
-    <PlatformShell
-      eyebrow="Operations"
-      title="Go-Live Readiness"
-      description={description}
-    >
+    <PlatformShell eyebrow="Operations" title="Go-Live Readiness" description={description}>
       <GoLiveReadinessCentre />
     </PlatformShell>
   );

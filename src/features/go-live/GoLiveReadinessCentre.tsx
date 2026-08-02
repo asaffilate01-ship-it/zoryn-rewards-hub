@@ -86,14 +86,17 @@ export function GoLiveReadinessCentre() {
           <h2 className="font-semibold">{t("Händler-Onboarding")}</h2>
         </div>
         <p className="mt-3 text-sm">
-          {t("Aktueller Status")}: <strong>{data.onboarding?.status ?? t("nicht gestartet")}</strong>
+          {t("Aktueller Status")}:{" "}
+          <strong>{data.onboarding?.status ?? t("nicht gestartet")}</strong>
         </p>
         {data.onboarding?.legalName && (
           <p className="text-xs text-muted-foreground">{data.onboarding.legalName}</p>
         )}
         {(data.onboarding?.requiredActions.length ?? 0) > 0 && (
           <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
-            {data.onboarding?.requiredActions.map((action) => <li key={action}>{action}</li>)}
+            {data.onboarding?.requiredActions.map((action) => (
+              <li key={action}>{action}</li>
+            ))}
           </ul>
         )}
       </section>
