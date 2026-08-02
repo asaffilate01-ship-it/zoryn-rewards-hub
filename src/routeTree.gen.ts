@@ -71,6 +71,7 @@ import { Route as AuthenticatedAdminMerchantsRouteImport } from './routes/_authe
 import { Route as AuthenticatedAdminClaimsRouteImport } from './routes/_authenticated/admin.claims'
 import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authenticated/admin.audit'
 import { Route as AuthenticatedAdminAnalyticsRouteImport } from './routes/_authenticated/admin.analytics'
+import { Route as ApiPublicRewardsScheduledJobsRouteImport } from './routes/api/public/rewards.scheduled-jobs'
 import { Route as ApiPublicRewardsEventsRouteImport } from './routes/api/public/rewards.events'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -407,6 +408,12 @@ const AuthenticatedAdminAnalyticsRoute =
     path: '/analytics',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const ApiPublicRewardsScheduledJobsRoute =
+  ApiPublicRewardsScheduledJobsRouteImport.update({
+    id: '/api/public/rewards/scheduled-jobs',
+    path: '/api/public/rewards/scheduled-jobs',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicRewardsEventsRoute = ApiPublicRewardsEventsRouteImport.update({
   id: '/api/public/rewards/events',
   path: '/api/public/rewards/events',
@@ -476,6 +483,7 @@ export interface FileRoutesByFullPath {
   '/app/': typeof AuthenticatedAppIndexRoute
   '/merchant/': typeof AuthenticatedMerchantIndexRoute
   '/api/public/rewards/events': typeof ApiPublicRewardsEventsRoute
+  '/api/public/rewards/scheduled-jobs': typeof ApiPublicRewardsScheduledJobsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -537,6 +545,7 @@ export interface FileRoutesByTo {
   '/app': typeof AuthenticatedAppIndexRoute
   '/merchant': typeof AuthenticatedMerchantIndexRoute
   '/api/public/rewards/events': typeof ApiPublicRewardsEventsRoute
+  '/api/public/rewards/scheduled-jobs': typeof ApiPublicRewardsScheduledJobsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -603,6 +612,7 @@ export interface FileRoutesById {
   '/_authenticated/app/': typeof AuthenticatedAppIndexRoute
   '/_authenticated/merchant/': typeof AuthenticatedMerchantIndexRoute
   '/api/public/rewards/events': typeof ApiPublicRewardsEventsRoute
+  '/api/public/rewards/scheduled-jobs': typeof ApiPublicRewardsScheduledJobsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -669,6 +679,7 @@ export interface FileRouteTypes {
     | '/app/'
     | '/merchant/'
     | '/api/public/rewards/events'
+    | '/api/public/rewards/scheduled-jobs'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -730,6 +741,7 @@ export interface FileRouteTypes {
     | '/app'
     | '/merchant'
     | '/api/public/rewards/events'
+    | '/api/public/rewards/scheduled-jobs'
   id:
     | '__root__'
     | '/'
@@ -795,6 +807,7 @@ export interface FileRouteTypes {
     | '/_authenticated/app/'
     | '/_authenticated/merchant/'
     | '/api/public/rewards/events'
+    | '/api/public/rewards/scheduled-jobs'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -820,6 +833,7 @@ export interface RootRouteChildren {
   LegalTermsRoute: typeof LegalTermsRoute
   BlogIndexRoute: typeof BlogIndexRoute
   ApiPublicRewardsEventsRoute: typeof ApiPublicRewardsEventsRoute
+  ApiPublicRewardsScheduledJobsRoute: typeof ApiPublicRewardsScheduledJobsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -1258,6 +1272,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminAnalyticsRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/api/public/rewards/scheduled-jobs': {
+      id: '/api/public/rewards/scheduled-jobs'
+      path: '/api/public/rewards/scheduled-jobs'
+      fullPath: '/api/public/rewards/scheduled-jobs'
+      preLoaderRoute: typeof ApiPublicRewardsScheduledJobsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/rewards/events': {
       id: '/api/public/rewards/events'
       path: '/api/public/rewards/events'
@@ -1412,6 +1433,7 @@ const rootRouteChildren: RootRouteChildren = {
   LegalTermsRoute: LegalTermsRoute,
   BlogIndexRoute: BlogIndexRoute,
   ApiPublicRewardsEventsRoute: ApiPublicRewardsEventsRoute,
+  ApiPublicRewardsScheduledJobsRoute: ApiPublicRewardsScheduledJobsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
