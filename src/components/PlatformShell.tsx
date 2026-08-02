@@ -25,7 +25,6 @@ export const PLATFORM_TABS = [
   { to: "/go-live-readiness", label: "Go-Live", icon: Rocket },
 ] as const;
 
-
 export function formatEuroCents(cents: number, locale = "de-DE") {
   return new Intl.NumberFormat(locale, { style: "currency", currency: "EUR" }).format(
     (Number(cents) || 0) / 100,

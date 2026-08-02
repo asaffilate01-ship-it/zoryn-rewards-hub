@@ -90,10 +90,7 @@ export function BillingCentre() {
               </div>
               <p className="font-display mt-2 text-3xl font-semibold tracking-tight">
                 {formatEuroCents(plan.monthlyPriceMinor)}
-                <span className="text-sm font-normal text-muted-foreground">
-                  {" "}
-                  / {t("Monat")}
-                </span>
+                <span className="text-sm font-normal text-muted-foreground"> / {t("Monat")}</span>
               </p>
               <p className="text-xs text-muted-foreground">
                 {t("Jährlich")}: {formatEuroCents(plan.annualPriceMinor)}

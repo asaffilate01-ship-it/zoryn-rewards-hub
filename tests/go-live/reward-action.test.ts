@@ -45,7 +45,9 @@ describe("go-live secure reward action", () => {
   });
 
   it("rejects a single-sided posting", () => {
-    expect(rewardActionInput.safeParse({ ...base, entries: [base.entries[0]] }).success).toBe(false);
+    expect(rewardActionInput.safeParse({ ...base, entries: [base.entries[0]] }).success).toBe(
+      false,
+    );
   });
 
   it("rejects short idempotency keys", () => {

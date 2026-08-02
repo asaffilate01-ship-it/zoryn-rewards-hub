@@ -11,22 +11,26 @@ const schema = z.object({
 
 describe("reward action validation", () => {
   it("accepts a valid earn action", () => {
-    expect(schema.safeParse({
-      action: "earn",
-      tenantId: "00000000-0000-0000-0000-000000000101",
-      memberId: "00000000-0000-0000-0000-000000000201",
-      amount: 250,
-      idempotencyKey: "purchase-123456",
-    }).success).toBe(true);
+    expect(
+      schema.safeParse({
+        action: "earn",
+        tenantId: "00000000-0000-0000-0000-000000000101",
+        memberId: "00000000-0000-0000-0000-000000000201",
+        amount: 250,
+        idempotencyKey: "purchase-123456",
+      }).success,
+    ).toBe(true);
   });
 
   it("rejects zero or negative rewards", () => {
-    expect(schema.safeParse({
-      action: "earn",
-      tenantId: "00000000-0000-0000-0000-000000000101",
-      memberId: "00000000-0000-0000-0000-000000000201",
-      amount: 0,
-      idempotencyKey: "purchase-123456",
-    }).success).toBe(false);
+    expect(
+      schema.safeParse({
+        action: "earn",
+        tenantId: "00000000-0000-0000-0000-000000000101",
+        memberId: "00000000-0000-0000-0000-000000000201",
+        amount: 0,
+        idempotencyKey: "purchase-123456",
+      }).success,
+    ).toBe(false);
   });
 });
