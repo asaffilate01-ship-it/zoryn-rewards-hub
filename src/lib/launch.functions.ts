@@ -41,11 +41,33 @@ export type ScheduledJobConfig = {
   lastRunAt: string | null;
 };
 
+export type ReleaseEvidence = {
+  id: string;
+  releaseName: string;
+  environment: string;
+  evidenceType: string;
+  status: string;
+  evidenceReference: string | null;
+  executedAt: string;
+};
+
+export type ReleaseBlocker = {
+  id: string;
+  area: string;
+  severity: string;
+  title: string;
+  status: string;
+  owner: string | null;
+  dueAt: string | null;
+};
+
 export type FinalLaunchOverview = {
   acceptance: LaunchAcceptance | null;
   checks: MonitoringCheck[];
   devices: MobileDevice[];
   jobs: ScheduledJobConfig[];
+  evidence: ReleaseEvidence[];
+  blockers: ReleaseBlocker[];
 };
 
 export const getFinalLaunchOverview = createServerFn({ method: "GET" })
