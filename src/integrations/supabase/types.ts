@@ -2057,6 +2057,341 @@ export type Database = {
         }
         Relationships: []
       }
+      zr_api_credentials: {
+        Row: {
+          created_at: string
+          expires_at: string | null
+          id: string
+          last_used_at: string | null
+          name: string
+          public_key: string
+          revoked_at: string | null
+          scopes: string[]
+          secret_hash: string
+          tenant_id: string
+        }
+        Insert: {
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          last_used_at?: string | null
+          name: string
+          public_key: string
+          revoked_at?: string | null
+          scopes?: string[]
+          secret_hash: string
+          tenant_id: string
+        }
+        Update: {
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          last_used_at?: string | null
+          name?: string
+          public_key?: string
+          revoked_at?: string | null
+          scopes?: string[]
+          secret_hash?: string
+          tenant_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "zr_api_credentials_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "reward_tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      zr_automations: {
+        Row: {
+          action_config: Json
+          created_at: string
+          id: string
+          name: string
+          status: string
+          tenant_id: string
+          trigger_config: Json
+          trigger_type: string
+          updated_at: string
+        }
+        Insert: {
+          action_config?: Json
+          created_at?: string
+          id?: string
+          name: string
+          status?: string
+          tenant_id: string
+          trigger_config?: Json
+          trigger_type: string
+          updated_at?: string
+        }
+        Update: {
+          action_config?: Json
+          created_at?: string
+          id?: string
+          name?: string
+          status?: string
+          tenant_id?: string
+          trigger_config?: Json
+          trigger_type?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "zr_automations_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "reward_tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      zr_customer_segments: {
+        Row: {
+          created_at: string
+          description: string | null
+          estimated_members: number
+          id: string
+          name: string
+          rules: Json
+          tenant_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          estimated_members?: number
+          id?: string
+          name: string
+          rules?: Json
+          tenant_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          estimated_members?: number
+          id?: string
+          name?: string
+          rules?: Json
+          tenant_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "zr_customer_segments_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "reward_tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      zr_gift_cards_v4: {
+        Row: {
+          code_hash: string
+          created_at: string
+          deliver_at: string | null
+          expires_at: string | null
+          id: string
+          initial_value_cents: number
+          message: string | null
+          purchaser_user_id: string | null
+          recipient_email: string | null
+          remaining_value_cents: number
+          status: string
+          tenant_id: string
+          updated_at: string
+        }
+        Insert: {
+          code_hash: string
+          created_at?: string
+          deliver_at?: string | null
+          expires_at?: string | null
+          id?: string
+          initial_value_cents: number
+          message?: string | null
+          purchaser_user_id?: string | null
+          recipient_email?: string | null
+          remaining_value_cents: number
+          status?: string
+          tenant_id: string
+          updated_at?: string
+        }
+        Update: {
+          code_hash?: string
+          created_at?: string
+          deliver_at?: string | null
+          expires_at?: string | null
+          id?: string
+          initial_value_cents?: number
+          message?: string | null
+          purchaser_user_id?: string | null
+          recipient_email?: string | null
+          remaining_value_cents?: number
+          status?: string
+          tenant_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "zr_gift_cards_v4_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "reward_tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      zr_qr_challenges: {
+        Row: {
+          action_type: string
+          amount_cents: number | null
+          consumed_at: string | null
+          created_at: string
+          expires_at: string
+          id: string
+          location_id: string | null
+          member_id: string | null
+          merchant_id: string | null
+          nonce: string
+          tenant_id: string
+          token_hash: string
+        }
+        Insert: {
+          action_type: string
+          amount_cents?: number | null
+          consumed_at?: string | null
+          created_at?: string
+          expires_at: string
+          id?: string
+          location_id?: string | null
+          member_id?: string | null
+          merchant_id?: string | null
+          nonce: string
+          tenant_id: string
+          token_hash: string
+        }
+        Update: {
+          action_type?: string
+          amount_cents?: number | null
+          consumed_at?: string | null
+          created_at?: string
+          expires_at?: string
+          id?: string
+          location_id?: string | null
+          member_id?: string | null
+          merchant_id?: string | null
+          nonce?: string
+          tenant_id?: string
+          token_hash?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "zr_qr_challenges_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "reward_tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      zr_security_events: {
+        Row: {
+          created_at: string
+          event_type: string
+          id: string
+          reasons: Json
+          risk_score: number
+          severity: string
+          status: string
+          tenant_id: string | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          event_type: string
+          id?: string
+          reasons?: Json
+          risk_score?: number
+          severity: string
+          status?: string
+          tenant_id?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          event_type?: string
+          id?: string
+          reasons?: Json
+          risk_score?: number
+          severity?: string
+          status?: string
+          tenant_id?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "zr_security_events_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "reward_tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      zr_stamp_cards: {
+        Row: {
+          completed_count: number
+          created_at: string
+          current_stamps: number
+          id: string
+          member_id: string
+          programme_name: string
+          reward_description: string
+          stamps_required: number
+          tenant_id: string
+          updated_at: string
+        }
+        Insert: {
+          completed_count?: number
+          created_at?: string
+          current_stamps?: number
+          id?: string
+          member_id: string
+          programme_name: string
+          reward_description: string
+          stamps_required: number
+          tenant_id: string
+          updated_at?: string
+        }
+        Update: {
+          completed_count?: number
+          created_at?: string
+          current_stamps?: number
+          id?: string
+          member_id?: string
+          programme_name?: string
+          reward_description?: string
+          stamps_required?: number
+          tenant_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "zr_stamp_cards_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "reward_tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       account_balances: {

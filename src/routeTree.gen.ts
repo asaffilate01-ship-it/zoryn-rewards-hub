@@ -30,6 +30,7 @@ import { Route as FeaturesEnterpriseRouteImport } from './routes/features.enterp
 import { Route as FeaturesDevelopersRouteImport } from './routes/features.developers'
 import { Route as FeaturesConsumersRouteImport } from './routes/features.consumers'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as AuthenticatedRewardsV4RouteImport } from './routes/_authenticated/rewards-v4'
 import { Route as AuthenticatedRewardsScenarioLabRouteImport } from './routes/_authenticated/rewards-scenario-lab'
 import { Route as AuthenticatedRewardsProductionRouteImport } from './routes/_authenticated/rewards-production'
 import { Route as AuthenticatedMerchantOnboardingRouteImport } from './routes/_authenticated/merchant-onboarding'
@@ -171,6 +172,11 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   id: '/blog/$slug',
   path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRewardsV4Route = AuthenticatedRewardsV4RouteImport.update({
+  id: '/rewards-v4',
+  path: '/rewards-v4',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedRewardsScenarioLabRoute =
   AuthenticatedRewardsScenarioLabRouteImport.update({
@@ -393,6 +399,7 @@ export interface FileRoutesByFullPath {
   '/merchant-onboarding': typeof AuthenticatedMerchantOnboardingRoute
   '/rewards-production': typeof AuthenticatedRewardsProductionRoute
   '/rewards-scenario-lab': typeof AuthenticatedRewardsScenarioLabRoute
+  '/rewards-v4': typeof AuthenticatedRewardsV4Route
   '/blog/$slug': typeof BlogSlugRoute
   '/features/consumers': typeof FeaturesConsumersRoute
   '/features/developers': typeof FeaturesDevelopersRoute
@@ -449,6 +456,7 @@ export interface FileRoutesByTo {
   '/merchant-onboarding': typeof AuthenticatedMerchantOnboardingRoute
   '/rewards-production': typeof AuthenticatedRewardsProductionRoute
   '/rewards-scenario-lab': typeof AuthenticatedRewardsScenarioLabRoute
+  '/rewards-v4': typeof AuthenticatedRewardsV4Route
   '/blog/$slug': typeof BlogSlugRoute
   '/features/consumers': typeof FeaturesConsumersRoute
   '/features/developers': typeof FeaturesDevelopersRoute
@@ -510,6 +518,7 @@ export interface FileRoutesById {
   '/_authenticated/merchant-onboarding': typeof AuthenticatedMerchantOnboardingRoute
   '/_authenticated/rewards-production': typeof AuthenticatedRewardsProductionRoute
   '/_authenticated/rewards-scenario-lab': typeof AuthenticatedRewardsScenarioLabRoute
+  '/_authenticated/rewards-v4': typeof AuthenticatedRewardsV4Route
   '/blog/$slug': typeof BlogSlugRoute
   '/features/consumers': typeof FeaturesConsumersRoute
   '/features/developers': typeof FeaturesDevelopersRoute
@@ -571,6 +580,7 @@ export interface FileRouteTypes {
     | '/merchant-onboarding'
     | '/rewards-production'
     | '/rewards-scenario-lab'
+    | '/rewards-v4'
     | '/blog/$slug'
     | '/features/consumers'
     | '/features/developers'
@@ -627,6 +637,7 @@ export interface FileRouteTypes {
     | '/merchant-onboarding'
     | '/rewards-production'
     | '/rewards-scenario-lab'
+    | '/rewards-v4'
     | '/blog/$slug'
     | '/features/consumers'
     | '/features/developers'
@@ -687,6 +698,7 @@ export interface FileRouteTypes {
     | '/_authenticated/merchant-onboarding'
     | '/_authenticated/rewards-production'
     | '/_authenticated/rewards-scenario-lab'
+    | '/_authenticated/rewards-v4'
     | '/blog/$slug'
     | '/features/consumers'
     | '/features/developers'
@@ -907,6 +919,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/blog/$slug'
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/rewards-v4': {
+      id: '/_authenticated/rewards-v4'
+      path: '/rewards-v4'
+      fullPath: '/rewards-v4'
+      preLoaderRoute: typeof AuthenticatedRewardsV4RouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/rewards-scenario-lab': {
       id: '/_authenticated/rewards-scenario-lab'
@@ -1265,6 +1284,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedMerchantOnboardingRoute: typeof AuthenticatedMerchantOnboardingRoute
   AuthenticatedRewardsProductionRoute: typeof AuthenticatedRewardsProductionRoute
   AuthenticatedRewardsScenarioLabRoute: typeof AuthenticatedRewardsScenarioLabRoute
+  AuthenticatedRewardsV4Route: typeof AuthenticatedRewardsV4Route
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -1276,6 +1296,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedMerchantOnboardingRoute: AuthenticatedMerchantOnboardingRoute,
   AuthenticatedRewardsProductionRoute: AuthenticatedRewardsProductionRoute,
   AuthenticatedRewardsScenarioLabRoute: AuthenticatedRewardsScenarioLabRoute,
+  AuthenticatedRewardsV4Route: AuthenticatedRewardsV4Route,
 }
 
 const AuthenticatedRouteRouteWithChildren =
