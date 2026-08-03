@@ -33,15 +33,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
   );
 }
 
-function Row({
-  label,
-  meta,
-  status,
-}: {
-  label: string;
-  meta?: string;
-  status: string;
-}) {
+function Row({ label, meta, status }: { label: string; meta?: string; status: string }) {
   return (
     <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-border/50 bg-background/40 px-4 py-3">
       <div className="min-w-0">
@@ -77,7 +69,10 @@ export function ProductionIntegrationsCentre() {
   return (
     <div className="space-y-6">
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        <StatTile label={t("Gesunde Integrationen")} value={`${healthy}/${data.connections.length}`} />
+        <StatTile
+          label={t("Gesunde Integrationen")}
+          value={`${healthy}/${data.connections.length}`}
+        />
         <StatTile label={t("Abonnements")} value={String(data.subscriptions.length)} />
         <StatTile label={t("Affiliate-Transaktionen")} value={String(data.affiliate.length)} />
         <StatTile
@@ -126,7 +121,9 @@ export function ProductionIntegrationsCentre() {
 
       <Section title="Affiliate-Transaktionen">
         {data.affiliate.length === 0 ? (
-          <p className="text-sm text-muted-foreground">{t("Noch keine Affiliate-Transaktionen.")}</p>
+          <p className="text-sm text-muted-foreground">
+            {t("Noch keine Affiliate-Transaktionen.")}
+          </p>
         ) : (
           data.affiliate.map((a) => (
             <Row

@@ -21,11 +21,7 @@ export const Route = createFileRoute("/_authenticated/production-integrations")(
 
 function ProductionIntegrationsPage() {
   return (
-    <PlatformShell
-      eyebrow="Produktion"
-      title="Integrationen"
-      description={description}
-    >
+    <PlatformShell eyebrow="Produktion" title="Integrationen" description={description}>
       <ProductionIntegrationsCentre />
     </PlatformShell>
   );
