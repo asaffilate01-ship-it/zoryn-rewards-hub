@@ -74,6 +74,7 @@ import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authentic
 import { Route as AuthenticatedAdminAnalyticsRouteImport } from './routes/_authenticated/admin.analytics'
 import { Route as ApiPublicRewardsSchedulerRouteImport } from './routes/api/public/rewards.scheduler'
 import { Route as ApiPublicRewardsScheduledJobsRouteImport } from './routes/api/public/rewards.scheduled-jobs'
+import { Route as ApiPublicRewardsIntegrationHealthRouteImport } from './routes/api/public/rewards.integration-health'
 import { Route as ApiPublicRewardsHealthRouteImport } from './routes/api/public/rewards.health'
 import { Route as ApiPublicRewardsEventsRouteImport } from './routes/api/public/rewards.events'
 import { Route as ApiPublicRewardsAffiliateCallbackRouteImport } from './routes/api/public/rewards.affiliate-callback'
@@ -430,6 +431,12 @@ const ApiPublicRewardsScheduledJobsRoute =
     path: '/api/public/rewards/scheduled-jobs',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicRewardsIntegrationHealthRoute =
+  ApiPublicRewardsIntegrationHealthRouteImport.update({
+    id: '/api/public/rewards/integration-health',
+    path: '/api/public/rewards/integration-health',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicRewardsHealthRoute = ApiPublicRewardsHealthRouteImport.update({
   id: '/api/public/rewards/health',
   path: '/api/public/rewards/health',
@@ -513,6 +520,7 @@ export interface FileRoutesByFullPath {
   '/api/public/rewards/affiliate-callback': typeof ApiPublicRewardsAffiliateCallbackRoute
   '/api/public/rewards/events': typeof ApiPublicRewardsEventsRoute
   '/api/public/rewards/health': typeof ApiPublicRewardsHealthRoute
+  '/api/public/rewards/integration-health': typeof ApiPublicRewardsIntegrationHealthRoute
   '/api/public/rewards/scheduled-jobs': typeof ApiPublicRewardsScheduledJobsRoute
   '/api/public/rewards/scheduler': typeof ApiPublicRewardsSchedulerRoute
 }
@@ -579,6 +587,7 @@ export interface FileRoutesByTo {
   '/api/public/rewards/affiliate-callback': typeof ApiPublicRewardsAffiliateCallbackRoute
   '/api/public/rewards/events': typeof ApiPublicRewardsEventsRoute
   '/api/public/rewards/health': typeof ApiPublicRewardsHealthRoute
+  '/api/public/rewards/integration-health': typeof ApiPublicRewardsIntegrationHealthRoute
   '/api/public/rewards/scheduled-jobs': typeof ApiPublicRewardsScheduledJobsRoute
   '/api/public/rewards/scheduler': typeof ApiPublicRewardsSchedulerRoute
 }
@@ -650,6 +659,7 @@ export interface FileRoutesById {
   '/api/public/rewards/affiliate-callback': typeof ApiPublicRewardsAffiliateCallbackRoute
   '/api/public/rewards/events': typeof ApiPublicRewardsEventsRoute
   '/api/public/rewards/health': typeof ApiPublicRewardsHealthRoute
+  '/api/public/rewards/integration-health': typeof ApiPublicRewardsIntegrationHealthRoute
   '/api/public/rewards/scheduled-jobs': typeof ApiPublicRewardsScheduledJobsRoute
   '/api/public/rewards/scheduler': typeof ApiPublicRewardsSchedulerRoute
 }
@@ -721,6 +731,7 @@ export interface FileRouteTypes {
     | '/api/public/rewards/affiliate-callback'
     | '/api/public/rewards/events'
     | '/api/public/rewards/health'
+    | '/api/public/rewards/integration-health'
     | '/api/public/rewards/scheduled-jobs'
     | '/api/public/rewards/scheduler'
   fileRoutesByTo: FileRoutesByTo
@@ -787,6 +798,7 @@ export interface FileRouteTypes {
     | '/api/public/rewards/affiliate-callback'
     | '/api/public/rewards/events'
     | '/api/public/rewards/health'
+    | '/api/public/rewards/integration-health'
     | '/api/public/rewards/scheduled-jobs'
     | '/api/public/rewards/scheduler'
   id:
@@ -857,6 +869,7 @@ export interface FileRouteTypes {
     | '/api/public/rewards/affiliate-callback'
     | '/api/public/rewards/events'
     | '/api/public/rewards/health'
+    | '/api/public/rewards/integration-health'
     | '/api/public/rewards/scheduled-jobs'
     | '/api/public/rewards/scheduler'
   fileRoutesById: FileRoutesById
@@ -886,6 +899,7 @@ export interface RootRouteChildren {
   ApiPublicRewardsAffiliateCallbackRoute: typeof ApiPublicRewardsAffiliateCallbackRoute
   ApiPublicRewardsEventsRoute: typeof ApiPublicRewardsEventsRoute
   ApiPublicRewardsHealthRoute: typeof ApiPublicRewardsHealthRoute
+  ApiPublicRewardsIntegrationHealthRoute: typeof ApiPublicRewardsIntegrationHealthRoute
   ApiPublicRewardsScheduledJobsRoute: typeof ApiPublicRewardsScheduledJobsRoute
   ApiPublicRewardsSchedulerRoute: typeof ApiPublicRewardsSchedulerRoute
 }
@@ -1347,6 +1361,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicRewardsScheduledJobsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/rewards/integration-health': {
+      id: '/api/public/rewards/integration-health'
+      path: '/api/public/rewards/integration-health'
+      fullPath: '/api/public/rewards/integration-health'
+      preLoaderRoute: typeof ApiPublicRewardsIntegrationHealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/rewards/health': {
       id: '/api/public/rewards/health'
       path: '/api/public/rewards/health'
@@ -1520,19 +1541,11 @@ const rootRouteChildren: RootRouteChildren = {
     ApiPublicRewardsAffiliateCallbackRoute,
   ApiPublicRewardsEventsRoute: ApiPublicRewardsEventsRoute,
   ApiPublicRewardsHealthRoute: ApiPublicRewardsHealthRoute,
+  ApiPublicRewardsIntegrationHealthRoute:
+    ApiPublicRewardsIntegrationHealthRoute,
   ApiPublicRewardsScheduledJobsRoute: ApiPublicRewardsScheduledJobsRoute,
   ApiPublicRewardsSchedulerRoute: ApiPublicRewardsSchedulerRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
