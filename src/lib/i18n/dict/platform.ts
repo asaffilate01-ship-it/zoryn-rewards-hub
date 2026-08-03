@@ -7,6 +7,27 @@ export const platform: Record<string, string> = {
   "Scenario Lab": "Scenario Lab",
   "Lädt …": "Loading …",
 
+  // Production integrations centre
+  Integrationen: "Integrations",
+  "Gesunde Integrationen": "Healthy integrations",
+  Abonnements: "Subscriptions",
+  "Affiliate-Transaktionen": "Affiliate transactions",
+  "Offene Alerts": "Open alerts",
+  Integrationsmodus: "Integration mode",
+  "Provider-Verbindungen": "Provider connections",
+  "Noch keine Verbindungen erfasst.": "No connections recorded yet.",
+  "Noch keine Abonnements.": "No subscriptions yet.",
+  "Noch keine Affiliate-Transaktionen.": "No affiliate transactions yet.",
+  "Offene Monitoring-Alerts": "Open monitoring alerts",
+  "Keine offenen Alerts.": "No open alerts.",
+  "Backup- und Restore-Nachweise": "Backup and restore evidence",
+  "Noch keine Restore-Tests erfasst.": "No restore drills recorded yet.",
+  Laufzeitende: "Period ends",
+  Provision: "Commission",
+  "Ledger geprüft": "Ledger verified",
+  "Mandantentrennung geprüft": "Tenant isolation verified",
+  "Scheduler geprüft": "Scheduler verified",
+
   // Production dashboard
   "Rewards Produktion": "Rewards production",
   "Ein Loyalty-Betriebssystem für alle Mandanten.":

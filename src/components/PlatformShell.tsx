@@ -10,6 +10,7 @@ import {
   CreditCard,
   Scale,
   Activity,
+  Plug,
   Flag,
 } from "lucide-react";
 import { ZorynMark } from "@/components/ZorynMark";
@@ -26,6 +27,7 @@ export const PLATFORM_TABS = [
   { to: "/rewards-scenario-lab", label: "Scenario Lab", icon: FlaskConical },
   { to: "/pilot-operations", label: "Pilot Ops", icon: Activity },
   { to: "/go-live-readiness", label: "Go-Live", icon: Rocket },
+  { to: "/production-integrations", label: "Integrationen", icon: Plug },
   { to: "/final-launch", label: "Final Launch", icon: Flag },
 ] as const;
 
