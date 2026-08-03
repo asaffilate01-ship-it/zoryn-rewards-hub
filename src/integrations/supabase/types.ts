@@ -2060,6 +2060,80 @@ export type Database = {
         }
         Relationships: []
       }
+      zr_affiliate_transactions: {
+        Row: {
+          approved_at: string | null
+          click_reference: string | null
+          commission_minor: number
+          created_at: string
+          currency: string
+          expected_available_at: string | null
+          id: string
+          merchant_reference: string | null
+          order_reference: string | null
+          payload: Json
+          provider: string
+          provider_transaction_id: string
+          reversed_at: string | null
+          reward_minor: number
+          sale_amount_minor: number | null
+          status: string
+          tenant_id: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          approved_at?: string | null
+          click_reference?: string | null
+          commission_minor?: number
+          created_at?: string
+          currency?: string
+          expected_available_at?: string | null
+          id?: string
+          merchant_reference?: string | null
+          order_reference?: string | null
+          payload?: Json
+          provider: string
+          provider_transaction_id: string
+          reversed_at?: string | null
+          reward_minor?: number
+          sale_amount_minor?: number | null
+          status: string
+          tenant_id: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          approved_at?: string | null
+          click_reference?: string | null
+          commission_minor?: number
+          created_at?: string
+          currency?: string
+          expected_available_at?: string | null
+          id?: string
+          merchant_reference?: string | null
+          order_reference?: string | null
+          payload?: Json
+          provider?: string
+          provider_transaction_id?: string
+          reversed_at?: string | null
+          reward_minor?: number
+          sale_amount_minor?: number | null
+          status?: string
+          tenant_id?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "zr_affiliate_transactions_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "reward_tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       zr_api_credentials: {
         Row: {
           created_at: string
@@ -2187,6 +2261,54 @@ export type Database = {
         }
         Relationships: []
       }
+      zr_backup_restore_runs: {
+        Row: {
+          backup_reference: string
+          completed_at: string | null
+          environment: string
+          id: string
+          ledger_verified: boolean
+          notes: string | null
+          recovery_point_seconds: number | null
+          recovery_time_seconds: number | null
+          restore_target: string
+          scheduler_verified: boolean
+          started_at: string
+          status: string
+          tenant_isolation_verified: boolean
+        }
+        Insert: {
+          backup_reference: string
+          completed_at?: string | null
+          environment: string
+          id?: string
+          ledger_verified?: boolean
+          notes?: string | null
+          recovery_point_seconds?: number | null
+          recovery_time_seconds?: number | null
+          restore_target: string
+          scheduler_verified?: boolean
+          started_at?: string
+          status: string
+          tenant_isolation_verified?: boolean
+        }
+        Update: {
+          backup_reference?: string
+          completed_at?: string | null
+          environment?: string
+          id?: string
+          ledger_verified?: boolean
+          notes?: string | null
+          recovery_point_seconds?: number | null
+          recovery_time_seconds?: number | null
+          restore_target?: string
+          scheduler_verified?: boolean
+          started_at?: string
+          status?: string
+          tenant_isolation_verified?: boolean
+        }
+        Relationships: []
+      }
       zr_billing_plans: {
         Row: {
           active: boolean
@@ -2231,6 +2353,59 @@ export type Database = {
           white_label_enabled?: boolean
         }
         Relationships: []
+      }
+      zr_billing_subscriptions: {
+        Row: {
+          cancelled_at: string | null
+          created_at: string
+          current_period_ends_at: string | null
+          grace_ends_at: string | null
+          id: string
+          plan_code: string
+          provider: string
+          provider_subscription_id: string | null
+          status: string
+          tenant_id: string
+          trial_ends_at: string | null
+          updated_at: string
+        }
+        Insert: {
+          cancelled_at?: string | null
+          created_at?: string
+          current_period_ends_at?: string | null
+          grace_ends_at?: string | null
+          id?: string
+          plan_code: string
+          provider: string
+          provider_subscription_id?: string | null
+          status: string
+          tenant_id: string
+          trial_ends_at?: string | null
+          updated_at?: string
+        }
+        Update: {
+          cancelled_at?: string | null
+          created_at?: string
+          current_period_ends_at?: string | null
+          grace_ends_at?: string | null
+          id?: string
+          plan_code?: string
+          provider?: string
+          provider_subscription_id?: string | null
+          status?: string
+          tenant_id?: string
+          trial_ends_at?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "zr_billing_subscriptions_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "reward_tenants"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       zr_consent_records: {
         Row: {
@@ -2358,6 +2533,48 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      zr_integration_connections: {
+        Row: {
+          created_at: string
+          environment: string
+          id: string
+          integration_type: string
+          last_error: string | null
+          last_failure_at: string | null
+          last_success_at: string | null
+          metadata: Json
+          provider: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          environment: string
+          id?: string
+          integration_type: string
+          last_error?: string | null
+          last_failure_at?: string | null
+          last_success_at?: string | null
+          metadata?: Json
+          provider: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          environment?: string
+          id?: string
+          integration_type?: string
+          last_error?: string | null
+          last_failure_at?: string | null
+          last_success_at?: string | null
+          metadata?: Json
+          provider?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
       }
       zr_job_runs: {
         Row: {
@@ -2585,6 +2802,39 @@ export type Database = {
           revoked_at?: string | null
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      zr_monitoring_alert_events: {
+        Row: {
+          created_at: string
+          details: Json
+          id: string
+          resolved_at: string | null
+          rule_key: string
+          severity: string
+          status: string
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          details?: Json
+          id?: string
+          resolved_at?: string | null
+          rule_key: string
+          severity: string
+          status?: string
+          title: string
+        }
+        Update: {
+          created_at?: string
+          details?: Json
+          id?: string
+          resolved_at?: string | null
+          rule_key?: string
+          severity?: string
+          status?: string
+          title?: string
         }
         Relationships: []
       }
