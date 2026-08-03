@@ -1,0 +1,57 @@
+name: Rewards Production Integrations
+on:
+  workflow_dispatch:
+    inputs:
+      integration_mode:
+        description: Integration validation mode
+        required: true
+        default: mock
+        type: choice
+        options: [mock, sandbox]
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  application:
+    name: Application
+    runs-on: ubuntu-latest
+    env: { INTEGRATION_MODE: mock }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - run: npm run check:release
+      - run: npm run test:production-integrations
+  browser:
+    name: Browser
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e:release
+  database:
+    name: Database
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: supabase/setup-cli@v1
+      - run: supabase start
+      - run: supabase db reset
+      - run: supabase test db
+      - if: always()
+        run: supabase stop
+  release-gate:
+    name: Integration Gate
+    runs-on: ubuntu-latest
+    if: always()
+    needs: [application,browser,database]
+    steps:
+      - run: |
+          if [[ "${{ needs.application.result }}" != "success" || "${{ needs.browser.result }}" != "success" || "${{ needs.database.result }}" != "success" ]]; then exit 1; fi
+          echo "Production integration gates passed."
