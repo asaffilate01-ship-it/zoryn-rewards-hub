@@ -25,7 +25,10 @@
     "test:critical:coverage": "vitest run --coverage --config vitest.rewards-critical.config.ts",
     "test:e2e:release": "playwright test --config playwright.release.config.ts --project=chromium",
     "check:release": "npm run ci:doctor && npm run typecheck && npm run lint && npm run audit:release-safety && npm run test:critical:coverage && npm run build",
-    "release:proof": "npm run check:release && npm run test:e2e:release"
+    "release:proof": "npm run check:release && npm run test:e2e:release",
+    "test:production-integrations": "vitest run tests/production-integrations",
+    "production:validate": "npm run check:release && npm run test:production-integrations",
+    "production:proof": "npm run production:validate && npm run test:e2e:release"
   },
   "dependencies": {
     "@capacitor/android": "^8.4.2",
