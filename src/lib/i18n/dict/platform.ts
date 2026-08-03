@@ -22,7 +22,6 @@ export const platform: Record<string, string> = {
   "Keine offenen Alerts.": "No open alerts.",
   "Backup- und Restore-Nachweise": "Backup and restore evidence",
   "Noch keine Restore-Tests erfasst.": "No restore drills recorded yet.",
-  Laufzeitende: "Period ends",
   Provision: "Commission",
   "Ledger geprüft": "Ledger verified",
   "Mandantentrennung geprüft": "Tenant isolation verified",
